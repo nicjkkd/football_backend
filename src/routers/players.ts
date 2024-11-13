@@ -5,7 +5,7 @@ import {
   PlayerUncheckedUpdateManyInputSchema,
   PlayerUpdateManyMutationInputSchema,
 } from "../../prisma/generated/zod";
-import { buildBirthDateFilterObj } from "../utils";
+import { buildBirthDateFilterObj, isValidDate } from "../utils";
 
 const router = Router();
 const prisma = new PrismaClient();
@@ -16,31 +16,67 @@ router.get("/api/players", async (request, response) => {
   let convertedOlderThan;
   let convertedYoungerThan;
 
-  if (youngerThan !== undefined) {
-    if (typeof youngerThan === "string") {
-      convertedYoungerThan = new Date(youngerThan);
-    }
+  if (
+    olderThan !== undefined &&
+    typeof olderThan === "string" &&
+    isValidDate(new Date(olderThan))
+  ) {
+    convertedOlderThan = new Date(olderThan);
+  } else {
+    response.status(400).json({ msg: "Invalid olderThan date param provided" });
+    return undefined;
   }
 
-  if (olderThan !== undefined) {
-    if (typeof olderThan === "string") {
-      convertedOlderThan = new Date(olderThan);
-    }
+  if (
+    youngerThan !== undefined &&
+    typeof youngerThan === "string" &&
+    isValidDate(new Date(youngerThan))
+  ) {
+    convertedYoungerThan = new Date(youngerThan);
+  } else {
+    response
+      .status(400)
+      .json({ msg: "Invalid youngerThan date param provided" });
+    return undefined;
   }
 
-  // дати повинні пройти перевірку validate, не має бути Invalid Date (мають бути цифри)
-  // якщо дата не в рамках 1000-3000 то повертаємо помилку (getFullYear() greater than ...)
+  // if (youngerThan !== undefined) {
+  //   if (typeof youngerThan === "string") {
+  //     if (isValidDate(new Date(youngerThan))) {
+  //       convertedYoungerThan = new Date(youngerThan);
+  //     } else {
+  //       response.status(400).json({ msg: "Invalid Date" });
+  //     }
+  //   }
+  // }
 
-  console.log(
-    convertedOlderThan?.getFullYear(),
-    convertedYoungerThan?.getFullYear()
-  );
+  // if (olderThan !== undefined) {
+  //   if (typeof olderThan === "string") {
+  //     if (isValidDate(new Date(olderThan))) {
+  //       convertedOlderThan = new Date(olderThan);
+  //     } else {
+  //       response.status(400).json({ msg: "Invalid Date" });
+  //     }
+  //   }
+  // }
 
   if (convertedOlderThan !== undefined && convertedYoungerThan !== undefined) {
-    const players = await prisma.player.findMany({
-      where: buildBirthDateFilterObj(convertedYoungerThan, convertedOlderThan),
-    });
-    response.json(players);
+    if (
+      convertedOlderThan.getFullYear() >= 1000 &&
+      convertedYoungerThan.getFullYear() <= 3000
+    ) {
+      const players = await prisma.player.findMany({
+        where: buildBirthDateFilterObj(
+          convertedYoungerThan,
+          convertedOlderThan
+        ),
+      });
+      response.json(players);
+    } else {
+      response.status(400).json({
+        msg: "Invalid date time, expected: olderThan > 1000, youngerThan < 3000",
+      });
+    }
   } else {
     const players = await prisma.player.findMany();
     response.json(players);

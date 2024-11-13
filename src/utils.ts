@@ -14,3 +14,7 @@ export const buildBirthDateFilterObj = (
     ? { dateBirth: filterParamsObj }
     : {};
 };
+
+export const isValidDate = (d: unknown): d is Date => {
+  return d instanceof Date && !isNaN(d.getTime());
+};
