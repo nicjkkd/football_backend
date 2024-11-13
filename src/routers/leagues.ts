@@ -29,7 +29,7 @@ router.get("/api/leagues/:id", async (request, response) => {
 });
 
 router.post("/api/leagues", async (request, response) => {
-  const shoulIncludeTeam = request.query.includeTeam === "true";
+  const shoudIncludeTeam = request.query.includeTeam === "true";
   try {
     const LeagueSchema = z.object({
       teamsIdToAdd: z.array(z.string()).optional(),
@@ -50,7 +50,7 @@ router.post("/api/leagues", async (request, response) => {
         teams: { connect: teamsToConnect },
       },
       include: {
-        teams: shoulIncludeTeam,
+        teams: shoudIncludeTeam,
       },
     });
     console.log(league);
