@@ -16,49 +16,51 @@ router.get("/api/players", async (request, response) => {
   let convertedOlderThan;
   let convertedYoungerThan;
 
-  if (
-    olderThan !== undefined &&
-    typeof olderThan === "string" &&
-    isValidDate(new Date(olderThan))
-  ) {
-    convertedOlderThan = new Date(olderThan);
-  } else {
-    response.status(400).json({ msg: "Invalid olderThan date param provided" });
-    return undefined;
-  }
-
-  if (
-    youngerThan !== undefined &&
-    typeof youngerThan === "string" &&
-    isValidDate(new Date(youngerThan))
-  ) {
-    convertedYoungerThan = new Date(youngerThan);
-  } else {
-    response
-      .status(400)
-      .json({ msg: "Invalid youngerThan date param provided" });
-    return undefined;
-  }
-
-  // if (youngerThan !== undefined) {
-  //   if (typeof youngerThan === "string") {
-  //     if (isValidDate(new Date(youngerThan))) {
-  //       convertedYoungerThan = new Date(youngerThan);
-  //     } else {
-  //       response.status(400).json({ msg: "Invalid Date" });
-  //     }
-  //   }
+  // if (
+  //   olderThan !== undefined &&
+  //   typeof olderThan === "string" &&
+  //   isValidDate(new Date(olderThan))
+  // ) {
+  //   convertedOlderThan = new Date(olderThan);
+  // } else {
+  // response.status(400).json({ msg: "Invalid olderThan date param provided" });
+  //   return undefined;
   // }
 
-  // if (olderThan !== undefined) {
-  //   if (typeof olderThan === "string") {
-  //     if (isValidDate(new Date(olderThan))) {
-  //       convertedOlderThan = new Date(olderThan);
-  //     } else {
-  //       response.status(400).json({ msg: "Invalid Date" });
-  //     }
-  //   }
+  // if (
+  //   youngerThan !== undefined &&
+  //   typeof youngerThan === "string" &&
+  //   isValidDate(new Date(youngerThan))
+  // ) {
+  //   convertedYoungerThan = new Date(youngerThan);
+  // } else {
+  // response
+  //   .status(400)
+  //   .json({ msg: "Invalid youngerThan date param provided" });
+  //   return undefined;
   // }
+
+  if (youngerThan !== undefined) {
+    if (typeof youngerThan === "string" && isValidDate(new Date(youngerThan))) {
+      convertedYoungerThan = new Date(youngerThan);
+    } else {
+      response
+        .status(400)
+        .json({ msg: "Invalid youngerThan date param provided" });
+      return undefined;
+    }
+  }
+
+  if (olderThan !== undefined) {
+    if (typeof olderThan === "string" && isValidDate(new Date(olderThan))) {
+      convertedOlderThan = new Date(olderThan);
+    } else {
+      response
+        .status(400)
+        .json({ msg: "Invalid olderThan date param provided" });
+      return undefined;
+    }
+  }
 
   if (convertedOlderThan !== undefined && convertedYoungerThan !== undefined) {
     if (
@@ -76,6 +78,7 @@ router.get("/api/players", async (request, response) => {
       response.status(400).json({
         msg: "Invalid date time, expected: olderThan > 1000, youngerThan < 3000",
       });
+      return undefined;
     }
   } else {
     const players = await prisma.player.findMany();
