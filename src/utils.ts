@@ -18,3 +18,9 @@ export const buildBirthDateFilterObj = (
 export const isValidDate = (d: unknown): d is Date => {
   return d instanceof Date && !isNaN(d.getTime());
 };
+
+export const checkAgeLimitInput = (date: Date): boolean => {
+  return date.getFullYear() >= 1000 && date.getFullYear() <= 3000
+    ? true
+    : false;
+};
