@@ -23,7 +23,7 @@ router.get("/api/leagues/:id", async (request, response) => {
       teams: shoulIncludeTeam,
     },
   });
-  if (!league) response.status(404).send("msg: League not found");
+  if (!league) response.status(404).json({ msg: "League not found" });
   console.log(league);
   response.json(league);
 });
