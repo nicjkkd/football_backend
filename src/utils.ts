@@ -20,7 +20,5 @@ export const isValidDate = (d: unknown): d is Date => {
 };
 
 export const checkAgeLimitInput = (date: Date): boolean => {
-  return date.getFullYear() >= 1000 && date.getFullYear() <= 3000
-    ? true
-    : false;
+  return date.getFullYear() >= 1000 && date.getFullYear() <= 3000;
 };
