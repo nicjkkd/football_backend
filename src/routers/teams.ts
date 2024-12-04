@@ -9,9 +9,22 @@ const router = Router();
 const prisma = new PrismaClient();
 
 router.get("/api/teams", async (request, response) => {
-  const teams = await prisma.team.findMany();
-  console.log(teams);
-  response.json(teams);
+  const searchByLetters = request.query.nameQuery;
+  if (searchByLetters) {
+    const teams = await prisma.team.findMany({
+      where: {
+        teamName: {
+          contains: `${searchByLetters}`,
+        },
+      },
+    });
+    response.json(teams);
+    return;
+  } else {
+    const teams = await prisma.team.findMany();
+    response.json(teams);
+    return;
+  }
 });
 
 router.get("/api/teams/:id", async (request, response) => {
