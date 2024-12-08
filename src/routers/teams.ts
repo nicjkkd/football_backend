@@ -4,27 +4,24 @@ import {
   TeamCreateManyInputSchema,
   TeamUpdateManyMutationInputSchema,
 } from "../../prisma/generated/zod";
+import { TeamsWhere } from "../models";
 
 const router = Router();
 const prisma = new PrismaClient();
 
 router.get("/api/teams", async (request, response) => {
   const searchByLetters = request.query.nameQuery;
+  let where: TeamsWhere | undefined;
   if (searchByLetters) {
-    const teams = await prisma.team.findMany({
-      where: {
-        teamName: {
-          contains: `${searchByLetters}`,
-        },
+    where = {
+      teamName: {
+        contains: `${searchByLetters}`,
       },
-    });
-    response.json(teams);
-    return;
-  } else {
-    const teams = await prisma.team.findMany();
-    response.json(teams);
-    return;
+    };
   }
+  const teams = await prisma.team.findMany({ where });
+  response.json(teams);
+  return;
 });
 
 router.get("/api/teams/:id", async (request, response) => {
