@@ -130,19 +130,45 @@ router.patch("/api/players/:id", async (request, response) => {
 
   if (!existingPlayer) {
     response.status(404).json({ msg: "Player with this id was not found" });
-  } else if (existingPlayer.teamId) {
+  } else if (existingPlayer.teamId && existingPlayer.playerNumber) {
     const validatedPlayer = PlayerUncheckedUpdateManyInputSchema.parse(
       request.body
     );
 
-    const isInvalidTeam =
-      (!validatedPlayer.playerNumber && validatedPlayer.teamId) ||
-      (validatedPlayer.playerNumber && !validatedPlayer.teamId);
+    const isUpdatePlayerWithTeamAndNumber =
+      request.body.playerNumber && request.body.teamId;
+    const isUpdatePlayerWithTeamOrNumber =
+      request.body.playerNumber || request.body.teamId;
 
-    if (isInvalidTeam) {
-      response.status(400).json({
-        msg: "Player number && TeamId must be both provided or empty",
-      });
+    if (isUpdatePlayerWithTeamAndNumber) {
+      const playerWithTheSamePlayerNumberAndTeam =
+        await prisma.player.findFirst({
+          where: {
+            playerNumber: request.body.playerNumber,
+            teamId: request.body.teamId,
+          },
+        });
+      if (playerWithTheSamePlayerNumberAndTeam) {
+        response.status(400).json({
+          msg: "Player with this number and team already exists",
+        });
+        return undefined;
+      }
+    } else if (isUpdatePlayerWithTeamOrNumber) {
+      const playerWithTheSamePlayerNumberAndTeam =
+        await prisma.player.findFirst({
+          where: {
+            playerNumber:
+              request.body.playerNumber || existingPlayer.playerNumber,
+            teamId: request.body.teamId || existingPlayer.teamId,
+          },
+        });
+      if (playerWithTheSamePlayerNumberAndTeam) {
+        response.status(400).json({
+          msg: "Player with this number and team already exists",
+        });
+        return undefined;
+      }
     }
 
     const player = await prisma.player.update({
@@ -153,14 +179,40 @@ router.patch("/api/players/:id", async (request, response) => {
     console.log(player);
     response.json(player);
   } else {
-    const validatedPlayer = PlayerUpdateManyMutationInputSchema.parse(
+    const validatedPlayer = PlayerUncheckedUpdateManyInputSchema.parse(
       request.body
     );
 
-    if (validatedPlayer.playerNumber) {
+    const isTeamProvided =
+      validatedPlayer.teamId && !validatedPlayer.playerNumber;
+    const isPlayerNumberProvided =
+      validatedPlayer.playerNumber && !validatedPlayer.teamId;
+
+    if (isPlayerNumberProvided) {
       response
         .status(404)
         .json({ msg: "Player team is null, playerNumber couldn't be changed" });
+      return undefined;
+    }
+
+    if (isTeamProvided) {
+      response
+        .status(404)
+        .json({ msg: "Player number is null, teamId couldn't be changed" });
+      return undefined;
+    }
+
+    const playerWithTheSamePlayerNumberAndTeam = await prisma.player.findFirst({
+      where: {
+        playerNumber: request.body.playerNumber,
+        teamId: request.body.teamId,
+      },
+    });
+
+    if (playerWithTheSamePlayerNumberAndTeam) {
+      response.status(400).json({
+        msg: "Player with this number and team already exists",
+      });
       return undefined;
     }
 
