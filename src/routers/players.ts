@@ -191,39 +191,41 @@ router.patch("/api/players/:id", async (request, response) => {
       request.body
     );
 
-    const isTeamProvided =
-      validatedPlayer.teamId && !validatedPlayer.playerNumber;
-    const isPlayerNumberProvided =
-      validatedPlayer.playerNumber && !validatedPlayer.teamId;
+    if (validatedPlayer.teamId || validatedPlayer.playerNumber) {
+      const isTeamProvided =
+        validatedPlayer.teamId && !validatedPlayer.playerNumber;
+      const isPlayerNumberProvided =
+        validatedPlayer.playerNumber && !validatedPlayer.teamId;
 
-    if (isPlayerNumberProvided) {
-      response
-        .status(404)
-        .json({ msg: "Player team is null, playerNumber couldn't be changed" });
-      return undefined;
+      if (isPlayerNumberProvided) {
+        response.status(404).json({
+          msg: "Player team is null, playerNumber couldn't be changed",
+        });
+        return undefined;
+      }
+
+      if (isTeamProvided) {
+        response
+          .status(404)
+          .json({ msg: "Player number is null, teamId couldn't be changed" });
+        return undefined;
+      }
+
+      const playerWithTheSamePlayerNumberAndTeam =
+        await prisma.player.findFirst({
+          where: {
+            playerNumber: request.body.playerNumber,
+            teamId: request.body.teamId,
+          },
+        });
+
+      if (playerWithTheSamePlayerNumberAndTeam) {
+        response.status(400).json({
+          msg: "Player with this number and team already exists",
+        });
+        return undefined;
+      }
     }
-
-    if (isTeamProvided) {
-      response
-        .status(404)
-        .json({ msg: "Player number is null, teamId couldn't be changed" });
-      return undefined;
-    }
-
-    const playerWithTheSamePlayerNumberAndTeam = await prisma.player.findFirst({
-      where: {
-        playerNumber: request.body.playerNumber,
-        teamId: request.body.teamId,
-      },
-    });
-
-    if (playerWithTheSamePlayerNumberAndTeam) {
-      response.status(400).json({
-        msg: "Player with this number and team already exists",
-      });
-      return undefined;
-    }
-
     const player = await prisma.player.update({
       data: validatedPlayer,
       where: { id: request.params.id },
