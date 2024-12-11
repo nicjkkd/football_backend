@@ -135,10 +135,18 @@ router.patch("/api/players/:id", async (request, response) => {
       request.body
     );
 
+    const isTheSameNumberAndTeam =
+      existingPlayer.teamId === request.body.teamId &&
+      existingPlayer.playerNumber === request.body.playerNumber;
+
     const isUpdatePlayerWithTeamAndNumber =
-      request.body.playerNumber && request.body.teamId;
+      request.body.playerNumber &&
+      request.body.teamId &&
+      !isTheSameNumberAndTeam;
+
     const isUpdatePlayerWithTeamOrNumber =
-      request.body.playerNumber || request.body.teamId;
+      (request.body.playerNumber || request.body.teamId) &&
+      !isTheSameNumberAndTeam;
 
     if (isUpdatePlayerWithTeamAndNumber) {
       const playerWithTheSamePlayerNumberAndTeam =
