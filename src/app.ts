@@ -51,7 +51,7 @@ wss.on("connection", (ws) => {
   ws.on("message", (data, isBinary) => {
     try {
       const parsedData = JSON.parse(data.toString());
-      console.log("received: ", parsedData);
+      // console.log("received: ", parsedData);
       wss.clients.forEach((client) => {
         if (client !== ws && client.readyState === WebSocket.OPEN) {
           client.send(data, { binary: isBinary });
