@@ -7,6 +7,8 @@ import {
 import { v4 as uuidv4 } from "uuid";
 import { ActionTypes, TeamsWhere } from "../models";
 
+console.log("Test");
+
 const getTeamsRouter = (broadcast: (data: string) => void) => {
   const router = Router();
   const prisma = new PrismaClient();
