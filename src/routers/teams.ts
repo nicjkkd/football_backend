@@ -10,7 +10,6 @@ import { ActionTypes, TeamsWhere } from "../models";
 const getTeamsRouter = (broadcast: (data: string) => void) => {
   const router = Router();
   const prisma = new PrismaClient();
-  console.log("aaa");
 
   router.get("/api/teams", async (request, response) => {
     const searchByLetters = request.query.nameQuery;
