@@ -36,7 +36,6 @@ const getTeamsRouter = (broadcast: (data: string) => void) => {
         leagues: shoulIncludeLeague,
       },
     });
-    // console.log(team);
     response.json(team);
   });
 
@@ -46,9 +45,7 @@ const getTeamsRouter = (broadcast: (data: string) => void) => {
     });
 
     let eventId = uuidv4();
-    // response.json({ ...team, eventId: eventId });
-    // console.log(team);
-    response.json(team);
+    response.json({ ...team, eventId: eventId });
 
     broadcast(
       JSON.stringify({
@@ -63,15 +60,12 @@ const getTeamsRouter = (broadcast: (data: string) => void) => {
 
   router.post("/api/teams", async (request, response) => {
     try {
-      // console.log(request.body);
       const validatedTeam = TeamCreateManyInputSchema.parse(request.body);
 
       const team = await prisma.team.create({ data: validatedTeam });
 
       let eventId = uuidv4();
-      // response.json({ ...team, eventId: eventId });
-      // console.log(team);
-      response.json(team);
+      response.json({ ...team, eventId: eventId });
 
       broadcast(
         JSON.stringify({
@@ -105,9 +99,7 @@ const getTeamsRouter = (broadcast: (data: string) => void) => {
       });
 
       let eventId = uuidv4();
-      // response.json({ ...team, eventId: eventId });
-      // console.log(team);
-      response.json(team);
+      response.json({ ...team, eventId: eventId });
 
       broadcast(
         JSON.stringify({
@@ -133,8 +125,6 @@ const getTeamsRouter = (broadcast: (data: string) => void) => {
         msg: "At least one field must be provided: playersIdToAdd or playersIdToRemove",
       });
     } else {
-      // console.log(request.body);
-
       const playersIdToAdd: string[] = Array.isArray(
         request.body?.playersIdToAdd
       )
@@ -171,9 +161,7 @@ const getTeamsRouter = (broadcast: (data: string) => void) => {
       });
 
       let eventId = uuidv4();
-      // response.json({ ...team, eventId: eventId });
-      // console.log(updatedTeam);
-      response.json(updatedTeam);
+      response.json({ ...updatedTeam, eventId: eventId });
 
       broadcast(
         JSON.stringify({
@@ -214,7 +202,6 @@ const getTeamsRouter = (broadcast: (data: string) => void) => {
         id,
       }));
 
-      // console.log(leaguesIdToConnect, leaguesIdToDisconnect);
       if (!leaguesIdToConnect.length && !leaguesIdToDisconnect.length) {
         response.status(400).send({
           msg: "At least one field shoul not be empty: leaguesIdToAdd or leaguesIdToRemove",
@@ -235,9 +222,7 @@ const getTeamsRouter = (broadcast: (data: string) => void) => {
       });
 
       let eventId = uuidv4();
-      // response.json({ ...team, eventId: eventId });
-      // console.log(updatedTeam);
-      response.send(updatedTeam);
+      response.json({ ...updatedTeam, eventId: eventId });
 
       broadcast(
         JSON.stringify({

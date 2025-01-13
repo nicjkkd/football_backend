@@ -14,7 +14,6 @@ const getLeaguesRouter = (broadcast: (data: string) => void) => {
 
   router.get("/api/leagues", async (request, response) => {
     const leagues = await prisma.league.findMany();
-    // console.log(leagues);
     response.json(leagues);
   });
 
@@ -27,7 +26,7 @@ const getLeaguesRouter = (broadcast: (data: string) => void) => {
       },
     });
     if (!league) response.status(404).json({ msg: "League not found" });
-    // console.log(league);
+
     response.json(league);
   });
 
@@ -45,7 +44,6 @@ const getLeaguesRouter = (broadcast: (data: string) => void) => {
         ? request.body?.teamsIdToAdd
         : [];
       const teamsToConnect = teamsIdToAdd.map((id: string) => ({ id }));
-      // console.log(teamsToConnect);
 
       const league = await prisma.league.create({
         data: {
@@ -58,9 +56,7 @@ const getLeaguesRouter = (broadcast: (data: string) => void) => {
       });
 
       let eventId = uuidv4();
-      // response.json({ ...league, eventId: eventId });
-      // console.log(league);
-      response.json(league);
+      response.json({ ...league, eventId: eventId });
 
       broadcast(
         JSON.stringify({
@@ -119,9 +115,8 @@ const getLeaguesRouter = (broadcast: (data: string) => void) => {
       });
 
       let eventId = uuidv4();
-      response.json(updatedLeague);
-      // response.json({ ...updatedLeague, eventId: eventId });
-      // console.log(updatedLeague);
+
+      response.json({ ...updatedLeague, eventId: eventId });
 
       broadcast(
         JSON.stringify({
@@ -141,9 +136,7 @@ const getLeaguesRouter = (broadcast: (data: string) => void) => {
     });
 
     let eventId = uuidv4();
-    // response.json({ ...league, eventId: eventId });
-    // console.log(deletedLeague);
-    response.send(deletedLeague);
+    response.json({ ...deletedLeague, eventId: eventId });
 
     broadcast(
       JSON.stringify({
@@ -174,10 +167,7 @@ const getLeaguesRouter = (broadcast: (data: string) => void) => {
       });
 
       let eventId = uuidv4();
-
-      // console.log(league);
-      response.json(league);
-      // response.json({ ...league, eventId: eventId });
+      response.json({ ...league, eventId: eventId });
 
       broadcast(
         JSON.stringify({
@@ -193,4 +183,5 @@ const getLeaguesRouter = (broadcast: (data: string) => void) => {
 
   return router;
 };
+
 export default getLeaguesRouter;
