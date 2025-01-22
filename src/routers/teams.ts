@@ -4,8 +4,8 @@ import {
   TeamCreateManyInputSchema,
   TeamUpdateManyMutationInputSchema,
 } from "../../prisma/generated/zod";
-import { v4 as uuidv4 } from "uuid";
-import { ActionTypes, TeamsWhere } from "../models";
+import { OperationTypes, TeamsWhere } from "../models";
+import { broadcastResponse } from "../utils";
 
 const getTeamsRouter = (broadcast: (data: string) => void) => {
   const router = Router();
@@ -44,17 +44,27 @@ const getTeamsRouter = (broadcast: (data: string) => void) => {
       where: { id: request.params.id },
     });
 
-    let eventId = uuidv4();
-    response.json({ ...team, eventId: eventId });
+    // let eventId = uuidv4();
+    // response.json({ ...team, eventId: eventId });
 
-    broadcast(
-      JSON.stringify({
-        operation: "invalidate",
-        entity: ["teams"],
-        type: ActionTypes.Delete,
-        data: team,
-        eventId: eventId,
-      })
+    // broadcast(
+    //   JSON.stringify({
+    //     operation: "invalidate",
+    //     entity: ["teams"],
+    //     data: team,
+    //     eventId: eventId,
+    //   })
+    // );
+
+    response.json(
+      broadcastResponse(
+        {
+          operation: OperationTypes.invalidate,
+          entity: ["teams"],
+          responseEntityObject: team,
+        },
+        broadcast
+      )
     );
   });
 
@@ -64,17 +74,27 @@ const getTeamsRouter = (broadcast: (data: string) => void) => {
 
       const team = await prisma.team.create({ data: validatedTeam });
 
-      let eventId = uuidv4();
-      response.json({ ...team, eventId: eventId });
+      // let eventId = uuidv4();
+      // response.json({ ...team, eventId: eventId });
 
-      broadcast(
-        JSON.stringify({
-          operation: "invalidate",
-          entity: ["teams"],
-          type: ActionTypes.Create,
-          data: team,
-          eventId: eventId,
-        })
+      // broadcast(
+      //   JSON.stringify({
+      //     operation: "invalidate",
+      //     entity: ["teams"],
+      //     data: team,
+      //     eventId: eventId,
+      //   })
+      // );
+
+      response.json(
+        broadcastResponse(
+          {
+            operation: OperationTypes.invalidate,
+            entity: ["teams"],
+            responseEntityObject: team,
+          },
+          broadcast
+        )
       );
     } catch (err) {
       response.status(400).json(err);
@@ -98,17 +118,27 @@ const getTeamsRouter = (broadcast: (data: string) => void) => {
         where: { id: request.params.id },
       });
 
-      let eventId = uuidv4();
-      response.json({ ...team, eventId: eventId });
+      // let eventId = uuidv4();
+      // response.json({ ...team, eventId: eventId });
 
-      broadcast(
-        JSON.stringify({
-          operation: "invalidate",
-          entity: ["teams"],
-          type: ActionTypes.Update,
-          data: team,
-          eventId: eventId,
-        })
+      // broadcast(
+      //   JSON.stringify({
+      //     operation: "invalidate",
+      //     entity: ["teams"],
+      //     data: team,
+      //     eventId: eventId,
+      //   })
+      // );
+
+      response.json(
+        broadcastResponse(
+          {
+            operation: OperationTypes.invalidate,
+            entity: ["teams"],
+            responseEntityObject: team,
+          },
+          broadcast
+        )
       );
     }
   });
@@ -160,17 +190,27 @@ const getTeamsRouter = (broadcast: (data: string) => void) => {
         },
       });
 
-      let eventId = uuidv4();
-      response.json({ ...updatedTeam, eventId: eventId });
+      // let eventId = uuidv4();
+      // response.json({ ...updatedTeam, eventId: eventId });
 
-      broadcast(
-        JSON.stringify({
-          operation: "invalidate",
-          entity: ["teams"],
-          type: ActionTypes.Update,
-          data: updatedTeam,
-          eventId: eventId,
-        })
+      // broadcast(
+      //   JSON.stringify({
+      //     operation: "invalidate",
+      //     entity: ["teams"],
+      //     data: updatedTeam,
+      //     eventId: eventId,
+      //   })
+      // );
+
+      response.json(
+        broadcastResponse(
+          {
+            operation: OperationTypes.invalidate,
+            entity: ["teams"],
+            responseEntityObject: updatedTeam,
+          },
+          broadcast
+        )
       );
     }
   });
@@ -221,17 +261,27 @@ const getTeamsRouter = (broadcast: (data: string) => void) => {
         },
       });
 
-      let eventId = uuidv4();
-      response.json({ ...updatedTeam, eventId: eventId });
+      // let eventId = uuidv4();
+      // response.json({ ...updatedTeam, eventId: eventId });
 
-      broadcast(
-        JSON.stringify({
-          operation: "invalidate",
-          entity: ["teams"],
-          type: ActionTypes.Update,
-          data: updatedTeam,
-          eventId: eventId,
-        })
+      // broadcast(
+      //   JSON.stringify({
+      //     operation: "invalidate",
+      //     entity: ["teams"],
+      //     data: updatedTeam,
+      //     eventId: eventId,
+      //   })
+      // );
+
+      response.json(
+        broadcastResponse(
+          {
+            operation: OperationTypes.invalidate,
+            entity: ["teams"],
+            responseEntityObject: updatedTeam,
+          },
+          broadcast
+        )
       );
     }
   });
