@@ -4,8 +4,9 @@ export interface TeamsWhere {
   };
 }
 
-export enum ActionTypes {
-  Update = "Update",
-  Create = "Create",
-  Delete = "Delete",
+export enum OperationTypes {
+  invalidate = "invalidate",
+  create = "create",
+  delete = "delete",
+  update = "update",
 }

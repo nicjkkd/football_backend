@@ -5,8 +5,8 @@ import {
   LeagueUpdateManyMutationInputSchema,
 } from "../../prisma/generated/zod";
 import { z } from "zod";
-import { v4 as uuidv4 } from "uuid";
-import { ActionTypes } from "../models";
+import { broadcastResponse } from "../utils";
+import { OperationTypes } from "../models";
 
 const getLeaguesRouter = (broadcast: (data: string) => void) => {
   const router = Router();
@@ -55,17 +55,27 @@ const getLeaguesRouter = (broadcast: (data: string) => void) => {
         },
       });
 
-      let eventId = uuidv4();
-      response.json({ ...league, eventId: eventId });
+      // let eventId = uuidv4();
+      // response.json({ ...league, eventId: eventId });
 
-      broadcast(
-        JSON.stringify({
-          operation: "invalidate",
-          entity: ["leagues"],
-          type: ActionTypes.Create,
-          data: league,
-          eventId: eventId,
-        })
+      // broadcast(
+      //   JSON.stringify({
+      //     operation: "invalidate",
+      //     entity: ["leagues"],
+      //     data: league,
+      //     eventId: eventId,
+      //   })
+      // );
+
+      response.json(
+        broadcastResponse(
+          {
+            operation: OperationTypes.invalidate,
+            entity: ["leagues"],
+            responseEntityObject: league,
+          },
+          broadcast
+        )
       );
     } catch (err) {
       response.status(400).json(err);
@@ -114,18 +124,28 @@ const getLeaguesRouter = (broadcast: (data: string) => void) => {
         },
       });
 
-      let eventId = uuidv4();
+      // let eventId = uuidv4();
 
-      response.json({ ...updatedLeague, eventId: eventId });
+      // response.json({ ...updatedLeague, eventId: eventId });
 
-      broadcast(
-        JSON.stringify({
-          operation: "invalidate",
-          entity: ["leagues"],
-          type: ActionTypes.Update,
-          data: updatedLeague,
-          eventId: eventId,
-        })
+      // broadcast(
+      //   JSON.stringify({
+      //     operation: "invalidate",
+      //     entity: ["leagues"],
+      //     data: updatedLeague,
+      //     eventId: eventId,
+      //   })
+      // );
+
+      response.json(
+        broadcastResponse(
+          {
+            operation: OperationTypes.invalidate,
+            entity: ["leagues"],
+            responseEntityObject: updatedLeague,
+          },
+          broadcast
+        )
       );
     }
   });
@@ -135,17 +155,27 @@ const getLeaguesRouter = (broadcast: (data: string) => void) => {
       where: { id: request.params.id },
     });
 
-    let eventId = uuidv4();
-    response.json({ ...deletedLeague, eventId: eventId });
+    // let eventId = uuidv4();
+    // response.json({ ...deletedLeague, eventId: eventId });
 
-    broadcast(
-      JSON.stringify({
-        operation: "invalidate",
-        entity: ["leagues"],
-        type: ActionTypes.Delete,
-        data: deletedLeague,
-        eventId: eventId,
-      })
+    // broadcast(
+    //   JSON.stringify({
+    //     operation: "invalidate",
+    //     entity: ["leagues"],
+    //     data: deletedLeague,
+    //     eventId: eventId,
+    //   })
+    // );
+
+    response.json(
+      broadcastResponse(
+        {
+          operation: OperationTypes.invalidate,
+          entity: ["leagues"],
+          responseEntityObject: deletedLeague,
+        },
+        broadcast
+      )
     );
   });
 
@@ -166,17 +196,27 @@ const getLeaguesRouter = (broadcast: (data: string) => void) => {
         where: { id: request.params.id },
       });
 
-      let eventId = uuidv4();
-      response.json({ ...league, eventId: eventId });
+      // let eventId = uuidv4();
+      // response.json({ ...league, eventId: eventId });
 
-      broadcast(
-        JSON.stringify({
-          operation: "invalidate",
-          entity: ["leagues"],
-          type: ActionTypes.Update,
-          data: league,
-          eventId: eventId,
-        })
+      // broadcast(
+      //   JSON.stringify({
+      //     operation: "invalidate",
+      //     entity: ["leagues"],
+      //     data: league,
+      //     eventId: eventId,
+      //   })
+      // );
+
+      response.json(
+        broadcastResponse(
+          {
+            operation: OperationTypes.invalidate,
+            entity: ["leagues"],
+            responseEntityObject: league,
+          },
+          broadcast
+        )
       );
     }
   });

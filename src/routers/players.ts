@@ -5,12 +5,12 @@ import {
   PlayerUncheckedUpdateManyInputSchema,
 } from "../../prisma/generated/zod";
 import {
+  broadcastResponse,
   buildBirthDateFilterObj,
   checkAgeLimitInput,
   isValidDate,
 } from "../utils";
-import { v4 as uuidv4 } from "uuid";
-import { ActionTypes } from "../models";
+import { OperationTypes } from "../models";
 
 const getPlayersRouter = (broadcast: (data: string) => void) => {
   const router = Router();
@@ -85,7 +85,6 @@ const getPlayersRouter = (broadcast: (data: string) => void) => {
   });
 
   router.post("/api/players", async (request, response) => {
-    let eventId = uuidv4();
     try {
       const validatedPlayer = PlayerCreateManyInputSchema.parse(request.body);
 
@@ -112,33 +111,57 @@ const getPlayersRouter = (broadcast: (data: string) => void) => {
         } else {
           const player = await prisma.player.create({ data: validatedPlayer });
 
-          response.json({ ...player, eventId: eventId });
+          // let eventId = uuidv4();
+          // response.json({ ...player, eventId: eventId });
 
-          broadcast(
-            JSON.stringify({
-              operation: "create",
-              entity: ["players"],
-              type: ActionTypes.Create,
-              data: player,
-              id: player.id,
-              eventId: eventId,
-            })
+          // broadcast(
+          //   JSON.stringify({
+          //     operation: "create",
+          //     entity: ["players"],
+          //     data: player,
+          //     id: player.id,
+          //     eventId: eventId,
+          //   })
+          // );
+
+          response.json(
+            broadcastResponse(
+              {
+                operation: OperationTypes.create,
+                entity: ["players"],
+                responseEntityObject: player,
+                id: player.id,
+              },
+              broadcast
+            )
           );
         }
       } else {
         const player = await prisma.player.create({ data: validatedPlayer });
 
-        response.json({ ...player, eventId: eventId });
+        // let eventId = uuidv4();
+        // response.json({ ...player, eventId: eventId });
 
-        broadcast(
-          JSON.stringify({
-            operation: "create",
-            entity: ["players"],
-            type: ActionTypes.Create,
-            data: player,
-            id: player.id,
-            eventId: eventId,
-          })
+        // broadcast(
+        //   JSON.stringify({
+        //     operation: "create",
+        //     entity: ["players"],
+        //     data: player,
+        //     id: player.id,
+        //     eventId: eventId,
+        //   })
+        // );
+
+        response.json(
+          broadcastResponse(
+            {
+              operation: OperationTypes.create,
+              entity: ["players"],
+              responseEntityObject: player,
+              id: player.id,
+            },
+            broadcast
+          )
         );
       }
     } catch (err) {
@@ -147,27 +170,37 @@ const getPlayersRouter = (broadcast: (data: string) => void) => {
   });
 
   router.delete("/api/players/:id", async (request, response) => {
-    let eventId = uuidv4();
     const player = await prisma.player.delete({
       where: { id: request.params.id },
     });
 
-    response.json({ ...player, eventId: eventId });
+    // let eventId = uuidv4();
+    // response.json({ ...player, eventId: eventId });
 
-    broadcast(
-      JSON.stringify({
-        operation: "delete",
-        entity: ["players"],
-        type: ActionTypes.Delete,
-        data: player,
-        id: player.id,
-        eventId: eventId,
-      })
+    // broadcast(
+    //   JSON.stringify({
+    //     operation: "delete",
+    //     entity: ["players"],
+    //     data: player,
+    //     id: player.id,
+    //     eventId: eventId,
+    //   })
+    // );
+
+    response.json(
+      broadcastResponse(
+        {
+          operation: OperationTypes.delete,
+          entity: ["players"],
+          responseEntityObject: player,
+          id: player.id,
+        },
+        broadcast
+      )
     );
   });
 
   router.patch("/api/players/:id", async (request, response) => {
-    let eventId = uuidv4();
     const existingPlayer = await prisma.player.findUnique({
       where: { id: request.params.id },
     });
@@ -228,17 +261,29 @@ const getPlayersRouter = (broadcast: (data: string) => void) => {
         where: { id: request.params.id },
       });
 
-      response.json({ ...player, eventId: eventId });
+      // let eventId = uuidv4();
+      // response.json({ ...player, eventId: eventId });
 
-      broadcast(
-        JSON.stringify({
-          operation: "update",
-          entity: ["players"],
-          type: ActionTypes.Update,
-          data: player,
-          id: player.id,
-          eventId: eventId,
-        })
+      // broadcast(
+      //   JSON.stringify({
+      //     operation: "update",
+      //     entity: ["players"],
+      //     data: player,
+      //     id: player.id,
+      //     eventId: eventId,
+      //   })
+      // );
+
+      response.json(
+        broadcastResponse(
+          {
+            operation: OperationTypes.update,
+            entity: ["players"],
+            responseEntityObject: player,
+            id: player.id,
+          },
+          broadcast
+        )
       );
     } else {
       const validatedPlayer = PlayerUncheckedUpdateManyInputSchema.parse(
@@ -285,17 +330,28 @@ const getPlayersRouter = (broadcast: (data: string) => void) => {
         where: { id: request.params.id },
       });
 
-      response.json({ ...player, eventId: eventId });
+      // response.json({ ...player, eventId: eventId });
 
-      broadcast(
-        JSON.stringify({
-          operation: "update",
-          entity: ["players"],
-          type: ActionTypes.Update,
-          data: player,
-          id: player.id,
-          eventId: eventId,
-        })
+      // broadcast(
+      //   JSON.stringify({
+      //     operation: "update",
+      //     entity: ["players"],
+      //     data: player,
+      //     id: player.id,
+      //     eventId: eventId,
+      //   })
+      // );
+
+      response.json(
+        broadcastResponse(
+          {
+            operation: OperationTypes.update,
+            entity: ["players"],
+            responseEntityObject: player,
+            id: player.id,
+          },
+          broadcast
+        )
       );
     }
   });
