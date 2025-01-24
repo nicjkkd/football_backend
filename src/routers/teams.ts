@@ -5,7 +5,9 @@ import {
   TeamUpdateManyMutationInputSchema,
 } from "../../prisma/generated/zod";
 import { OperationTypes, TeamsWhere } from "../models";
-import { broadcastResponse } from "../utils";
+import { sendResponseWithBroadcast } from "../utils";
+
+const broadcastEntity = "teams";
 
 const getTeamsRouter = (broadcast: (data: string) => void) => {
   const router = Router();
@@ -44,28 +46,13 @@ const getTeamsRouter = (broadcast: (data: string) => void) => {
       where: { id: request.params.id },
     });
 
-    // let eventId = uuidv4();
-    // response.json({ ...team, eventId: eventId });
+    let responsePayload = {
+      operation: OperationTypes.invalidate,
+      entity: [broadcastEntity],
+      data: team,
+    };
 
-    // broadcast(
-    //   JSON.stringify({
-    //     operation: "invalidate",
-    //     entity: ["teams"],
-    //     data: team,
-    //     eventId: eventId,
-    //   })
-    // );
-
-    response.json(
-      broadcastResponse(
-        {
-          operation: OperationTypes.invalidate,
-          entity: ["teams"],
-          responseEntityObject: team,
-        },
-        broadcast
-      )
-    );
+    sendResponseWithBroadcast({ response, broadcast, responsePayload });
   });
 
   router.post("/api/teams", async (request, response) => {
@@ -74,28 +61,13 @@ const getTeamsRouter = (broadcast: (data: string) => void) => {
 
       const team = await prisma.team.create({ data: validatedTeam });
 
-      // let eventId = uuidv4();
-      // response.json({ ...team, eventId: eventId });
+      let responsePayload = {
+        operation: OperationTypes.invalidate,
+        entity: [broadcastEntity],
+        data: team,
+      };
 
-      // broadcast(
-      //   JSON.stringify({
-      //     operation: "invalidate",
-      //     entity: ["teams"],
-      //     data: team,
-      //     eventId: eventId,
-      //   })
-      // );
-
-      response.json(
-        broadcastResponse(
-          {
-            operation: OperationTypes.invalidate,
-            entity: ["teams"],
-            responseEntityObject: team,
-          },
-          broadcast
-        )
-      );
+      sendResponseWithBroadcast({ response, broadcast, responsePayload });
     } catch (err) {
       response.status(400).json(err);
     }
@@ -118,28 +90,13 @@ const getTeamsRouter = (broadcast: (data: string) => void) => {
         where: { id: request.params.id },
       });
 
-      // let eventId = uuidv4();
-      // response.json({ ...team, eventId: eventId });
+      let responsePayload = {
+        operation: OperationTypes.invalidate,
+        entity: [broadcastEntity],
+        data: team,
+      };
 
-      // broadcast(
-      //   JSON.stringify({
-      //     operation: "invalidate",
-      //     entity: ["teams"],
-      //     data: team,
-      //     eventId: eventId,
-      //   })
-      // );
-
-      response.json(
-        broadcastResponse(
-          {
-            operation: OperationTypes.invalidate,
-            entity: ["teams"],
-            responseEntityObject: team,
-          },
-          broadcast
-        )
-      );
+      sendResponseWithBroadcast({ response, broadcast, responsePayload });
     }
   });
 
@@ -190,28 +147,13 @@ const getTeamsRouter = (broadcast: (data: string) => void) => {
         },
       });
 
-      // let eventId = uuidv4();
-      // response.json({ ...updatedTeam, eventId: eventId });
+      let responsePayload = {
+        operation: OperationTypes.invalidate,
+        entity: [broadcastEntity],
+        data: updatedTeam,
+      };
 
-      // broadcast(
-      //   JSON.stringify({
-      //     operation: "invalidate",
-      //     entity: ["teams"],
-      //     data: updatedTeam,
-      //     eventId: eventId,
-      //   })
-      // );
-
-      response.json(
-        broadcastResponse(
-          {
-            operation: OperationTypes.invalidate,
-            entity: ["teams"],
-            responseEntityObject: updatedTeam,
-          },
-          broadcast
-        )
-      );
+      sendResponseWithBroadcast({ response, broadcast, responsePayload });
     }
   });
 
@@ -261,28 +203,13 @@ const getTeamsRouter = (broadcast: (data: string) => void) => {
         },
       });
 
-      // let eventId = uuidv4();
-      // response.json({ ...updatedTeam, eventId: eventId });
+      let responsePayload = {
+        operation: OperationTypes.invalidate,
+        entity: [broadcastEntity],
+        data: updatedTeam,
+      };
 
-      // broadcast(
-      //   JSON.stringify({
-      //     operation: "invalidate",
-      //     entity: ["teams"],
-      //     data: updatedTeam,
-      //     eventId: eventId,
-      //   })
-      // );
-
-      response.json(
-        broadcastResponse(
-          {
-            operation: OperationTypes.invalidate,
-            entity: ["teams"],
-            responseEntityObject: updatedTeam,
-          },
-          broadcast
-        )
-      );
+      sendResponseWithBroadcast({ response, broadcast, responsePayload });
     }
   });
 

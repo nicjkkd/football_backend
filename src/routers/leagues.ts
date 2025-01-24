@@ -5,8 +5,10 @@ import {
   LeagueUpdateManyMutationInputSchema,
 } from "../../prisma/generated/zod";
 import { z } from "zod";
-import { broadcastResponse } from "../utils";
+import { sendResponseWithBroadcast } from "../utils";
 import { OperationTypes } from "../models";
+
+const broadcastEntity = "leagues";
 
 const getLeaguesRouter = (broadcast: (data: string) => void) => {
   const router = Router();
@@ -55,28 +57,13 @@ const getLeaguesRouter = (broadcast: (data: string) => void) => {
         },
       });
 
-      // let eventId = uuidv4();
-      // response.json({ ...league, eventId: eventId });
+      let responsePayload = {
+        operation: OperationTypes.invalidate,
+        entity: [broadcastEntity],
+        data: league,
+      };
 
-      // broadcast(
-      //   JSON.stringify({
-      //     operation: "invalidate",
-      //     entity: ["leagues"],
-      //     data: league,
-      //     eventId: eventId,
-      //   })
-      // );
-
-      response.json(
-        broadcastResponse(
-          {
-            operation: OperationTypes.invalidate,
-            entity: ["leagues"],
-            responseEntityObject: league,
-          },
-          broadcast
-        )
-      );
+      sendResponseWithBroadcast({ response, broadcast, responsePayload });
     } catch (err) {
       response.status(400).json(err);
     }
@@ -124,29 +111,13 @@ const getLeaguesRouter = (broadcast: (data: string) => void) => {
         },
       });
 
-      // let eventId = uuidv4();
+      let responsePayload = {
+        operation: OperationTypes.invalidate,
+        entity: [broadcastEntity],
+        data: updatedLeague,
+      };
 
-      // response.json({ ...updatedLeague, eventId: eventId });
-
-      // broadcast(
-      //   JSON.stringify({
-      //     operation: "invalidate",
-      //     entity: ["leagues"],
-      //     data: updatedLeague,
-      //     eventId: eventId,
-      //   })
-      // );
-
-      response.json(
-        broadcastResponse(
-          {
-            operation: OperationTypes.invalidate,
-            entity: ["leagues"],
-            responseEntityObject: updatedLeague,
-          },
-          broadcast
-        )
-      );
+      sendResponseWithBroadcast({ response, broadcast, responsePayload });
     }
   });
 
@@ -155,28 +126,13 @@ const getLeaguesRouter = (broadcast: (data: string) => void) => {
       where: { id: request.params.id },
     });
 
-    // let eventId = uuidv4();
-    // response.json({ ...deletedLeague, eventId: eventId });
+    let responsePayload = {
+      operation: OperationTypes.invalidate,
+      entity: [broadcastEntity],
+      data: deletedLeague,
+    };
 
-    // broadcast(
-    //   JSON.stringify({
-    //     operation: "invalidate",
-    //     entity: ["leagues"],
-    //     data: deletedLeague,
-    //     eventId: eventId,
-    //   })
-    // );
-
-    response.json(
-      broadcastResponse(
-        {
-          operation: OperationTypes.invalidate,
-          entity: ["leagues"],
-          responseEntityObject: deletedLeague,
-        },
-        broadcast
-      )
-    );
+    sendResponseWithBroadcast({ response, broadcast, responsePayload });
   });
 
   router.patch("/api/leagues/:id", async (request, response) => {
@@ -196,28 +152,13 @@ const getLeaguesRouter = (broadcast: (data: string) => void) => {
         where: { id: request.params.id },
       });
 
-      // let eventId = uuidv4();
-      // response.json({ ...league, eventId: eventId });
+      let responsePayload = {
+        operation: OperationTypes.invalidate,
+        entity: [broadcastEntity],
+        data: league,
+      };
 
-      // broadcast(
-      //   JSON.stringify({
-      //     operation: "invalidate",
-      //     entity: ["leagues"],
-      //     data: league,
-      //     eventId: eventId,
-      //   })
-      // );
-
-      response.json(
-        broadcastResponse(
-          {
-            operation: OperationTypes.invalidate,
-            entity: ["leagues"],
-            responseEntityObject: league,
-          },
-          broadcast
-        )
-      );
+      sendResponseWithBroadcast({ response, broadcast, responsePayload });
     }
   });
 

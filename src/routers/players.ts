@@ -5,12 +5,14 @@ import {
   PlayerUncheckedUpdateManyInputSchema,
 } from "../../prisma/generated/zod";
 import {
-  broadcastResponse,
   buildBirthDateFilterObj,
   checkAgeLimitInput,
   isValidDate,
+  sendResponseWithBroadcast,
 } from "../utils";
 import { OperationTypes } from "../models";
+
+const broadcastEntity = "players";
 
 const getPlayersRouter = (broadcast: (data: string) => void) => {
   const router = Router();
@@ -111,58 +113,26 @@ const getPlayersRouter = (broadcast: (data: string) => void) => {
         } else {
           const player = await prisma.player.create({ data: validatedPlayer });
 
-          // let eventId = uuidv4();
-          // response.json({ ...player, eventId: eventId });
+          let responsePayload = {
+            operation: OperationTypes.create,
+            entity: [broadcastEntity],
+            data: player,
+            id: player.id,
+          };
 
-          // broadcast(
-          //   JSON.stringify({
-          //     operation: "create",
-          //     entity: ["players"],
-          //     data: player,
-          //     id: player.id,
-          //     eventId: eventId,
-          //   })
-          // );
-
-          response.json(
-            broadcastResponse(
-              {
-                operation: OperationTypes.create,
-                entity: ["players"],
-                responseEntityObject: player,
-                id: player.id,
-              },
-              broadcast
-            )
-          );
+          sendResponseWithBroadcast({ response, broadcast, responsePayload });
         }
       } else {
         const player = await prisma.player.create({ data: validatedPlayer });
 
-        // let eventId = uuidv4();
-        // response.json({ ...player, eventId: eventId });
+        let responsePayload = {
+          operation: OperationTypes.create,
+          entity: [broadcastEntity],
+          data: player,
+          id: player.id,
+        };
 
-        // broadcast(
-        //   JSON.stringify({
-        //     operation: "create",
-        //     entity: ["players"],
-        //     data: player,
-        //     id: player.id,
-        //     eventId: eventId,
-        //   })
-        // );
-
-        response.json(
-          broadcastResponse(
-            {
-              operation: OperationTypes.create,
-              entity: ["players"],
-              responseEntityObject: player,
-              id: player.id,
-            },
-            broadcast
-          )
-        );
+        sendResponseWithBroadcast({ response, broadcast, responsePayload });
       }
     } catch (err) {
       response.status(400).json(err);
@@ -174,30 +144,14 @@ const getPlayersRouter = (broadcast: (data: string) => void) => {
       where: { id: request.params.id },
     });
 
-    // let eventId = uuidv4();
-    // response.json({ ...player, eventId: eventId });
+    let responsePayload = {
+      operation: OperationTypes.delete,
+      entity: [broadcastEntity],
+      data: player,
+      id: player.id,
+    };
 
-    // broadcast(
-    //   JSON.stringify({
-    //     operation: "delete",
-    //     entity: ["players"],
-    //     data: player,
-    //     id: player.id,
-    //     eventId: eventId,
-    //   })
-    // );
-
-    response.json(
-      broadcastResponse(
-        {
-          operation: OperationTypes.delete,
-          entity: ["players"],
-          responseEntityObject: player,
-          id: player.id,
-        },
-        broadcast
-      )
-    );
+    sendResponseWithBroadcast({ response, broadcast, responsePayload });
   });
 
   router.patch("/api/players/:id", async (request, response) => {
@@ -261,30 +215,14 @@ const getPlayersRouter = (broadcast: (data: string) => void) => {
         where: { id: request.params.id },
       });
 
-      // let eventId = uuidv4();
-      // response.json({ ...player, eventId: eventId });
+      let responsePayload = {
+        operation: OperationTypes.update,
+        entity: [broadcastEntity],
+        data: player,
+        id: player.id,
+      };
 
-      // broadcast(
-      //   JSON.stringify({
-      //     operation: "update",
-      //     entity: ["players"],
-      //     data: player,
-      //     id: player.id,
-      //     eventId: eventId,
-      //   })
-      // );
-
-      response.json(
-        broadcastResponse(
-          {
-            operation: OperationTypes.update,
-            entity: ["players"],
-            responseEntityObject: player,
-            id: player.id,
-          },
-          broadcast
-        )
-      );
+      sendResponseWithBroadcast({ response, broadcast, responsePayload });
     } else {
       const validatedPlayer = PlayerUncheckedUpdateManyInputSchema.parse(
         request.body
@@ -330,29 +268,14 @@ const getPlayersRouter = (broadcast: (data: string) => void) => {
         where: { id: request.params.id },
       });
 
-      // response.json({ ...player, eventId: eventId });
+      let responsePayload = {
+        operation: OperationTypes.update,
+        entity: [broadcastEntity],
+        data: player,
+        id: player.id,
+      };
 
-      // broadcast(
-      //   JSON.stringify({
-      //     operation: "update",
-      //     entity: ["players"],
-      //     data: player,
-      //     id: player.id,
-      //     eventId: eventId,
-      //   })
-      // );
-
-      response.json(
-        broadcastResponse(
-          {
-            operation: OperationTypes.update,
-            entity: ["players"],
-            responseEntityObject: player,
-            id: player.id,
-          },
-          broadcast
-        )
-      );
+      sendResponseWithBroadcast({ response, broadcast, responsePayload });
     }
   });
 
