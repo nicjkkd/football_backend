@@ -3,6 +3,9 @@ import dotenv from "dotenv";
 import routes from "./routers/index";
 import cors from "cors";
 import { WebSocketServer } from "ws";
+import { Worker } from "worker_threads";
+import path from "path";
+import { fibonacci } from "./utils";
 dotenv.config();
 
 const HTTP_SERVER_PORT = process.env.HTTP_SERVER_PORT || 3000;
@@ -11,6 +14,32 @@ const WS_SERVER_PORT = parseInt(process.env.WS_SERVER_PORT || "8080");
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+const workerCode = `
+require("ts-node/register");
+require("${path.resolve(__dirname, "./worker.ts")}");
+`;
+const worker = new Worker(workerCode, { eval: true });
+
+app.get("/worker", (req, res) => {
+  worker.postMessage(45);
+  worker.once("message", (result: number) => {
+    res
+      .status(201)
+      .send(`Число Фібоначчі: ${result ? result : null}, час виконання:  мс`);
+  });
+});
+
+app.get("/no-worker", (req, res) => {
+  const startTime = Date.now();
+  const result = fibonacci(45);
+  const endTime = Date.now();
+  res
+    .status(201)
+    .send(
+      `Число Фібоначчі: ${result}, час виконання: ${endTime - startTime} мс`
+    );
+});
 
 app.get("/health", (req, res) => {
   res.status(200).send("Hello, TypeScript Node Express!");
