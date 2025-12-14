@@ -42,7 +42,7 @@ export type PositionType = `${z.infer<typeof PositionSchema>}`
 
 export const PlayerSchema = z.object({
   position: PositionSchema.nullable(),
-  id: z.string().uuid(),
+  id: z.uuid(),
   firstName: z.string(),
   lastName: z.string(),
   dateBirth: z.coerce.date().nullable(),
@@ -59,7 +59,7 @@ export type Player = z.infer<typeof PlayerSchema>
 /////////////////////////////////////////
 
 export const TeamSchema = z.object({
-  id: z.string().uuid(),
+  id: z.uuid(),
   teamName: z.string(),
   city: z.string(),
   since: z.number().int(),
@@ -74,7 +74,7 @@ export type Team = z.infer<typeof TeamSchema>
 /////////////////////////////////////////
 
 export const LeagueSchema = z.object({
-  id: z.string().uuid(),
+  id: z.uuid(),
   leagueName: z.string(),
   createdAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
@@ -91,7 +91,7 @@ export type League = z.infer<typeof LeagueSchema>
 
 export const PlayerIncludeSchema: z.ZodType<Prisma.PlayerInclude> = z.object({
   Team: z.union([z.boolean(),z.lazy(() => TeamArgsSchema)]).optional(),
-}).strict()
+}).strict();
 
 export const PlayerArgsSchema: z.ZodType<Prisma.PlayerDefaultArgs> = z.object({
   select: z.lazy(() => PlayerSelectSchema).optional(),
@@ -118,7 +118,7 @@ export const TeamIncludeSchema: z.ZodType<Prisma.TeamInclude> = z.object({
   players: z.union([z.boolean(),z.lazy(() => PlayerFindManyArgsSchema)]).optional(),
   leagues: z.union([z.boolean(),z.lazy(() => LeagueFindManyArgsSchema)]).optional(),
   _count: z.union([z.boolean(),z.lazy(() => TeamCountOutputTypeArgsSchema)]).optional(),
-}).strict()
+}).strict();
 
 export const TeamArgsSchema: z.ZodType<Prisma.TeamDefaultArgs> = z.object({
   select: z.lazy(() => TeamSelectSchema).optional(),
@@ -152,7 +152,7 @@ export const TeamSelectSchema: z.ZodType<Prisma.TeamSelect> = z.object({
 export const LeagueIncludeSchema: z.ZodType<Prisma.LeagueInclude> = z.object({
   teams: z.union([z.boolean(),z.lazy(() => TeamFindManyArgsSchema)]).optional(),
   _count: z.union([z.boolean(),z.lazy(() => LeagueCountOutputTypeArgsSchema)]).optional(),
-}).strict()
+}).strict();
 
 export const LeagueArgsSchema: z.ZodType<Prisma.LeagueDefaultArgs> = z.object({
   select: z.lazy(() => LeagueSelectSchema).optional(),
@@ -181,102 +181,102 @@ export const LeagueSelectSchema: z.ZodType<Prisma.LeagueSelect> = z.object({
 // INPUT TYPES
 /////////////////////////////////////////
 
-export const PlayerWhereInputSchema: z.ZodType<Prisma.PlayerWhereInput> = z.object({
-  AND: z.union([ z.lazy(() => PlayerWhereInputSchema),z.lazy(() => PlayerWhereInputSchema).array() ]).optional(),
+export const PlayerWhereInputSchema: z.ZodType<Prisma.PlayerWhereInput> = z.strictObject({
+  AND: z.union([ z.lazy(() => PlayerWhereInputSchema), z.lazy(() => PlayerWhereInputSchema).array() ]).optional(),
   OR: z.lazy(() => PlayerWhereInputSchema).array().optional(),
-  NOT: z.union([ z.lazy(() => PlayerWhereInputSchema),z.lazy(() => PlayerWhereInputSchema).array() ]).optional(),
-  id: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  firstName: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  lastName: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  dateBirth: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.coerce.date() ]).optional().nullable(),
-  position: z.union([ z.lazy(() => EnumPositionNullableFilterSchema),z.lazy(() => PositionSchema) ]).optional().nullable(),
-  playerNumber: z.union([ z.lazy(() => IntNullableFilterSchema),z.number() ]).optional().nullable(),
-  teamId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
-  createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
-  updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
-  Team: z.union([ z.lazy(() => TeamNullableScalarRelationFilterSchema),z.lazy(() => TeamWhereInputSchema) ]).optional().nullable(),
-}).strict();
+  NOT: z.union([ z.lazy(() => PlayerWhereInputSchema), z.lazy(() => PlayerWhereInputSchema).array() ]).optional(),
+  id: z.union([ z.lazy(() => StringFilterSchema), z.string() ]).optional(),
+  firstName: z.union([ z.lazy(() => StringFilterSchema), z.string() ]).optional(),
+  lastName: z.union([ z.lazy(() => StringFilterSchema), z.string() ]).optional(),
+  dateBirth: z.union([ z.lazy(() => DateTimeNullableFilterSchema), z.coerce.date() ]).optional().nullable(),
+  position: z.union([ z.lazy(() => EnumPositionNullableFilterSchema), z.lazy(() => PositionSchema) ]).optional().nullable(),
+  playerNumber: z.union([ z.lazy(() => IntNullableFilterSchema), z.number() ]).optional().nullable(),
+  teamId: z.union([ z.lazy(() => StringNullableFilterSchema), z.string() ]).optional().nullable(),
+  createdAt: z.union([ z.lazy(() => DateTimeFilterSchema), z.coerce.date() ]).optional(),
+  updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema), z.coerce.date() ]).optional(),
+  Team: z.union([ z.lazy(() => TeamNullableScalarRelationFilterSchema), z.lazy(() => TeamWhereInputSchema) ]).optional().nullable(),
+});
 
-export const PlayerOrderByWithRelationInputSchema: z.ZodType<Prisma.PlayerOrderByWithRelationInput> = z.object({
+export const PlayerOrderByWithRelationInputSchema: z.ZodType<Prisma.PlayerOrderByWithRelationInput> = z.strictObject({
   id: z.lazy(() => SortOrderSchema).optional(),
   firstName: z.lazy(() => SortOrderSchema).optional(),
   lastName: z.lazy(() => SortOrderSchema).optional(),
-  dateBirth: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  position: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  playerNumber: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  teamId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  dateBirth: z.union([ z.lazy(() => SortOrderSchema), z.lazy(() => SortOrderInputSchema) ]).optional(),
+  position: z.union([ z.lazy(() => SortOrderSchema), z.lazy(() => SortOrderInputSchema) ]).optional(),
+  playerNumber: z.union([ z.lazy(() => SortOrderSchema), z.lazy(() => SortOrderInputSchema) ]).optional(),
+  teamId: z.union([ z.lazy(() => SortOrderSchema), z.lazy(() => SortOrderInputSchema) ]).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional(),
   Team: z.lazy(() => TeamOrderByWithRelationInputSchema).optional(),
-  _relevance: z.lazy(() => PlayerOrderByRelevanceInputSchema).optional()
-}).strict();
+  _relevance: z.lazy(() => PlayerOrderByRelevanceInputSchema).optional(),
+});
 
 export const PlayerWhereUniqueInputSchema: z.ZodType<Prisma.PlayerWhereUniqueInput> = z.object({
-  id: z.string().uuid()
+  id: z.uuid(),
 })
-.and(z.object({
-  id: z.string().uuid().optional(),
-  AND: z.union([ z.lazy(() => PlayerWhereInputSchema),z.lazy(() => PlayerWhereInputSchema).array() ]).optional(),
+.and(z.strictObject({
+  id: z.uuid().optional(),
+  AND: z.union([ z.lazy(() => PlayerWhereInputSchema), z.lazy(() => PlayerWhereInputSchema).array() ]).optional(),
   OR: z.lazy(() => PlayerWhereInputSchema).array().optional(),
-  NOT: z.union([ z.lazy(() => PlayerWhereInputSchema),z.lazy(() => PlayerWhereInputSchema).array() ]).optional(),
-  firstName: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  lastName: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  dateBirth: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.coerce.date() ]).optional().nullable(),
-  position: z.union([ z.lazy(() => EnumPositionNullableFilterSchema),z.lazy(() => PositionSchema) ]).optional().nullable(),
-  playerNumber: z.union([ z.lazy(() => IntNullableFilterSchema),z.number().int() ]).optional().nullable(),
-  teamId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
-  createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
-  updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
-  Team: z.union([ z.lazy(() => TeamNullableScalarRelationFilterSchema),z.lazy(() => TeamWhereInputSchema) ]).optional().nullable(),
-}).strict());
+  NOT: z.union([ z.lazy(() => PlayerWhereInputSchema), z.lazy(() => PlayerWhereInputSchema).array() ]).optional(),
+  firstName: z.union([ z.lazy(() => StringFilterSchema), z.string() ]).optional(),
+  lastName: z.union([ z.lazy(() => StringFilterSchema), z.string() ]).optional(),
+  dateBirth: z.union([ z.lazy(() => DateTimeNullableFilterSchema), z.coerce.date() ]).optional().nullable(),
+  position: z.union([ z.lazy(() => EnumPositionNullableFilterSchema), z.lazy(() => PositionSchema) ]).optional().nullable(),
+  playerNumber: z.union([ z.lazy(() => IntNullableFilterSchema), z.number().int() ]).optional().nullable(),
+  teamId: z.union([ z.lazy(() => StringNullableFilterSchema), z.string() ]).optional().nullable(),
+  createdAt: z.union([ z.lazy(() => DateTimeFilterSchema), z.coerce.date() ]).optional(),
+  updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema), z.coerce.date() ]).optional(),
+  Team: z.union([ z.lazy(() => TeamNullableScalarRelationFilterSchema), z.lazy(() => TeamWhereInputSchema) ]).optional().nullable(),
+}));
 
-export const PlayerOrderByWithAggregationInputSchema: z.ZodType<Prisma.PlayerOrderByWithAggregationInput> = z.object({
+export const PlayerOrderByWithAggregationInputSchema: z.ZodType<Prisma.PlayerOrderByWithAggregationInput> = z.strictObject({
   id: z.lazy(() => SortOrderSchema).optional(),
   firstName: z.lazy(() => SortOrderSchema).optional(),
   lastName: z.lazy(() => SortOrderSchema).optional(),
-  dateBirth: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  position: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  playerNumber: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  teamId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  dateBirth: z.union([ z.lazy(() => SortOrderSchema), z.lazy(() => SortOrderInputSchema) ]).optional(),
+  position: z.union([ z.lazy(() => SortOrderSchema), z.lazy(() => SortOrderInputSchema) ]).optional(),
+  playerNumber: z.union([ z.lazy(() => SortOrderSchema), z.lazy(() => SortOrderInputSchema) ]).optional(),
+  teamId: z.union([ z.lazy(() => SortOrderSchema), z.lazy(() => SortOrderInputSchema) ]).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional(),
   _count: z.lazy(() => PlayerCountOrderByAggregateInputSchema).optional(),
   _avg: z.lazy(() => PlayerAvgOrderByAggregateInputSchema).optional(),
   _max: z.lazy(() => PlayerMaxOrderByAggregateInputSchema).optional(),
   _min: z.lazy(() => PlayerMinOrderByAggregateInputSchema).optional(),
-  _sum: z.lazy(() => PlayerSumOrderByAggregateInputSchema).optional()
-}).strict();
+  _sum: z.lazy(() => PlayerSumOrderByAggregateInputSchema).optional(),
+});
 
-export const PlayerScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.PlayerScalarWhereWithAggregatesInput> = z.object({
-  AND: z.union([ z.lazy(() => PlayerScalarWhereWithAggregatesInputSchema),z.lazy(() => PlayerScalarWhereWithAggregatesInputSchema).array() ]).optional(),
+export const PlayerScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.PlayerScalarWhereWithAggregatesInput> = z.strictObject({
+  AND: z.union([ z.lazy(() => PlayerScalarWhereWithAggregatesInputSchema), z.lazy(() => PlayerScalarWhereWithAggregatesInputSchema).array() ]).optional(),
   OR: z.lazy(() => PlayerScalarWhereWithAggregatesInputSchema).array().optional(),
-  NOT: z.union([ z.lazy(() => PlayerScalarWhereWithAggregatesInputSchema),z.lazy(() => PlayerScalarWhereWithAggregatesInputSchema).array() ]).optional(),
-  id: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
-  firstName: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
-  lastName: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
-  dateBirth: z.union([ z.lazy(() => DateTimeNullableWithAggregatesFilterSchema),z.coerce.date() ]).optional().nullable(),
-  position: z.union([ z.lazy(() => EnumPositionNullableWithAggregatesFilterSchema),z.lazy(() => PositionSchema) ]).optional().nullable(),
-  playerNumber: z.union([ z.lazy(() => IntNullableWithAggregatesFilterSchema),z.number() ]).optional().nullable(),
-  teamId: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
-  createdAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.coerce.date() ]).optional(),
-  updatedAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.coerce.date() ]).optional(),
-}).strict();
+  NOT: z.union([ z.lazy(() => PlayerScalarWhereWithAggregatesInputSchema), z.lazy(() => PlayerScalarWhereWithAggregatesInputSchema).array() ]).optional(),
+  id: z.union([ z.lazy(() => StringWithAggregatesFilterSchema), z.string() ]).optional(),
+  firstName: z.union([ z.lazy(() => StringWithAggregatesFilterSchema), z.string() ]).optional(),
+  lastName: z.union([ z.lazy(() => StringWithAggregatesFilterSchema), z.string() ]).optional(),
+  dateBirth: z.union([ z.lazy(() => DateTimeNullableWithAggregatesFilterSchema), z.coerce.date() ]).optional().nullable(),
+  position: z.union([ z.lazy(() => EnumPositionNullableWithAggregatesFilterSchema), z.lazy(() => PositionSchema) ]).optional().nullable(),
+  playerNumber: z.union([ z.lazy(() => IntNullableWithAggregatesFilterSchema), z.number() ]).optional().nullable(),
+  teamId: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema), z.string() ]).optional().nullable(),
+  createdAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema), z.coerce.date() ]).optional(),
+  updatedAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema), z.coerce.date() ]).optional(),
+});
 
-export const TeamWhereInputSchema: z.ZodType<Prisma.TeamWhereInput> = z.object({
-  AND: z.union([ z.lazy(() => TeamWhereInputSchema),z.lazy(() => TeamWhereInputSchema).array() ]).optional(),
+export const TeamWhereInputSchema: z.ZodType<Prisma.TeamWhereInput> = z.strictObject({
+  AND: z.union([ z.lazy(() => TeamWhereInputSchema), z.lazy(() => TeamWhereInputSchema).array() ]).optional(),
   OR: z.lazy(() => TeamWhereInputSchema).array().optional(),
-  NOT: z.union([ z.lazy(() => TeamWhereInputSchema),z.lazy(() => TeamWhereInputSchema).array() ]).optional(),
-  id: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  teamName: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  city: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  since: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
-  createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
-  updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
+  NOT: z.union([ z.lazy(() => TeamWhereInputSchema), z.lazy(() => TeamWhereInputSchema).array() ]).optional(),
+  id: z.union([ z.lazy(() => StringFilterSchema), z.string() ]).optional(),
+  teamName: z.union([ z.lazy(() => StringFilterSchema), z.string() ]).optional(),
+  city: z.union([ z.lazy(() => StringFilterSchema), z.string() ]).optional(),
+  since: z.union([ z.lazy(() => IntFilterSchema), z.number() ]).optional(),
+  createdAt: z.union([ z.lazy(() => DateTimeFilterSchema), z.coerce.date() ]).optional(),
+  updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema), z.coerce.date() ]).optional(),
   players: z.lazy(() => PlayerListRelationFilterSchema).optional(),
-  leagues: z.lazy(() => LeagueListRelationFilterSchema).optional()
-}).strict();
+  leagues: z.lazy(() => LeagueListRelationFilterSchema).optional(),
+});
 
-export const TeamOrderByWithRelationInputSchema: z.ZodType<Prisma.TeamOrderByWithRelationInput> = z.object({
+export const TeamOrderByWithRelationInputSchema: z.ZodType<Prisma.TeamOrderByWithRelationInput> = z.strictObject({
   id: z.lazy(() => SortOrderSchema).optional(),
   teamName: z.lazy(() => SortOrderSchema).optional(),
   city: z.lazy(() => SortOrderSchema).optional(),
@@ -285,36 +285,36 @@ export const TeamOrderByWithRelationInputSchema: z.ZodType<Prisma.TeamOrderByWit
   updatedAt: z.lazy(() => SortOrderSchema).optional(),
   players: z.lazy(() => PlayerOrderByRelationAggregateInputSchema).optional(),
   leagues: z.lazy(() => LeagueOrderByRelationAggregateInputSchema).optional(),
-  _relevance: z.lazy(() => TeamOrderByRelevanceInputSchema).optional()
-}).strict();
+  _relevance: z.lazy(() => TeamOrderByRelevanceInputSchema).optional(),
+});
 
 export const TeamWhereUniqueInputSchema: z.ZodType<Prisma.TeamWhereUniqueInput> = z.union([
   z.object({
-    id: z.string().uuid(),
-    teamName: z.string()
+    id: z.uuid(),
+    teamName: z.string(),
   }),
   z.object({
-    id: z.string().uuid(),
+    id: z.uuid(),
   }),
   z.object({
     teamName: z.string(),
   }),
 ])
-.and(z.object({
-  id: z.string().uuid().optional(),
+.and(z.strictObject({
+  id: z.uuid().optional(),
   teamName: z.string().optional(),
-  AND: z.union([ z.lazy(() => TeamWhereInputSchema),z.lazy(() => TeamWhereInputSchema).array() ]).optional(),
+  AND: z.union([ z.lazy(() => TeamWhereInputSchema), z.lazy(() => TeamWhereInputSchema).array() ]).optional(),
   OR: z.lazy(() => TeamWhereInputSchema).array().optional(),
-  NOT: z.union([ z.lazy(() => TeamWhereInputSchema),z.lazy(() => TeamWhereInputSchema).array() ]).optional(),
-  city: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  since: z.union([ z.lazy(() => IntFilterSchema),z.number().int() ]).optional(),
-  createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
-  updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
+  NOT: z.union([ z.lazy(() => TeamWhereInputSchema), z.lazy(() => TeamWhereInputSchema).array() ]).optional(),
+  city: z.union([ z.lazy(() => StringFilterSchema), z.string() ]).optional(),
+  since: z.union([ z.lazy(() => IntFilterSchema), z.number().int() ]).optional(),
+  createdAt: z.union([ z.lazy(() => DateTimeFilterSchema), z.coerce.date() ]).optional(),
+  updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema), z.coerce.date() ]).optional(),
   players: z.lazy(() => PlayerListRelationFilterSchema).optional(),
-  leagues: z.lazy(() => LeagueListRelationFilterSchema).optional()
-}).strict());
+  leagues: z.lazy(() => LeagueListRelationFilterSchema).optional(),
+}));
 
-export const TeamOrderByWithAggregationInputSchema: z.ZodType<Prisma.TeamOrderByWithAggregationInput> = z.object({
+export const TeamOrderByWithAggregationInputSchema: z.ZodType<Prisma.TeamOrderByWithAggregationInput> = z.strictObject({
   id: z.lazy(() => SortOrderSchema).optional(),
   teamName: z.lazy(() => SortOrderSchema).optional(),
   city: z.lazy(() => SortOrderSchema).optional(),
@@ -325,86 +325,86 @@ export const TeamOrderByWithAggregationInputSchema: z.ZodType<Prisma.TeamOrderBy
   _avg: z.lazy(() => TeamAvgOrderByAggregateInputSchema).optional(),
   _max: z.lazy(() => TeamMaxOrderByAggregateInputSchema).optional(),
   _min: z.lazy(() => TeamMinOrderByAggregateInputSchema).optional(),
-  _sum: z.lazy(() => TeamSumOrderByAggregateInputSchema).optional()
-}).strict();
+  _sum: z.lazy(() => TeamSumOrderByAggregateInputSchema).optional(),
+});
 
-export const TeamScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.TeamScalarWhereWithAggregatesInput> = z.object({
-  AND: z.union([ z.lazy(() => TeamScalarWhereWithAggregatesInputSchema),z.lazy(() => TeamScalarWhereWithAggregatesInputSchema).array() ]).optional(),
+export const TeamScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.TeamScalarWhereWithAggregatesInput> = z.strictObject({
+  AND: z.union([ z.lazy(() => TeamScalarWhereWithAggregatesInputSchema), z.lazy(() => TeamScalarWhereWithAggregatesInputSchema).array() ]).optional(),
   OR: z.lazy(() => TeamScalarWhereWithAggregatesInputSchema).array().optional(),
-  NOT: z.union([ z.lazy(() => TeamScalarWhereWithAggregatesInputSchema),z.lazy(() => TeamScalarWhereWithAggregatesInputSchema).array() ]).optional(),
-  id: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
-  teamName: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
-  city: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
-  since: z.union([ z.lazy(() => IntWithAggregatesFilterSchema),z.number() ]).optional(),
-  createdAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.coerce.date() ]).optional(),
-  updatedAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.coerce.date() ]).optional(),
-}).strict();
+  NOT: z.union([ z.lazy(() => TeamScalarWhereWithAggregatesInputSchema), z.lazy(() => TeamScalarWhereWithAggregatesInputSchema).array() ]).optional(),
+  id: z.union([ z.lazy(() => StringWithAggregatesFilterSchema), z.string() ]).optional(),
+  teamName: z.union([ z.lazy(() => StringWithAggregatesFilterSchema), z.string() ]).optional(),
+  city: z.union([ z.lazy(() => StringWithAggregatesFilterSchema), z.string() ]).optional(),
+  since: z.union([ z.lazy(() => IntWithAggregatesFilterSchema), z.number() ]).optional(),
+  createdAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema), z.coerce.date() ]).optional(),
+  updatedAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema), z.coerce.date() ]).optional(),
+});
 
-export const LeagueWhereInputSchema: z.ZodType<Prisma.LeagueWhereInput> = z.object({
-  AND: z.union([ z.lazy(() => LeagueWhereInputSchema),z.lazy(() => LeagueWhereInputSchema).array() ]).optional(),
+export const LeagueWhereInputSchema: z.ZodType<Prisma.LeagueWhereInput> = z.strictObject({
+  AND: z.union([ z.lazy(() => LeagueWhereInputSchema), z.lazy(() => LeagueWhereInputSchema).array() ]).optional(),
   OR: z.lazy(() => LeagueWhereInputSchema).array().optional(),
-  NOT: z.union([ z.lazy(() => LeagueWhereInputSchema),z.lazy(() => LeagueWhereInputSchema).array() ]).optional(),
-  id: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  leagueName: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
-  updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
-  teams: z.lazy(() => TeamListRelationFilterSchema).optional()
-}).strict();
+  NOT: z.union([ z.lazy(() => LeagueWhereInputSchema), z.lazy(() => LeagueWhereInputSchema).array() ]).optional(),
+  id: z.union([ z.lazy(() => StringFilterSchema), z.string() ]).optional(),
+  leagueName: z.union([ z.lazy(() => StringFilterSchema), z.string() ]).optional(),
+  createdAt: z.union([ z.lazy(() => DateTimeFilterSchema), z.coerce.date() ]).optional(),
+  updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema), z.coerce.date() ]).optional(),
+  teams: z.lazy(() => TeamListRelationFilterSchema).optional(),
+});
 
-export const LeagueOrderByWithRelationInputSchema: z.ZodType<Prisma.LeagueOrderByWithRelationInput> = z.object({
+export const LeagueOrderByWithRelationInputSchema: z.ZodType<Prisma.LeagueOrderByWithRelationInput> = z.strictObject({
   id: z.lazy(() => SortOrderSchema).optional(),
   leagueName: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional(),
   teams: z.lazy(() => TeamOrderByRelationAggregateInputSchema).optional(),
-  _relevance: z.lazy(() => LeagueOrderByRelevanceInputSchema).optional()
-}).strict();
+  _relevance: z.lazy(() => LeagueOrderByRelevanceInputSchema).optional(),
+});
 
 export const LeagueWhereUniqueInputSchema: z.ZodType<Prisma.LeagueWhereUniqueInput> = z.union([
   z.object({
-    id: z.string().uuid(),
-    leagueName: z.string()
+    id: z.uuid(),
+    leagueName: z.string(),
   }),
   z.object({
-    id: z.string().uuid(),
+    id: z.uuid(),
   }),
   z.object({
     leagueName: z.string(),
   }),
 ])
-.and(z.object({
-  id: z.string().uuid().optional(),
+.and(z.strictObject({
+  id: z.uuid().optional(),
   leagueName: z.string().optional(),
-  AND: z.union([ z.lazy(() => LeagueWhereInputSchema),z.lazy(() => LeagueWhereInputSchema).array() ]).optional(),
+  AND: z.union([ z.lazy(() => LeagueWhereInputSchema), z.lazy(() => LeagueWhereInputSchema).array() ]).optional(),
   OR: z.lazy(() => LeagueWhereInputSchema).array().optional(),
-  NOT: z.union([ z.lazy(() => LeagueWhereInputSchema),z.lazy(() => LeagueWhereInputSchema).array() ]).optional(),
-  createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
-  updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
-  teams: z.lazy(() => TeamListRelationFilterSchema).optional()
-}).strict());
+  NOT: z.union([ z.lazy(() => LeagueWhereInputSchema), z.lazy(() => LeagueWhereInputSchema).array() ]).optional(),
+  createdAt: z.union([ z.lazy(() => DateTimeFilterSchema), z.coerce.date() ]).optional(),
+  updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema), z.coerce.date() ]).optional(),
+  teams: z.lazy(() => TeamListRelationFilterSchema).optional(),
+}));
 
-export const LeagueOrderByWithAggregationInputSchema: z.ZodType<Prisma.LeagueOrderByWithAggregationInput> = z.object({
+export const LeagueOrderByWithAggregationInputSchema: z.ZodType<Prisma.LeagueOrderByWithAggregationInput> = z.strictObject({
   id: z.lazy(() => SortOrderSchema).optional(),
   leagueName: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional(),
   _count: z.lazy(() => LeagueCountOrderByAggregateInputSchema).optional(),
   _max: z.lazy(() => LeagueMaxOrderByAggregateInputSchema).optional(),
-  _min: z.lazy(() => LeagueMinOrderByAggregateInputSchema).optional()
-}).strict();
+  _min: z.lazy(() => LeagueMinOrderByAggregateInputSchema).optional(),
+});
 
-export const LeagueScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.LeagueScalarWhereWithAggregatesInput> = z.object({
-  AND: z.union([ z.lazy(() => LeagueScalarWhereWithAggregatesInputSchema),z.lazy(() => LeagueScalarWhereWithAggregatesInputSchema).array() ]).optional(),
+export const LeagueScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.LeagueScalarWhereWithAggregatesInput> = z.strictObject({
+  AND: z.union([ z.lazy(() => LeagueScalarWhereWithAggregatesInputSchema), z.lazy(() => LeagueScalarWhereWithAggregatesInputSchema).array() ]).optional(),
   OR: z.lazy(() => LeagueScalarWhereWithAggregatesInputSchema).array().optional(),
-  NOT: z.union([ z.lazy(() => LeagueScalarWhereWithAggregatesInputSchema),z.lazy(() => LeagueScalarWhereWithAggregatesInputSchema).array() ]).optional(),
-  id: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
-  leagueName: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
-  createdAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.coerce.date() ]).optional(),
-  updatedAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.coerce.date() ]).optional(),
-}).strict();
+  NOT: z.union([ z.lazy(() => LeagueScalarWhereWithAggregatesInputSchema), z.lazy(() => LeagueScalarWhereWithAggregatesInputSchema).array() ]).optional(),
+  id: z.union([ z.lazy(() => StringWithAggregatesFilterSchema), z.string() ]).optional(),
+  leagueName: z.union([ z.lazy(() => StringWithAggregatesFilterSchema), z.string() ]).optional(),
+  createdAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema), z.coerce.date() ]).optional(),
+  updatedAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema), z.coerce.date() ]).optional(),
+});
 
-export const PlayerCreateInputSchema: z.ZodType<Prisma.PlayerCreateInput> = z.object({
-  id: z.string().uuid().optional(),
+export const PlayerCreateInputSchema: z.ZodType<Prisma.PlayerCreateInput> = z.strictObject({
+  id: z.uuid().optional(),
   firstName: z.string(),
   lastName: z.string(),
   dateBirth: z.coerce.date().optional().nullable(),
@@ -412,11 +412,11 @@ export const PlayerCreateInputSchema: z.ZodType<Prisma.PlayerCreateInput> = z.ob
   playerNumber: z.number().int().optional().nullable(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
-  Team: z.lazy(() => TeamCreateNestedOneWithoutPlayersInputSchema).optional()
-}).strict();
+  Team: z.lazy(() => TeamCreateNestedOneWithoutPlayersInputSchema).optional(),
+});
 
-export const PlayerUncheckedCreateInputSchema: z.ZodType<Prisma.PlayerUncheckedCreateInput> = z.object({
-  id: z.string().uuid().optional(),
+export const PlayerUncheckedCreateInputSchema: z.ZodType<Prisma.PlayerUncheckedCreateInput> = z.strictObject({
+  id: z.uuid().optional(),
   firstName: z.string(),
   lastName: z.string(),
   dateBirth: z.coerce.date().optional().nullable(),
@@ -424,35 +424,35 @@ export const PlayerUncheckedCreateInputSchema: z.ZodType<Prisma.PlayerUncheckedC
   playerNumber: z.number().int().optional().nullable(),
   teamId: z.string().optional().nullable(),
   createdAt: z.coerce.date().optional(),
-  updatedAt: z.coerce.date().optional()
-}).strict();
+  updatedAt: z.coerce.date().optional(),
+});
 
-export const PlayerUpdateInputSchema: z.ZodType<Prisma.PlayerUpdateInput> = z.object({
-  id: z.union([ z.string().uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+export const PlayerUpdateInputSchema: z.ZodType<Prisma.PlayerUpdateInput> = z.strictObject({
+  id: z.union([ z.uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   firstName: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   lastName: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   dateBirth: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  position: z.union([ z.lazy(() => PositionSchema),z.lazy(() => NullableEnumPositionFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  position: z.union([ z.lazy(() => PositionSchema), z.lazy(() => NullableEnumPositionFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   playerNumber: z.union([ z.number().int(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-  Team: z.lazy(() => TeamUpdateOneWithoutPlayersNestedInputSchema).optional()
-}).strict();
+  Team: z.lazy(() => TeamUpdateOneWithoutPlayersNestedInputSchema).optional(),
+});
 
-export const PlayerUncheckedUpdateInputSchema: z.ZodType<Prisma.PlayerUncheckedUpdateInput> = z.object({
-  id: z.union([ z.string().uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+export const PlayerUncheckedUpdateInputSchema: z.ZodType<Prisma.PlayerUncheckedUpdateInput> = z.strictObject({
+  id: z.union([ z.uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   firstName: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   lastName: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   dateBirth: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  position: z.union([ z.lazy(() => PositionSchema),z.lazy(() => NullableEnumPositionFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  position: z.union([ z.lazy(() => PositionSchema), z.lazy(() => NullableEnumPositionFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   playerNumber: z.union([ z.number().int(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   teamId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-}).strict();
+});
 
-export const PlayerCreateManyInputSchema: z.ZodType<Prisma.PlayerCreateManyInput> = z.object({
-  id: z.string().uuid().optional(),
+export const PlayerCreateManyInputSchema: z.ZodType<Prisma.PlayerCreateManyInput> = z.strictObject({
+  id: z.uuid().optional(),
   firstName: z.string(),
   lastName: z.string(),
   dateBirth: z.coerce.date().optional().nullable(),
@@ -460,157 +460,157 @@ export const PlayerCreateManyInputSchema: z.ZodType<Prisma.PlayerCreateManyInput
   playerNumber: z.number().int().optional().nullable(),
   teamId: z.string().optional().nullable(),
   createdAt: z.coerce.date().optional(),
-  updatedAt: z.coerce.date().optional()
-}).strict();
+  updatedAt: z.coerce.date().optional(),
+});
 
-export const PlayerUpdateManyMutationInputSchema: z.ZodType<Prisma.PlayerUpdateManyMutationInput> = z.object({
-  id: z.union([ z.string().uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+export const PlayerUpdateManyMutationInputSchema: z.ZodType<Prisma.PlayerUpdateManyMutationInput> = z.strictObject({
+  id: z.union([ z.uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   firstName: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   lastName: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   dateBirth: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  position: z.union([ z.lazy(() => PositionSchema),z.lazy(() => NullableEnumPositionFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  position: z.union([ z.lazy(() => PositionSchema), z.lazy(() => NullableEnumPositionFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   playerNumber: z.union([ z.number().int(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-}).strict();
+});
 
-export const PlayerUncheckedUpdateManyInputSchema: z.ZodType<Prisma.PlayerUncheckedUpdateManyInput> = z.object({
-  id: z.union([ z.string().uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+export const PlayerUncheckedUpdateManyInputSchema: z.ZodType<Prisma.PlayerUncheckedUpdateManyInput> = z.strictObject({
+  id: z.union([ z.uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   firstName: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   lastName: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   dateBirth: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  position: z.union([ z.lazy(() => PositionSchema),z.lazy(() => NullableEnumPositionFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  position: z.union([ z.lazy(() => PositionSchema), z.lazy(() => NullableEnumPositionFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   playerNumber: z.union([ z.number().int(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   teamId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-}).strict();
+});
 
-export const TeamCreateInputSchema: z.ZodType<Prisma.TeamCreateInput> = z.object({
-  id: z.string().uuid().optional(),
+export const TeamCreateInputSchema: z.ZodType<Prisma.TeamCreateInput> = z.strictObject({
+  id: z.uuid().optional(),
   teamName: z.string(),
   city: z.string(),
   since: z.number().int(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   players: z.lazy(() => PlayerCreateNestedManyWithoutTeamInputSchema).optional(),
-  leagues: z.lazy(() => LeagueCreateNestedManyWithoutTeamsInputSchema).optional()
-}).strict();
+  leagues: z.lazy(() => LeagueCreateNestedManyWithoutTeamsInputSchema).optional(),
+});
 
-export const TeamUncheckedCreateInputSchema: z.ZodType<Prisma.TeamUncheckedCreateInput> = z.object({
-  id: z.string().uuid().optional(),
+export const TeamUncheckedCreateInputSchema: z.ZodType<Prisma.TeamUncheckedCreateInput> = z.strictObject({
+  id: z.uuid().optional(),
   teamName: z.string(),
   city: z.string(),
   since: z.number().int(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   players: z.lazy(() => PlayerUncheckedCreateNestedManyWithoutTeamInputSchema).optional(),
-  leagues: z.lazy(() => LeagueUncheckedCreateNestedManyWithoutTeamsInputSchema).optional()
-}).strict();
+  leagues: z.lazy(() => LeagueUncheckedCreateNestedManyWithoutTeamsInputSchema).optional(),
+});
 
-export const TeamUpdateInputSchema: z.ZodType<Prisma.TeamUpdateInput> = z.object({
-  id: z.union([ z.string().uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+export const TeamUpdateInputSchema: z.ZodType<Prisma.TeamUpdateInput> = z.strictObject({
+  id: z.union([ z.uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   teamName: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   city: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   since: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   players: z.lazy(() => PlayerUpdateManyWithoutTeamNestedInputSchema).optional(),
-  leagues: z.lazy(() => LeagueUpdateManyWithoutTeamsNestedInputSchema).optional()
-}).strict();
+  leagues: z.lazy(() => LeagueUpdateManyWithoutTeamsNestedInputSchema).optional(),
+});
 
-export const TeamUncheckedUpdateInputSchema: z.ZodType<Prisma.TeamUncheckedUpdateInput> = z.object({
-  id: z.union([ z.string().uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+export const TeamUncheckedUpdateInputSchema: z.ZodType<Prisma.TeamUncheckedUpdateInput> = z.strictObject({
+  id: z.union([ z.uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   teamName: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   city: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   since: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   players: z.lazy(() => PlayerUncheckedUpdateManyWithoutTeamNestedInputSchema).optional(),
-  leagues: z.lazy(() => LeagueUncheckedUpdateManyWithoutTeamsNestedInputSchema).optional()
-}).strict();
+  leagues: z.lazy(() => LeagueUncheckedUpdateManyWithoutTeamsNestedInputSchema).optional(),
+});
 
-export const TeamCreateManyInputSchema: z.ZodType<Prisma.TeamCreateManyInput> = z.object({
-  id: z.string().uuid().optional(),
+export const TeamCreateManyInputSchema: z.ZodType<Prisma.TeamCreateManyInput> = z.strictObject({
+  id: z.uuid().optional(),
   teamName: z.string(),
   city: z.string(),
   since: z.number().int(),
   createdAt: z.coerce.date().optional(),
-  updatedAt: z.coerce.date().optional()
-}).strict();
+  updatedAt: z.coerce.date().optional(),
+});
 
-export const TeamUpdateManyMutationInputSchema: z.ZodType<Prisma.TeamUpdateManyMutationInput> = z.object({
-  id: z.union([ z.string().uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+export const TeamUpdateManyMutationInputSchema: z.ZodType<Prisma.TeamUpdateManyMutationInput> = z.strictObject({
+  id: z.union([ z.uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   teamName: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   city: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   since: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-}).strict();
+});
 
-export const TeamUncheckedUpdateManyInputSchema: z.ZodType<Prisma.TeamUncheckedUpdateManyInput> = z.object({
-  id: z.union([ z.string().uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+export const TeamUncheckedUpdateManyInputSchema: z.ZodType<Prisma.TeamUncheckedUpdateManyInput> = z.strictObject({
+  id: z.union([ z.uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   teamName: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   city: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   since: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-}).strict();
+});
 
-export const LeagueCreateInputSchema: z.ZodType<Prisma.LeagueCreateInput> = z.object({
-  id: z.string().uuid().optional(),
+export const LeagueCreateInputSchema: z.ZodType<Prisma.LeagueCreateInput> = z.strictObject({
+  id: z.uuid().optional(),
   leagueName: z.string(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
-  teams: z.lazy(() => TeamCreateNestedManyWithoutLeaguesInputSchema).optional()
-}).strict();
+  teams: z.lazy(() => TeamCreateNestedManyWithoutLeaguesInputSchema).optional(),
+});
 
-export const LeagueUncheckedCreateInputSchema: z.ZodType<Prisma.LeagueUncheckedCreateInput> = z.object({
-  id: z.string().uuid().optional(),
+export const LeagueUncheckedCreateInputSchema: z.ZodType<Prisma.LeagueUncheckedCreateInput> = z.strictObject({
+  id: z.uuid().optional(),
   leagueName: z.string(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
-  teams: z.lazy(() => TeamUncheckedCreateNestedManyWithoutLeaguesInputSchema).optional()
-}).strict();
+  teams: z.lazy(() => TeamUncheckedCreateNestedManyWithoutLeaguesInputSchema).optional(),
+});
 
-export const LeagueUpdateInputSchema: z.ZodType<Prisma.LeagueUpdateInput> = z.object({
-  id: z.union([ z.string().uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+export const LeagueUpdateInputSchema: z.ZodType<Prisma.LeagueUpdateInput> = z.strictObject({
+  id: z.union([ z.uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   leagueName: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-  teams: z.lazy(() => TeamUpdateManyWithoutLeaguesNestedInputSchema).optional()
-}).strict();
+  teams: z.lazy(() => TeamUpdateManyWithoutLeaguesNestedInputSchema).optional(),
+});
 
-export const LeagueUncheckedUpdateInputSchema: z.ZodType<Prisma.LeagueUncheckedUpdateInput> = z.object({
-  id: z.union([ z.string().uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+export const LeagueUncheckedUpdateInputSchema: z.ZodType<Prisma.LeagueUncheckedUpdateInput> = z.strictObject({
+  id: z.union([ z.uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   leagueName: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-  teams: z.lazy(() => TeamUncheckedUpdateManyWithoutLeaguesNestedInputSchema).optional()
-}).strict();
+  teams: z.lazy(() => TeamUncheckedUpdateManyWithoutLeaguesNestedInputSchema).optional(),
+});
 
-export const LeagueCreateManyInputSchema: z.ZodType<Prisma.LeagueCreateManyInput> = z.object({
-  id: z.string().uuid().optional(),
+export const LeagueCreateManyInputSchema: z.ZodType<Prisma.LeagueCreateManyInput> = z.strictObject({
+  id: z.uuid().optional(),
   leagueName: z.string(),
   createdAt: z.coerce.date().optional(),
-  updatedAt: z.coerce.date().optional()
-}).strict();
+  updatedAt: z.coerce.date().optional(),
+});
 
-export const LeagueUpdateManyMutationInputSchema: z.ZodType<Prisma.LeagueUpdateManyMutationInput> = z.object({
-  id: z.union([ z.string().uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+export const LeagueUpdateManyMutationInputSchema: z.ZodType<Prisma.LeagueUpdateManyMutationInput> = z.strictObject({
+  id: z.union([ z.uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   leagueName: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-}).strict();
+});
 
-export const LeagueUncheckedUpdateManyInputSchema: z.ZodType<Prisma.LeagueUncheckedUpdateManyInput> = z.object({
-  id: z.union([ z.string().uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+export const LeagueUncheckedUpdateManyInputSchema: z.ZodType<Prisma.LeagueUncheckedUpdateManyInput> = z.strictObject({
+  id: z.union([ z.uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   leagueName: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-}).strict();
+});
 
-export const StringFilterSchema: z.ZodType<Prisma.StringFilter> = z.object({
+export const StringFilterSchema: z.ZodType<Prisma.StringFilter> = z.strictObject({
   equals: z.string().optional(),
   in: z.string().array().optional(),
   notIn: z.string().array().optional(),
@@ -623,9 +623,9 @@ export const StringFilterSchema: z.ZodType<Prisma.StringFilter> = z.object({
   endsWith: z.string().optional(),
   search: z.string().optional(),
   not: z.union([ z.string(),z.lazy(() => NestedStringFilterSchema) ]).optional(),
-}).strict();
+});
 
-export const DateTimeNullableFilterSchema: z.ZodType<Prisma.DateTimeNullableFilter> = z.object({
+export const DateTimeNullableFilterSchema: z.ZodType<Prisma.DateTimeNullableFilter> = z.strictObject({
   equals: z.coerce.date().optional().nullable(),
   in: z.coerce.date().array().optional().nullable(),
   notIn: z.coerce.date().array().optional().nullable(),
@@ -634,16 +634,16 @@ export const DateTimeNullableFilterSchema: z.ZodType<Prisma.DateTimeNullableFilt
   gt: z.coerce.date().optional(),
   gte: z.coerce.date().optional(),
   not: z.union([ z.coerce.date(),z.lazy(() => NestedDateTimeNullableFilterSchema) ]).optional().nullable(),
-}).strict();
+});
 
-export const EnumPositionNullableFilterSchema: z.ZodType<Prisma.EnumPositionNullableFilter> = z.object({
+export const EnumPositionNullableFilterSchema: z.ZodType<Prisma.EnumPositionNullableFilter> = z.strictObject({
   equals: z.lazy(() => PositionSchema).optional().nullable(),
   in: z.lazy(() => PositionSchema).array().optional().nullable(),
   notIn: z.lazy(() => PositionSchema).array().optional().nullable(),
-  not: z.union([ z.lazy(() => PositionSchema),z.lazy(() => NestedEnumPositionNullableFilterSchema) ]).optional().nullable(),
-}).strict();
+  not: z.union([ z.lazy(() => PositionSchema), z.lazy(() => NestedEnumPositionNullableFilterSchema) ]).optional().nullable(),
+});
 
-export const IntNullableFilterSchema: z.ZodType<Prisma.IntNullableFilter> = z.object({
+export const IntNullableFilterSchema: z.ZodType<Prisma.IntNullableFilter> = z.strictObject({
   equals: z.number().optional().nullable(),
   in: z.number().array().optional().nullable(),
   notIn: z.number().array().optional().nullable(),
@@ -652,9 +652,9 @@ export const IntNullableFilterSchema: z.ZodType<Prisma.IntNullableFilter> = z.ob
   gt: z.number().optional(),
   gte: z.number().optional(),
   not: z.union([ z.number(),z.lazy(() => NestedIntNullableFilterSchema) ]).optional().nullable(),
-}).strict();
+});
 
-export const StringNullableFilterSchema: z.ZodType<Prisma.StringNullableFilter> = z.object({
+export const StringNullableFilterSchema: z.ZodType<Prisma.StringNullableFilter> = z.strictObject({
   equals: z.string().optional().nullable(),
   in: z.string().array().optional().nullable(),
   notIn: z.string().array().optional().nullable(),
@@ -667,9 +667,9 @@ export const StringNullableFilterSchema: z.ZodType<Prisma.StringNullableFilter> 
   endsWith: z.string().optional(),
   search: z.string().optional(),
   not: z.union([ z.string(),z.lazy(() => NestedStringNullableFilterSchema) ]).optional().nullable(),
-}).strict();
+});
 
-export const DateTimeFilterSchema: z.ZodType<Prisma.DateTimeFilter> = z.object({
+export const DateTimeFilterSchema: z.ZodType<Prisma.DateTimeFilter> = z.strictObject({
   equals: z.coerce.date().optional(),
   in: z.coerce.date().array().optional(),
   notIn: z.coerce.date().array().optional(),
@@ -678,25 +678,25 @@ export const DateTimeFilterSchema: z.ZodType<Prisma.DateTimeFilter> = z.object({
   gt: z.coerce.date().optional(),
   gte: z.coerce.date().optional(),
   not: z.union([ z.coerce.date(),z.lazy(() => NestedDateTimeFilterSchema) ]).optional(),
-}).strict();
+});
 
-export const TeamNullableScalarRelationFilterSchema: z.ZodType<Prisma.TeamNullableScalarRelationFilter> = z.object({
+export const TeamNullableScalarRelationFilterSchema: z.ZodType<Prisma.TeamNullableScalarRelationFilter> = z.strictObject({
   is: z.lazy(() => TeamWhereInputSchema).optional().nullable(),
-  isNot: z.lazy(() => TeamWhereInputSchema).optional().nullable()
-}).strict();
+  isNot: z.lazy(() => TeamWhereInputSchema).optional().nullable(),
+});
 
-export const SortOrderInputSchema: z.ZodType<Prisma.SortOrderInput> = z.object({
+export const SortOrderInputSchema: z.ZodType<Prisma.SortOrderInput> = z.strictObject({
   sort: z.lazy(() => SortOrderSchema),
-  nulls: z.lazy(() => NullsOrderSchema).optional()
-}).strict();
+  nulls: z.lazy(() => NullsOrderSchema).optional(),
+});
 
-export const PlayerOrderByRelevanceInputSchema: z.ZodType<Prisma.PlayerOrderByRelevanceInput> = z.object({
-  fields: z.union([ z.lazy(() => PlayerOrderByRelevanceFieldEnumSchema),z.lazy(() => PlayerOrderByRelevanceFieldEnumSchema).array() ]),
+export const PlayerOrderByRelevanceInputSchema: z.ZodType<Prisma.PlayerOrderByRelevanceInput> = z.strictObject({
+  fields: z.union([ z.lazy(() => PlayerOrderByRelevanceFieldEnumSchema), z.lazy(() => PlayerOrderByRelevanceFieldEnumSchema).array() ]),
   sort: z.lazy(() => SortOrderSchema),
-  search: z.string()
-}).strict();
+  search: z.string(),
+});
 
-export const PlayerCountOrderByAggregateInputSchema: z.ZodType<Prisma.PlayerCountOrderByAggregateInput> = z.object({
+export const PlayerCountOrderByAggregateInputSchema: z.ZodType<Prisma.PlayerCountOrderByAggregateInput> = z.strictObject({
   id: z.lazy(() => SortOrderSchema).optional(),
   firstName: z.lazy(() => SortOrderSchema).optional(),
   lastName: z.lazy(() => SortOrderSchema).optional(),
@@ -705,14 +705,14 @@ export const PlayerCountOrderByAggregateInputSchema: z.ZodType<Prisma.PlayerCoun
   playerNumber: z.lazy(() => SortOrderSchema).optional(),
   teamId: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
-  updatedAt: z.lazy(() => SortOrderSchema).optional()
-}).strict();
+  updatedAt: z.lazy(() => SortOrderSchema).optional(),
+});
 
-export const PlayerAvgOrderByAggregateInputSchema: z.ZodType<Prisma.PlayerAvgOrderByAggregateInput> = z.object({
-  playerNumber: z.lazy(() => SortOrderSchema).optional()
-}).strict();
+export const PlayerAvgOrderByAggregateInputSchema: z.ZodType<Prisma.PlayerAvgOrderByAggregateInput> = z.strictObject({
+  playerNumber: z.lazy(() => SortOrderSchema).optional(),
+});
 
-export const PlayerMaxOrderByAggregateInputSchema: z.ZodType<Prisma.PlayerMaxOrderByAggregateInput> = z.object({
+export const PlayerMaxOrderByAggregateInputSchema: z.ZodType<Prisma.PlayerMaxOrderByAggregateInput> = z.strictObject({
   id: z.lazy(() => SortOrderSchema).optional(),
   firstName: z.lazy(() => SortOrderSchema).optional(),
   lastName: z.lazy(() => SortOrderSchema).optional(),
@@ -721,10 +721,10 @@ export const PlayerMaxOrderByAggregateInputSchema: z.ZodType<Prisma.PlayerMaxOrd
   playerNumber: z.lazy(() => SortOrderSchema).optional(),
   teamId: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
-  updatedAt: z.lazy(() => SortOrderSchema).optional()
-}).strict();
+  updatedAt: z.lazy(() => SortOrderSchema).optional(),
+});
 
-export const PlayerMinOrderByAggregateInputSchema: z.ZodType<Prisma.PlayerMinOrderByAggregateInput> = z.object({
+export const PlayerMinOrderByAggregateInputSchema: z.ZodType<Prisma.PlayerMinOrderByAggregateInput> = z.strictObject({
   id: z.lazy(() => SortOrderSchema).optional(),
   firstName: z.lazy(() => SortOrderSchema).optional(),
   lastName: z.lazy(() => SortOrderSchema).optional(),
@@ -733,14 +733,14 @@ export const PlayerMinOrderByAggregateInputSchema: z.ZodType<Prisma.PlayerMinOrd
   playerNumber: z.lazy(() => SortOrderSchema).optional(),
   teamId: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
-  updatedAt: z.lazy(() => SortOrderSchema).optional()
-}).strict();
+  updatedAt: z.lazy(() => SortOrderSchema).optional(),
+});
 
-export const PlayerSumOrderByAggregateInputSchema: z.ZodType<Prisma.PlayerSumOrderByAggregateInput> = z.object({
-  playerNumber: z.lazy(() => SortOrderSchema).optional()
-}).strict();
+export const PlayerSumOrderByAggregateInputSchema: z.ZodType<Prisma.PlayerSumOrderByAggregateInput> = z.strictObject({
+  playerNumber: z.lazy(() => SortOrderSchema).optional(),
+});
 
-export const StringWithAggregatesFilterSchema: z.ZodType<Prisma.StringWithAggregatesFilter> = z.object({
+export const StringWithAggregatesFilterSchema: z.ZodType<Prisma.StringWithAggregatesFilter> = z.strictObject({
   equals: z.string().optional(),
   in: z.string().array().optional(),
   notIn: z.string().array().optional(),
@@ -755,10 +755,10 @@ export const StringWithAggregatesFilterSchema: z.ZodType<Prisma.StringWithAggreg
   not: z.union([ z.string(),z.lazy(() => NestedStringWithAggregatesFilterSchema) ]).optional(),
   _count: z.lazy(() => NestedIntFilterSchema).optional(),
   _min: z.lazy(() => NestedStringFilterSchema).optional(),
-  _max: z.lazy(() => NestedStringFilterSchema).optional()
-}).strict();
+  _max: z.lazy(() => NestedStringFilterSchema).optional(),
+});
 
-export const DateTimeNullableWithAggregatesFilterSchema: z.ZodType<Prisma.DateTimeNullableWithAggregatesFilter> = z.object({
+export const DateTimeNullableWithAggregatesFilterSchema: z.ZodType<Prisma.DateTimeNullableWithAggregatesFilter> = z.strictObject({
   equals: z.coerce.date().optional().nullable(),
   in: z.coerce.date().array().optional().nullable(),
   notIn: z.coerce.date().array().optional().nullable(),
@@ -769,20 +769,20 @@ export const DateTimeNullableWithAggregatesFilterSchema: z.ZodType<Prisma.DateTi
   not: z.union([ z.coerce.date(),z.lazy(() => NestedDateTimeNullableWithAggregatesFilterSchema) ]).optional().nullable(),
   _count: z.lazy(() => NestedIntNullableFilterSchema).optional(),
   _min: z.lazy(() => NestedDateTimeNullableFilterSchema).optional(),
-  _max: z.lazy(() => NestedDateTimeNullableFilterSchema).optional()
-}).strict();
+  _max: z.lazy(() => NestedDateTimeNullableFilterSchema).optional(),
+});
 
-export const EnumPositionNullableWithAggregatesFilterSchema: z.ZodType<Prisma.EnumPositionNullableWithAggregatesFilter> = z.object({
+export const EnumPositionNullableWithAggregatesFilterSchema: z.ZodType<Prisma.EnumPositionNullableWithAggregatesFilter> = z.strictObject({
   equals: z.lazy(() => PositionSchema).optional().nullable(),
   in: z.lazy(() => PositionSchema).array().optional().nullable(),
   notIn: z.lazy(() => PositionSchema).array().optional().nullable(),
-  not: z.union([ z.lazy(() => PositionSchema),z.lazy(() => NestedEnumPositionNullableWithAggregatesFilterSchema) ]).optional().nullable(),
+  not: z.union([ z.lazy(() => PositionSchema), z.lazy(() => NestedEnumPositionNullableWithAggregatesFilterSchema) ]).optional().nullable(),
   _count: z.lazy(() => NestedIntNullableFilterSchema).optional(),
   _min: z.lazy(() => NestedEnumPositionNullableFilterSchema).optional(),
-  _max: z.lazy(() => NestedEnumPositionNullableFilterSchema).optional()
-}).strict();
+  _max: z.lazy(() => NestedEnumPositionNullableFilterSchema).optional(),
+});
 
-export const IntNullableWithAggregatesFilterSchema: z.ZodType<Prisma.IntNullableWithAggregatesFilter> = z.object({
+export const IntNullableWithAggregatesFilterSchema: z.ZodType<Prisma.IntNullableWithAggregatesFilter> = z.strictObject({
   equals: z.number().optional().nullable(),
   in: z.number().array().optional().nullable(),
   notIn: z.number().array().optional().nullable(),
@@ -795,10 +795,10 @@ export const IntNullableWithAggregatesFilterSchema: z.ZodType<Prisma.IntNullable
   _avg: z.lazy(() => NestedFloatNullableFilterSchema).optional(),
   _sum: z.lazy(() => NestedIntNullableFilterSchema).optional(),
   _min: z.lazy(() => NestedIntNullableFilterSchema).optional(),
-  _max: z.lazy(() => NestedIntNullableFilterSchema).optional()
-}).strict();
+  _max: z.lazy(() => NestedIntNullableFilterSchema).optional(),
+});
 
-export const StringNullableWithAggregatesFilterSchema: z.ZodType<Prisma.StringNullableWithAggregatesFilter> = z.object({
+export const StringNullableWithAggregatesFilterSchema: z.ZodType<Prisma.StringNullableWithAggregatesFilter> = z.strictObject({
   equals: z.string().optional().nullable(),
   in: z.string().array().optional().nullable(),
   notIn: z.string().array().optional().nullable(),
@@ -813,10 +813,10 @@ export const StringNullableWithAggregatesFilterSchema: z.ZodType<Prisma.StringNu
   not: z.union([ z.string(),z.lazy(() => NestedStringNullableWithAggregatesFilterSchema) ]).optional().nullable(),
   _count: z.lazy(() => NestedIntNullableFilterSchema).optional(),
   _min: z.lazy(() => NestedStringNullableFilterSchema).optional(),
-  _max: z.lazy(() => NestedStringNullableFilterSchema).optional()
-}).strict();
+  _max: z.lazy(() => NestedStringNullableFilterSchema).optional(),
+});
 
-export const DateTimeWithAggregatesFilterSchema: z.ZodType<Prisma.DateTimeWithAggregatesFilter> = z.object({
+export const DateTimeWithAggregatesFilterSchema: z.ZodType<Prisma.DateTimeWithAggregatesFilter> = z.strictObject({
   equals: z.coerce.date().optional(),
   in: z.coerce.date().array().optional(),
   notIn: z.coerce.date().array().optional(),
@@ -827,10 +827,10 @@ export const DateTimeWithAggregatesFilterSchema: z.ZodType<Prisma.DateTimeWithAg
   not: z.union([ z.coerce.date(),z.lazy(() => NestedDateTimeWithAggregatesFilterSchema) ]).optional(),
   _count: z.lazy(() => NestedIntFilterSchema).optional(),
   _min: z.lazy(() => NestedDateTimeFilterSchema).optional(),
-  _max: z.lazy(() => NestedDateTimeFilterSchema).optional()
-}).strict();
+  _max: z.lazy(() => NestedDateTimeFilterSchema).optional(),
+});
 
-export const IntFilterSchema: z.ZodType<Prisma.IntFilter> = z.object({
+export const IntFilterSchema: z.ZodType<Prisma.IntFilter> = z.strictObject({
   equals: z.number().optional(),
   in: z.number().array().optional(),
   notIn: z.number().array().optional(),
@@ -839,70 +839,70 @@ export const IntFilterSchema: z.ZodType<Prisma.IntFilter> = z.object({
   gt: z.number().optional(),
   gte: z.number().optional(),
   not: z.union([ z.number(),z.lazy(() => NestedIntFilterSchema) ]).optional(),
-}).strict();
+});
 
-export const PlayerListRelationFilterSchema: z.ZodType<Prisma.PlayerListRelationFilter> = z.object({
+export const PlayerListRelationFilterSchema: z.ZodType<Prisma.PlayerListRelationFilter> = z.strictObject({
   every: z.lazy(() => PlayerWhereInputSchema).optional(),
   some: z.lazy(() => PlayerWhereInputSchema).optional(),
-  none: z.lazy(() => PlayerWhereInputSchema).optional()
-}).strict();
+  none: z.lazy(() => PlayerWhereInputSchema).optional(),
+});
 
-export const LeagueListRelationFilterSchema: z.ZodType<Prisma.LeagueListRelationFilter> = z.object({
+export const LeagueListRelationFilterSchema: z.ZodType<Prisma.LeagueListRelationFilter> = z.strictObject({
   every: z.lazy(() => LeagueWhereInputSchema).optional(),
   some: z.lazy(() => LeagueWhereInputSchema).optional(),
-  none: z.lazy(() => LeagueWhereInputSchema).optional()
-}).strict();
+  none: z.lazy(() => LeagueWhereInputSchema).optional(),
+});
 
-export const PlayerOrderByRelationAggregateInputSchema: z.ZodType<Prisma.PlayerOrderByRelationAggregateInput> = z.object({
-  _count: z.lazy(() => SortOrderSchema).optional()
-}).strict();
+export const PlayerOrderByRelationAggregateInputSchema: z.ZodType<Prisma.PlayerOrderByRelationAggregateInput> = z.strictObject({
+  _count: z.lazy(() => SortOrderSchema).optional(),
+});
 
-export const LeagueOrderByRelationAggregateInputSchema: z.ZodType<Prisma.LeagueOrderByRelationAggregateInput> = z.object({
-  _count: z.lazy(() => SortOrderSchema).optional()
-}).strict();
+export const LeagueOrderByRelationAggregateInputSchema: z.ZodType<Prisma.LeagueOrderByRelationAggregateInput> = z.strictObject({
+  _count: z.lazy(() => SortOrderSchema).optional(),
+});
 
-export const TeamOrderByRelevanceInputSchema: z.ZodType<Prisma.TeamOrderByRelevanceInput> = z.object({
-  fields: z.union([ z.lazy(() => TeamOrderByRelevanceFieldEnumSchema),z.lazy(() => TeamOrderByRelevanceFieldEnumSchema).array() ]),
+export const TeamOrderByRelevanceInputSchema: z.ZodType<Prisma.TeamOrderByRelevanceInput> = z.strictObject({
+  fields: z.union([ z.lazy(() => TeamOrderByRelevanceFieldEnumSchema), z.lazy(() => TeamOrderByRelevanceFieldEnumSchema).array() ]),
   sort: z.lazy(() => SortOrderSchema),
-  search: z.string()
-}).strict();
+  search: z.string(),
+});
 
-export const TeamCountOrderByAggregateInputSchema: z.ZodType<Prisma.TeamCountOrderByAggregateInput> = z.object({
+export const TeamCountOrderByAggregateInputSchema: z.ZodType<Prisma.TeamCountOrderByAggregateInput> = z.strictObject({
   id: z.lazy(() => SortOrderSchema).optional(),
   teamName: z.lazy(() => SortOrderSchema).optional(),
   city: z.lazy(() => SortOrderSchema).optional(),
   since: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
-  updatedAt: z.lazy(() => SortOrderSchema).optional()
-}).strict();
+  updatedAt: z.lazy(() => SortOrderSchema).optional(),
+});
 
-export const TeamAvgOrderByAggregateInputSchema: z.ZodType<Prisma.TeamAvgOrderByAggregateInput> = z.object({
-  since: z.lazy(() => SortOrderSchema).optional()
-}).strict();
+export const TeamAvgOrderByAggregateInputSchema: z.ZodType<Prisma.TeamAvgOrderByAggregateInput> = z.strictObject({
+  since: z.lazy(() => SortOrderSchema).optional(),
+});
 
-export const TeamMaxOrderByAggregateInputSchema: z.ZodType<Prisma.TeamMaxOrderByAggregateInput> = z.object({
+export const TeamMaxOrderByAggregateInputSchema: z.ZodType<Prisma.TeamMaxOrderByAggregateInput> = z.strictObject({
   id: z.lazy(() => SortOrderSchema).optional(),
   teamName: z.lazy(() => SortOrderSchema).optional(),
   city: z.lazy(() => SortOrderSchema).optional(),
   since: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
-  updatedAt: z.lazy(() => SortOrderSchema).optional()
-}).strict();
+  updatedAt: z.lazy(() => SortOrderSchema).optional(),
+});
 
-export const TeamMinOrderByAggregateInputSchema: z.ZodType<Prisma.TeamMinOrderByAggregateInput> = z.object({
+export const TeamMinOrderByAggregateInputSchema: z.ZodType<Prisma.TeamMinOrderByAggregateInput> = z.strictObject({
   id: z.lazy(() => SortOrderSchema).optional(),
   teamName: z.lazy(() => SortOrderSchema).optional(),
   city: z.lazy(() => SortOrderSchema).optional(),
   since: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
-  updatedAt: z.lazy(() => SortOrderSchema).optional()
-}).strict();
+  updatedAt: z.lazy(() => SortOrderSchema).optional(),
+});
 
-export const TeamSumOrderByAggregateInputSchema: z.ZodType<Prisma.TeamSumOrderByAggregateInput> = z.object({
-  since: z.lazy(() => SortOrderSchema).optional()
-}).strict();
+export const TeamSumOrderByAggregateInputSchema: z.ZodType<Prisma.TeamSumOrderByAggregateInput> = z.strictObject({
+  since: z.lazy(() => SortOrderSchema).optional(),
+});
 
-export const IntWithAggregatesFilterSchema: z.ZodType<Prisma.IntWithAggregatesFilter> = z.object({
+export const IntWithAggregatesFilterSchema: z.ZodType<Prisma.IntWithAggregatesFilter> = z.strictObject({
   equals: z.number().optional(),
   in: z.number().array().optional(),
   notIn: z.number().array().optional(),
@@ -915,217 +915,217 @@ export const IntWithAggregatesFilterSchema: z.ZodType<Prisma.IntWithAggregatesFi
   _avg: z.lazy(() => NestedFloatFilterSchema).optional(),
   _sum: z.lazy(() => NestedIntFilterSchema).optional(),
   _min: z.lazy(() => NestedIntFilterSchema).optional(),
-  _max: z.lazy(() => NestedIntFilterSchema).optional()
-}).strict();
+  _max: z.lazy(() => NestedIntFilterSchema).optional(),
+});
 
-export const TeamListRelationFilterSchema: z.ZodType<Prisma.TeamListRelationFilter> = z.object({
+export const TeamListRelationFilterSchema: z.ZodType<Prisma.TeamListRelationFilter> = z.strictObject({
   every: z.lazy(() => TeamWhereInputSchema).optional(),
   some: z.lazy(() => TeamWhereInputSchema).optional(),
-  none: z.lazy(() => TeamWhereInputSchema).optional()
-}).strict();
+  none: z.lazy(() => TeamWhereInputSchema).optional(),
+});
 
-export const TeamOrderByRelationAggregateInputSchema: z.ZodType<Prisma.TeamOrderByRelationAggregateInput> = z.object({
-  _count: z.lazy(() => SortOrderSchema).optional()
-}).strict();
+export const TeamOrderByRelationAggregateInputSchema: z.ZodType<Prisma.TeamOrderByRelationAggregateInput> = z.strictObject({
+  _count: z.lazy(() => SortOrderSchema).optional(),
+});
 
-export const LeagueOrderByRelevanceInputSchema: z.ZodType<Prisma.LeagueOrderByRelevanceInput> = z.object({
-  fields: z.union([ z.lazy(() => LeagueOrderByRelevanceFieldEnumSchema),z.lazy(() => LeagueOrderByRelevanceFieldEnumSchema).array() ]),
+export const LeagueOrderByRelevanceInputSchema: z.ZodType<Prisma.LeagueOrderByRelevanceInput> = z.strictObject({
+  fields: z.union([ z.lazy(() => LeagueOrderByRelevanceFieldEnumSchema), z.lazy(() => LeagueOrderByRelevanceFieldEnumSchema).array() ]),
   sort: z.lazy(() => SortOrderSchema),
-  search: z.string()
-}).strict();
+  search: z.string(),
+});
 
-export const LeagueCountOrderByAggregateInputSchema: z.ZodType<Prisma.LeagueCountOrderByAggregateInput> = z.object({
+export const LeagueCountOrderByAggregateInputSchema: z.ZodType<Prisma.LeagueCountOrderByAggregateInput> = z.strictObject({
   id: z.lazy(() => SortOrderSchema).optional(),
   leagueName: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
-  updatedAt: z.lazy(() => SortOrderSchema).optional()
-}).strict();
+  updatedAt: z.lazy(() => SortOrderSchema).optional(),
+});
 
-export const LeagueMaxOrderByAggregateInputSchema: z.ZodType<Prisma.LeagueMaxOrderByAggregateInput> = z.object({
+export const LeagueMaxOrderByAggregateInputSchema: z.ZodType<Prisma.LeagueMaxOrderByAggregateInput> = z.strictObject({
   id: z.lazy(() => SortOrderSchema).optional(),
   leagueName: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
-  updatedAt: z.lazy(() => SortOrderSchema).optional()
-}).strict();
+  updatedAt: z.lazy(() => SortOrderSchema).optional(),
+});
 
-export const LeagueMinOrderByAggregateInputSchema: z.ZodType<Prisma.LeagueMinOrderByAggregateInput> = z.object({
+export const LeagueMinOrderByAggregateInputSchema: z.ZodType<Prisma.LeagueMinOrderByAggregateInput> = z.strictObject({
   id: z.lazy(() => SortOrderSchema).optional(),
   leagueName: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
-  updatedAt: z.lazy(() => SortOrderSchema).optional()
-}).strict();
+  updatedAt: z.lazy(() => SortOrderSchema).optional(),
+});
 
-export const TeamCreateNestedOneWithoutPlayersInputSchema: z.ZodType<Prisma.TeamCreateNestedOneWithoutPlayersInput> = z.object({
-  create: z.union([ z.lazy(() => TeamCreateWithoutPlayersInputSchema),z.lazy(() => TeamUncheckedCreateWithoutPlayersInputSchema) ]).optional(),
+export const TeamCreateNestedOneWithoutPlayersInputSchema: z.ZodType<Prisma.TeamCreateNestedOneWithoutPlayersInput> = z.strictObject({
+  create: z.union([ z.lazy(() => TeamCreateWithoutPlayersInputSchema), z.lazy(() => TeamUncheckedCreateWithoutPlayersInputSchema) ]).optional(),
   connectOrCreate: z.lazy(() => TeamCreateOrConnectWithoutPlayersInputSchema).optional(),
-  connect: z.lazy(() => TeamWhereUniqueInputSchema).optional()
-}).strict();
+  connect: z.lazy(() => TeamWhereUniqueInputSchema).optional(),
+});
 
-export const StringFieldUpdateOperationsInputSchema: z.ZodType<Prisma.StringFieldUpdateOperationsInput> = z.object({
-  set: z.string().optional()
-}).strict();
+export const StringFieldUpdateOperationsInputSchema: z.ZodType<Prisma.StringFieldUpdateOperationsInput> = z.strictObject({
+  set: z.string().optional(),
+});
 
-export const NullableDateTimeFieldUpdateOperationsInputSchema: z.ZodType<Prisma.NullableDateTimeFieldUpdateOperationsInput> = z.object({
-  set: z.coerce.date().optional().nullable()
-}).strict();
+export const NullableDateTimeFieldUpdateOperationsInputSchema: z.ZodType<Prisma.NullableDateTimeFieldUpdateOperationsInput> = z.strictObject({
+  set: z.coerce.date().optional().nullable(),
+});
 
-export const NullableEnumPositionFieldUpdateOperationsInputSchema: z.ZodType<Prisma.NullableEnumPositionFieldUpdateOperationsInput> = z.object({
-  set: z.lazy(() => PositionSchema).optional().nullable()
-}).strict();
+export const NullableEnumPositionFieldUpdateOperationsInputSchema: z.ZodType<Prisma.NullableEnumPositionFieldUpdateOperationsInput> = z.strictObject({
+  set: z.lazy(() => PositionSchema).optional().nullable(),
+});
 
-export const NullableIntFieldUpdateOperationsInputSchema: z.ZodType<Prisma.NullableIntFieldUpdateOperationsInput> = z.object({
+export const NullableIntFieldUpdateOperationsInputSchema: z.ZodType<Prisma.NullableIntFieldUpdateOperationsInput> = z.strictObject({
   set: z.number().optional().nullable(),
   increment: z.number().optional(),
   decrement: z.number().optional(),
   multiply: z.number().optional(),
-  divide: z.number().optional()
-}).strict();
+  divide: z.number().optional(),
+});
 
-export const DateTimeFieldUpdateOperationsInputSchema: z.ZodType<Prisma.DateTimeFieldUpdateOperationsInput> = z.object({
-  set: z.coerce.date().optional()
-}).strict();
+export const DateTimeFieldUpdateOperationsInputSchema: z.ZodType<Prisma.DateTimeFieldUpdateOperationsInput> = z.strictObject({
+  set: z.coerce.date().optional(),
+});
 
-export const TeamUpdateOneWithoutPlayersNestedInputSchema: z.ZodType<Prisma.TeamUpdateOneWithoutPlayersNestedInput> = z.object({
-  create: z.union([ z.lazy(() => TeamCreateWithoutPlayersInputSchema),z.lazy(() => TeamUncheckedCreateWithoutPlayersInputSchema) ]).optional(),
+export const TeamUpdateOneWithoutPlayersNestedInputSchema: z.ZodType<Prisma.TeamUpdateOneWithoutPlayersNestedInput> = z.strictObject({
+  create: z.union([ z.lazy(() => TeamCreateWithoutPlayersInputSchema), z.lazy(() => TeamUncheckedCreateWithoutPlayersInputSchema) ]).optional(),
   connectOrCreate: z.lazy(() => TeamCreateOrConnectWithoutPlayersInputSchema).optional(),
   upsert: z.lazy(() => TeamUpsertWithoutPlayersInputSchema).optional(),
   disconnect: z.union([ z.boolean(),z.lazy(() => TeamWhereInputSchema) ]).optional(),
   delete: z.union([ z.boolean(),z.lazy(() => TeamWhereInputSchema) ]).optional(),
   connect: z.lazy(() => TeamWhereUniqueInputSchema).optional(),
-  update: z.union([ z.lazy(() => TeamUpdateToOneWithWhereWithoutPlayersInputSchema),z.lazy(() => TeamUpdateWithoutPlayersInputSchema),z.lazy(() => TeamUncheckedUpdateWithoutPlayersInputSchema) ]).optional(),
-}).strict();
+  update: z.union([ z.lazy(() => TeamUpdateToOneWithWhereWithoutPlayersInputSchema), z.lazy(() => TeamUpdateWithoutPlayersInputSchema), z.lazy(() => TeamUncheckedUpdateWithoutPlayersInputSchema) ]).optional(),
+});
 
-export const NullableStringFieldUpdateOperationsInputSchema: z.ZodType<Prisma.NullableStringFieldUpdateOperationsInput> = z.object({
-  set: z.string().optional().nullable()
-}).strict();
+export const NullableStringFieldUpdateOperationsInputSchema: z.ZodType<Prisma.NullableStringFieldUpdateOperationsInput> = z.strictObject({
+  set: z.string().optional().nullable(),
+});
 
-export const PlayerCreateNestedManyWithoutTeamInputSchema: z.ZodType<Prisma.PlayerCreateNestedManyWithoutTeamInput> = z.object({
-  create: z.union([ z.lazy(() => PlayerCreateWithoutTeamInputSchema),z.lazy(() => PlayerCreateWithoutTeamInputSchema).array(),z.lazy(() => PlayerUncheckedCreateWithoutTeamInputSchema),z.lazy(() => PlayerUncheckedCreateWithoutTeamInputSchema).array() ]).optional(),
-  connectOrCreate: z.union([ z.lazy(() => PlayerCreateOrConnectWithoutTeamInputSchema),z.lazy(() => PlayerCreateOrConnectWithoutTeamInputSchema).array() ]).optional(),
+export const PlayerCreateNestedManyWithoutTeamInputSchema: z.ZodType<Prisma.PlayerCreateNestedManyWithoutTeamInput> = z.strictObject({
+  create: z.union([ z.lazy(() => PlayerCreateWithoutTeamInputSchema), z.lazy(() => PlayerCreateWithoutTeamInputSchema).array(), z.lazy(() => PlayerUncheckedCreateWithoutTeamInputSchema), z.lazy(() => PlayerUncheckedCreateWithoutTeamInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => PlayerCreateOrConnectWithoutTeamInputSchema), z.lazy(() => PlayerCreateOrConnectWithoutTeamInputSchema).array() ]).optional(),
   createMany: z.lazy(() => PlayerCreateManyTeamInputEnvelopeSchema).optional(),
-  connect: z.union([ z.lazy(() => PlayerWhereUniqueInputSchema),z.lazy(() => PlayerWhereUniqueInputSchema).array() ]).optional(),
-}).strict();
+  connect: z.union([ z.lazy(() => PlayerWhereUniqueInputSchema), z.lazy(() => PlayerWhereUniqueInputSchema).array() ]).optional(),
+});
 
-export const LeagueCreateNestedManyWithoutTeamsInputSchema: z.ZodType<Prisma.LeagueCreateNestedManyWithoutTeamsInput> = z.object({
-  create: z.union([ z.lazy(() => LeagueCreateWithoutTeamsInputSchema),z.lazy(() => LeagueCreateWithoutTeamsInputSchema).array(),z.lazy(() => LeagueUncheckedCreateWithoutTeamsInputSchema),z.lazy(() => LeagueUncheckedCreateWithoutTeamsInputSchema).array() ]).optional(),
-  connectOrCreate: z.union([ z.lazy(() => LeagueCreateOrConnectWithoutTeamsInputSchema),z.lazy(() => LeagueCreateOrConnectWithoutTeamsInputSchema).array() ]).optional(),
-  connect: z.union([ z.lazy(() => LeagueWhereUniqueInputSchema),z.lazy(() => LeagueWhereUniqueInputSchema).array() ]).optional(),
-}).strict();
+export const LeagueCreateNestedManyWithoutTeamsInputSchema: z.ZodType<Prisma.LeagueCreateNestedManyWithoutTeamsInput> = z.strictObject({
+  create: z.union([ z.lazy(() => LeagueCreateWithoutTeamsInputSchema), z.lazy(() => LeagueCreateWithoutTeamsInputSchema).array(), z.lazy(() => LeagueUncheckedCreateWithoutTeamsInputSchema), z.lazy(() => LeagueUncheckedCreateWithoutTeamsInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => LeagueCreateOrConnectWithoutTeamsInputSchema), z.lazy(() => LeagueCreateOrConnectWithoutTeamsInputSchema).array() ]).optional(),
+  connect: z.union([ z.lazy(() => LeagueWhereUniqueInputSchema), z.lazy(() => LeagueWhereUniqueInputSchema).array() ]).optional(),
+});
 
-export const PlayerUncheckedCreateNestedManyWithoutTeamInputSchema: z.ZodType<Prisma.PlayerUncheckedCreateNestedManyWithoutTeamInput> = z.object({
-  create: z.union([ z.lazy(() => PlayerCreateWithoutTeamInputSchema),z.lazy(() => PlayerCreateWithoutTeamInputSchema).array(),z.lazy(() => PlayerUncheckedCreateWithoutTeamInputSchema),z.lazy(() => PlayerUncheckedCreateWithoutTeamInputSchema).array() ]).optional(),
-  connectOrCreate: z.union([ z.lazy(() => PlayerCreateOrConnectWithoutTeamInputSchema),z.lazy(() => PlayerCreateOrConnectWithoutTeamInputSchema).array() ]).optional(),
+export const PlayerUncheckedCreateNestedManyWithoutTeamInputSchema: z.ZodType<Prisma.PlayerUncheckedCreateNestedManyWithoutTeamInput> = z.strictObject({
+  create: z.union([ z.lazy(() => PlayerCreateWithoutTeamInputSchema), z.lazy(() => PlayerCreateWithoutTeamInputSchema).array(), z.lazy(() => PlayerUncheckedCreateWithoutTeamInputSchema), z.lazy(() => PlayerUncheckedCreateWithoutTeamInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => PlayerCreateOrConnectWithoutTeamInputSchema), z.lazy(() => PlayerCreateOrConnectWithoutTeamInputSchema).array() ]).optional(),
   createMany: z.lazy(() => PlayerCreateManyTeamInputEnvelopeSchema).optional(),
-  connect: z.union([ z.lazy(() => PlayerWhereUniqueInputSchema),z.lazy(() => PlayerWhereUniqueInputSchema).array() ]).optional(),
-}).strict();
+  connect: z.union([ z.lazy(() => PlayerWhereUniqueInputSchema), z.lazy(() => PlayerWhereUniqueInputSchema).array() ]).optional(),
+});
 
-export const LeagueUncheckedCreateNestedManyWithoutTeamsInputSchema: z.ZodType<Prisma.LeagueUncheckedCreateNestedManyWithoutTeamsInput> = z.object({
-  create: z.union([ z.lazy(() => LeagueCreateWithoutTeamsInputSchema),z.lazy(() => LeagueCreateWithoutTeamsInputSchema).array(),z.lazy(() => LeagueUncheckedCreateWithoutTeamsInputSchema),z.lazy(() => LeagueUncheckedCreateWithoutTeamsInputSchema).array() ]).optional(),
-  connectOrCreate: z.union([ z.lazy(() => LeagueCreateOrConnectWithoutTeamsInputSchema),z.lazy(() => LeagueCreateOrConnectWithoutTeamsInputSchema).array() ]).optional(),
-  connect: z.union([ z.lazy(() => LeagueWhereUniqueInputSchema),z.lazy(() => LeagueWhereUniqueInputSchema).array() ]).optional(),
-}).strict();
+export const LeagueUncheckedCreateNestedManyWithoutTeamsInputSchema: z.ZodType<Prisma.LeagueUncheckedCreateNestedManyWithoutTeamsInput> = z.strictObject({
+  create: z.union([ z.lazy(() => LeagueCreateWithoutTeamsInputSchema), z.lazy(() => LeagueCreateWithoutTeamsInputSchema).array(), z.lazy(() => LeagueUncheckedCreateWithoutTeamsInputSchema), z.lazy(() => LeagueUncheckedCreateWithoutTeamsInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => LeagueCreateOrConnectWithoutTeamsInputSchema), z.lazy(() => LeagueCreateOrConnectWithoutTeamsInputSchema).array() ]).optional(),
+  connect: z.union([ z.lazy(() => LeagueWhereUniqueInputSchema), z.lazy(() => LeagueWhereUniqueInputSchema).array() ]).optional(),
+});
 
-export const IntFieldUpdateOperationsInputSchema: z.ZodType<Prisma.IntFieldUpdateOperationsInput> = z.object({
+export const IntFieldUpdateOperationsInputSchema: z.ZodType<Prisma.IntFieldUpdateOperationsInput> = z.strictObject({
   set: z.number().optional(),
   increment: z.number().optional(),
   decrement: z.number().optional(),
   multiply: z.number().optional(),
-  divide: z.number().optional()
-}).strict();
+  divide: z.number().optional(),
+});
 
-export const PlayerUpdateManyWithoutTeamNestedInputSchema: z.ZodType<Prisma.PlayerUpdateManyWithoutTeamNestedInput> = z.object({
-  create: z.union([ z.lazy(() => PlayerCreateWithoutTeamInputSchema),z.lazy(() => PlayerCreateWithoutTeamInputSchema).array(),z.lazy(() => PlayerUncheckedCreateWithoutTeamInputSchema),z.lazy(() => PlayerUncheckedCreateWithoutTeamInputSchema).array() ]).optional(),
-  connectOrCreate: z.union([ z.lazy(() => PlayerCreateOrConnectWithoutTeamInputSchema),z.lazy(() => PlayerCreateOrConnectWithoutTeamInputSchema).array() ]).optional(),
-  upsert: z.union([ z.lazy(() => PlayerUpsertWithWhereUniqueWithoutTeamInputSchema),z.lazy(() => PlayerUpsertWithWhereUniqueWithoutTeamInputSchema).array() ]).optional(),
+export const PlayerUpdateManyWithoutTeamNestedInputSchema: z.ZodType<Prisma.PlayerUpdateManyWithoutTeamNestedInput> = z.strictObject({
+  create: z.union([ z.lazy(() => PlayerCreateWithoutTeamInputSchema), z.lazy(() => PlayerCreateWithoutTeamInputSchema).array(), z.lazy(() => PlayerUncheckedCreateWithoutTeamInputSchema), z.lazy(() => PlayerUncheckedCreateWithoutTeamInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => PlayerCreateOrConnectWithoutTeamInputSchema), z.lazy(() => PlayerCreateOrConnectWithoutTeamInputSchema).array() ]).optional(),
+  upsert: z.union([ z.lazy(() => PlayerUpsertWithWhereUniqueWithoutTeamInputSchema), z.lazy(() => PlayerUpsertWithWhereUniqueWithoutTeamInputSchema).array() ]).optional(),
   createMany: z.lazy(() => PlayerCreateManyTeamInputEnvelopeSchema).optional(),
-  set: z.union([ z.lazy(() => PlayerWhereUniqueInputSchema),z.lazy(() => PlayerWhereUniqueInputSchema).array() ]).optional(),
-  disconnect: z.union([ z.lazy(() => PlayerWhereUniqueInputSchema),z.lazy(() => PlayerWhereUniqueInputSchema).array() ]).optional(),
-  delete: z.union([ z.lazy(() => PlayerWhereUniqueInputSchema),z.lazy(() => PlayerWhereUniqueInputSchema).array() ]).optional(),
-  connect: z.union([ z.lazy(() => PlayerWhereUniqueInputSchema),z.lazy(() => PlayerWhereUniqueInputSchema).array() ]).optional(),
-  update: z.union([ z.lazy(() => PlayerUpdateWithWhereUniqueWithoutTeamInputSchema),z.lazy(() => PlayerUpdateWithWhereUniqueWithoutTeamInputSchema).array() ]).optional(),
-  updateMany: z.union([ z.lazy(() => PlayerUpdateManyWithWhereWithoutTeamInputSchema),z.lazy(() => PlayerUpdateManyWithWhereWithoutTeamInputSchema).array() ]).optional(),
-  deleteMany: z.union([ z.lazy(() => PlayerScalarWhereInputSchema),z.lazy(() => PlayerScalarWhereInputSchema).array() ]).optional(),
-}).strict();
+  set: z.union([ z.lazy(() => PlayerWhereUniqueInputSchema), z.lazy(() => PlayerWhereUniqueInputSchema).array() ]).optional(),
+  disconnect: z.union([ z.lazy(() => PlayerWhereUniqueInputSchema), z.lazy(() => PlayerWhereUniqueInputSchema).array() ]).optional(),
+  delete: z.union([ z.lazy(() => PlayerWhereUniqueInputSchema), z.lazy(() => PlayerWhereUniqueInputSchema).array() ]).optional(),
+  connect: z.union([ z.lazy(() => PlayerWhereUniqueInputSchema), z.lazy(() => PlayerWhereUniqueInputSchema).array() ]).optional(),
+  update: z.union([ z.lazy(() => PlayerUpdateWithWhereUniqueWithoutTeamInputSchema), z.lazy(() => PlayerUpdateWithWhereUniqueWithoutTeamInputSchema).array() ]).optional(),
+  updateMany: z.union([ z.lazy(() => PlayerUpdateManyWithWhereWithoutTeamInputSchema), z.lazy(() => PlayerUpdateManyWithWhereWithoutTeamInputSchema).array() ]).optional(),
+  deleteMany: z.union([ z.lazy(() => PlayerScalarWhereInputSchema), z.lazy(() => PlayerScalarWhereInputSchema).array() ]).optional(),
+});
 
-export const LeagueUpdateManyWithoutTeamsNestedInputSchema: z.ZodType<Prisma.LeagueUpdateManyWithoutTeamsNestedInput> = z.object({
-  create: z.union([ z.lazy(() => LeagueCreateWithoutTeamsInputSchema),z.lazy(() => LeagueCreateWithoutTeamsInputSchema).array(),z.lazy(() => LeagueUncheckedCreateWithoutTeamsInputSchema),z.lazy(() => LeagueUncheckedCreateWithoutTeamsInputSchema).array() ]).optional(),
-  connectOrCreate: z.union([ z.lazy(() => LeagueCreateOrConnectWithoutTeamsInputSchema),z.lazy(() => LeagueCreateOrConnectWithoutTeamsInputSchema).array() ]).optional(),
-  upsert: z.union([ z.lazy(() => LeagueUpsertWithWhereUniqueWithoutTeamsInputSchema),z.lazy(() => LeagueUpsertWithWhereUniqueWithoutTeamsInputSchema).array() ]).optional(),
-  set: z.union([ z.lazy(() => LeagueWhereUniqueInputSchema),z.lazy(() => LeagueWhereUniqueInputSchema).array() ]).optional(),
-  disconnect: z.union([ z.lazy(() => LeagueWhereUniqueInputSchema),z.lazy(() => LeagueWhereUniqueInputSchema).array() ]).optional(),
-  delete: z.union([ z.lazy(() => LeagueWhereUniqueInputSchema),z.lazy(() => LeagueWhereUniqueInputSchema).array() ]).optional(),
-  connect: z.union([ z.lazy(() => LeagueWhereUniqueInputSchema),z.lazy(() => LeagueWhereUniqueInputSchema).array() ]).optional(),
-  update: z.union([ z.lazy(() => LeagueUpdateWithWhereUniqueWithoutTeamsInputSchema),z.lazy(() => LeagueUpdateWithWhereUniqueWithoutTeamsInputSchema).array() ]).optional(),
-  updateMany: z.union([ z.lazy(() => LeagueUpdateManyWithWhereWithoutTeamsInputSchema),z.lazy(() => LeagueUpdateManyWithWhereWithoutTeamsInputSchema).array() ]).optional(),
-  deleteMany: z.union([ z.lazy(() => LeagueScalarWhereInputSchema),z.lazy(() => LeagueScalarWhereInputSchema).array() ]).optional(),
-}).strict();
+export const LeagueUpdateManyWithoutTeamsNestedInputSchema: z.ZodType<Prisma.LeagueUpdateManyWithoutTeamsNestedInput> = z.strictObject({
+  create: z.union([ z.lazy(() => LeagueCreateWithoutTeamsInputSchema), z.lazy(() => LeagueCreateWithoutTeamsInputSchema).array(), z.lazy(() => LeagueUncheckedCreateWithoutTeamsInputSchema), z.lazy(() => LeagueUncheckedCreateWithoutTeamsInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => LeagueCreateOrConnectWithoutTeamsInputSchema), z.lazy(() => LeagueCreateOrConnectWithoutTeamsInputSchema).array() ]).optional(),
+  upsert: z.union([ z.lazy(() => LeagueUpsertWithWhereUniqueWithoutTeamsInputSchema), z.lazy(() => LeagueUpsertWithWhereUniqueWithoutTeamsInputSchema).array() ]).optional(),
+  set: z.union([ z.lazy(() => LeagueWhereUniqueInputSchema), z.lazy(() => LeagueWhereUniqueInputSchema).array() ]).optional(),
+  disconnect: z.union([ z.lazy(() => LeagueWhereUniqueInputSchema), z.lazy(() => LeagueWhereUniqueInputSchema).array() ]).optional(),
+  delete: z.union([ z.lazy(() => LeagueWhereUniqueInputSchema), z.lazy(() => LeagueWhereUniqueInputSchema).array() ]).optional(),
+  connect: z.union([ z.lazy(() => LeagueWhereUniqueInputSchema), z.lazy(() => LeagueWhereUniqueInputSchema).array() ]).optional(),
+  update: z.union([ z.lazy(() => LeagueUpdateWithWhereUniqueWithoutTeamsInputSchema), z.lazy(() => LeagueUpdateWithWhereUniqueWithoutTeamsInputSchema).array() ]).optional(),
+  updateMany: z.union([ z.lazy(() => LeagueUpdateManyWithWhereWithoutTeamsInputSchema), z.lazy(() => LeagueUpdateManyWithWhereWithoutTeamsInputSchema).array() ]).optional(),
+  deleteMany: z.union([ z.lazy(() => LeagueScalarWhereInputSchema), z.lazy(() => LeagueScalarWhereInputSchema).array() ]).optional(),
+});
 
-export const PlayerUncheckedUpdateManyWithoutTeamNestedInputSchema: z.ZodType<Prisma.PlayerUncheckedUpdateManyWithoutTeamNestedInput> = z.object({
-  create: z.union([ z.lazy(() => PlayerCreateWithoutTeamInputSchema),z.lazy(() => PlayerCreateWithoutTeamInputSchema).array(),z.lazy(() => PlayerUncheckedCreateWithoutTeamInputSchema),z.lazy(() => PlayerUncheckedCreateWithoutTeamInputSchema).array() ]).optional(),
-  connectOrCreate: z.union([ z.lazy(() => PlayerCreateOrConnectWithoutTeamInputSchema),z.lazy(() => PlayerCreateOrConnectWithoutTeamInputSchema).array() ]).optional(),
-  upsert: z.union([ z.lazy(() => PlayerUpsertWithWhereUniqueWithoutTeamInputSchema),z.lazy(() => PlayerUpsertWithWhereUniqueWithoutTeamInputSchema).array() ]).optional(),
+export const PlayerUncheckedUpdateManyWithoutTeamNestedInputSchema: z.ZodType<Prisma.PlayerUncheckedUpdateManyWithoutTeamNestedInput> = z.strictObject({
+  create: z.union([ z.lazy(() => PlayerCreateWithoutTeamInputSchema), z.lazy(() => PlayerCreateWithoutTeamInputSchema).array(), z.lazy(() => PlayerUncheckedCreateWithoutTeamInputSchema), z.lazy(() => PlayerUncheckedCreateWithoutTeamInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => PlayerCreateOrConnectWithoutTeamInputSchema), z.lazy(() => PlayerCreateOrConnectWithoutTeamInputSchema).array() ]).optional(),
+  upsert: z.union([ z.lazy(() => PlayerUpsertWithWhereUniqueWithoutTeamInputSchema), z.lazy(() => PlayerUpsertWithWhereUniqueWithoutTeamInputSchema).array() ]).optional(),
   createMany: z.lazy(() => PlayerCreateManyTeamInputEnvelopeSchema).optional(),
-  set: z.union([ z.lazy(() => PlayerWhereUniqueInputSchema),z.lazy(() => PlayerWhereUniqueInputSchema).array() ]).optional(),
-  disconnect: z.union([ z.lazy(() => PlayerWhereUniqueInputSchema),z.lazy(() => PlayerWhereUniqueInputSchema).array() ]).optional(),
-  delete: z.union([ z.lazy(() => PlayerWhereUniqueInputSchema),z.lazy(() => PlayerWhereUniqueInputSchema).array() ]).optional(),
-  connect: z.union([ z.lazy(() => PlayerWhereUniqueInputSchema),z.lazy(() => PlayerWhereUniqueInputSchema).array() ]).optional(),
-  update: z.union([ z.lazy(() => PlayerUpdateWithWhereUniqueWithoutTeamInputSchema),z.lazy(() => PlayerUpdateWithWhereUniqueWithoutTeamInputSchema).array() ]).optional(),
-  updateMany: z.union([ z.lazy(() => PlayerUpdateManyWithWhereWithoutTeamInputSchema),z.lazy(() => PlayerUpdateManyWithWhereWithoutTeamInputSchema).array() ]).optional(),
-  deleteMany: z.union([ z.lazy(() => PlayerScalarWhereInputSchema),z.lazy(() => PlayerScalarWhereInputSchema).array() ]).optional(),
-}).strict();
+  set: z.union([ z.lazy(() => PlayerWhereUniqueInputSchema), z.lazy(() => PlayerWhereUniqueInputSchema).array() ]).optional(),
+  disconnect: z.union([ z.lazy(() => PlayerWhereUniqueInputSchema), z.lazy(() => PlayerWhereUniqueInputSchema).array() ]).optional(),
+  delete: z.union([ z.lazy(() => PlayerWhereUniqueInputSchema), z.lazy(() => PlayerWhereUniqueInputSchema).array() ]).optional(),
+  connect: z.union([ z.lazy(() => PlayerWhereUniqueInputSchema), z.lazy(() => PlayerWhereUniqueInputSchema).array() ]).optional(),
+  update: z.union([ z.lazy(() => PlayerUpdateWithWhereUniqueWithoutTeamInputSchema), z.lazy(() => PlayerUpdateWithWhereUniqueWithoutTeamInputSchema).array() ]).optional(),
+  updateMany: z.union([ z.lazy(() => PlayerUpdateManyWithWhereWithoutTeamInputSchema), z.lazy(() => PlayerUpdateManyWithWhereWithoutTeamInputSchema).array() ]).optional(),
+  deleteMany: z.union([ z.lazy(() => PlayerScalarWhereInputSchema), z.lazy(() => PlayerScalarWhereInputSchema).array() ]).optional(),
+});
 
-export const LeagueUncheckedUpdateManyWithoutTeamsNestedInputSchema: z.ZodType<Prisma.LeagueUncheckedUpdateManyWithoutTeamsNestedInput> = z.object({
-  create: z.union([ z.lazy(() => LeagueCreateWithoutTeamsInputSchema),z.lazy(() => LeagueCreateWithoutTeamsInputSchema).array(),z.lazy(() => LeagueUncheckedCreateWithoutTeamsInputSchema),z.lazy(() => LeagueUncheckedCreateWithoutTeamsInputSchema).array() ]).optional(),
-  connectOrCreate: z.union([ z.lazy(() => LeagueCreateOrConnectWithoutTeamsInputSchema),z.lazy(() => LeagueCreateOrConnectWithoutTeamsInputSchema).array() ]).optional(),
-  upsert: z.union([ z.lazy(() => LeagueUpsertWithWhereUniqueWithoutTeamsInputSchema),z.lazy(() => LeagueUpsertWithWhereUniqueWithoutTeamsInputSchema).array() ]).optional(),
-  set: z.union([ z.lazy(() => LeagueWhereUniqueInputSchema),z.lazy(() => LeagueWhereUniqueInputSchema).array() ]).optional(),
-  disconnect: z.union([ z.lazy(() => LeagueWhereUniqueInputSchema),z.lazy(() => LeagueWhereUniqueInputSchema).array() ]).optional(),
-  delete: z.union([ z.lazy(() => LeagueWhereUniqueInputSchema),z.lazy(() => LeagueWhereUniqueInputSchema).array() ]).optional(),
-  connect: z.union([ z.lazy(() => LeagueWhereUniqueInputSchema),z.lazy(() => LeagueWhereUniqueInputSchema).array() ]).optional(),
-  update: z.union([ z.lazy(() => LeagueUpdateWithWhereUniqueWithoutTeamsInputSchema),z.lazy(() => LeagueUpdateWithWhereUniqueWithoutTeamsInputSchema).array() ]).optional(),
-  updateMany: z.union([ z.lazy(() => LeagueUpdateManyWithWhereWithoutTeamsInputSchema),z.lazy(() => LeagueUpdateManyWithWhereWithoutTeamsInputSchema).array() ]).optional(),
-  deleteMany: z.union([ z.lazy(() => LeagueScalarWhereInputSchema),z.lazy(() => LeagueScalarWhereInputSchema).array() ]).optional(),
-}).strict();
+export const LeagueUncheckedUpdateManyWithoutTeamsNestedInputSchema: z.ZodType<Prisma.LeagueUncheckedUpdateManyWithoutTeamsNestedInput> = z.strictObject({
+  create: z.union([ z.lazy(() => LeagueCreateWithoutTeamsInputSchema), z.lazy(() => LeagueCreateWithoutTeamsInputSchema).array(), z.lazy(() => LeagueUncheckedCreateWithoutTeamsInputSchema), z.lazy(() => LeagueUncheckedCreateWithoutTeamsInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => LeagueCreateOrConnectWithoutTeamsInputSchema), z.lazy(() => LeagueCreateOrConnectWithoutTeamsInputSchema).array() ]).optional(),
+  upsert: z.union([ z.lazy(() => LeagueUpsertWithWhereUniqueWithoutTeamsInputSchema), z.lazy(() => LeagueUpsertWithWhereUniqueWithoutTeamsInputSchema).array() ]).optional(),
+  set: z.union([ z.lazy(() => LeagueWhereUniqueInputSchema), z.lazy(() => LeagueWhereUniqueInputSchema).array() ]).optional(),
+  disconnect: z.union([ z.lazy(() => LeagueWhereUniqueInputSchema), z.lazy(() => LeagueWhereUniqueInputSchema).array() ]).optional(),
+  delete: z.union([ z.lazy(() => LeagueWhereUniqueInputSchema), z.lazy(() => LeagueWhereUniqueInputSchema).array() ]).optional(),
+  connect: z.union([ z.lazy(() => LeagueWhereUniqueInputSchema), z.lazy(() => LeagueWhereUniqueInputSchema).array() ]).optional(),
+  update: z.union([ z.lazy(() => LeagueUpdateWithWhereUniqueWithoutTeamsInputSchema), z.lazy(() => LeagueUpdateWithWhereUniqueWithoutTeamsInputSchema).array() ]).optional(),
+  updateMany: z.union([ z.lazy(() => LeagueUpdateManyWithWhereWithoutTeamsInputSchema), z.lazy(() => LeagueUpdateManyWithWhereWithoutTeamsInputSchema).array() ]).optional(),
+  deleteMany: z.union([ z.lazy(() => LeagueScalarWhereInputSchema), z.lazy(() => LeagueScalarWhereInputSchema).array() ]).optional(),
+});
 
-export const TeamCreateNestedManyWithoutLeaguesInputSchema: z.ZodType<Prisma.TeamCreateNestedManyWithoutLeaguesInput> = z.object({
-  create: z.union([ z.lazy(() => TeamCreateWithoutLeaguesInputSchema),z.lazy(() => TeamCreateWithoutLeaguesInputSchema).array(),z.lazy(() => TeamUncheckedCreateWithoutLeaguesInputSchema),z.lazy(() => TeamUncheckedCreateWithoutLeaguesInputSchema).array() ]).optional(),
-  connectOrCreate: z.union([ z.lazy(() => TeamCreateOrConnectWithoutLeaguesInputSchema),z.lazy(() => TeamCreateOrConnectWithoutLeaguesInputSchema).array() ]).optional(),
-  connect: z.union([ z.lazy(() => TeamWhereUniqueInputSchema),z.lazy(() => TeamWhereUniqueInputSchema).array() ]).optional(),
-}).strict();
+export const TeamCreateNestedManyWithoutLeaguesInputSchema: z.ZodType<Prisma.TeamCreateNestedManyWithoutLeaguesInput> = z.strictObject({
+  create: z.union([ z.lazy(() => TeamCreateWithoutLeaguesInputSchema), z.lazy(() => TeamCreateWithoutLeaguesInputSchema).array(), z.lazy(() => TeamUncheckedCreateWithoutLeaguesInputSchema), z.lazy(() => TeamUncheckedCreateWithoutLeaguesInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => TeamCreateOrConnectWithoutLeaguesInputSchema), z.lazy(() => TeamCreateOrConnectWithoutLeaguesInputSchema).array() ]).optional(),
+  connect: z.union([ z.lazy(() => TeamWhereUniqueInputSchema), z.lazy(() => TeamWhereUniqueInputSchema).array() ]).optional(),
+});
 
-export const TeamUncheckedCreateNestedManyWithoutLeaguesInputSchema: z.ZodType<Prisma.TeamUncheckedCreateNestedManyWithoutLeaguesInput> = z.object({
-  create: z.union([ z.lazy(() => TeamCreateWithoutLeaguesInputSchema),z.lazy(() => TeamCreateWithoutLeaguesInputSchema).array(),z.lazy(() => TeamUncheckedCreateWithoutLeaguesInputSchema),z.lazy(() => TeamUncheckedCreateWithoutLeaguesInputSchema).array() ]).optional(),
-  connectOrCreate: z.union([ z.lazy(() => TeamCreateOrConnectWithoutLeaguesInputSchema),z.lazy(() => TeamCreateOrConnectWithoutLeaguesInputSchema).array() ]).optional(),
-  connect: z.union([ z.lazy(() => TeamWhereUniqueInputSchema),z.lazy(() => TeamWhereUniqueInputSchema).array() ]).optional(),
-}).strict();
+export const TeamUncheckedCreateNestedManyWithoutLeaguesInputSchema: z.ZodType<Prisma.TeamUncheckedCreateNestedManyWithoutLeaguesInput> = z.strictObject({
+  create: z.union([ z.lazy(() => TeamCreateWithoutLeaguesInputSchema), z.lazy(() => TeamCreateWithoutLeaguesInputSchema).array(), z.lazy(() => TeamUncheckedCreateWithoutLeaguesInputSchema), z.lazy(() => TeamUncheckedCreateWithoutLeaguesInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => TeamCreateOrConnectWithoutLeaguesInputSchema), z.lazy(() => TeamCreateOrConnectWithoutLeaguesInputSchema).array() ]).optional(),
+  connect: z.union([ z.lazy(() => TeamWhereUniqueInputSchema), z.lazy(() => TeamWhereUniqueInputSchema).array() ]).optional(),
+});
 
-export const TeamUpdateManyWithoutLeaguesNestedInputSchema: z.ZodType<Prisma.TeamUpdateManyWithoutLeaguesNestedInput> = z.object({
-  create: z.union([ z.lazy(() => TeamCreateWithoutLeaguesInputSchema),z.lazy(() => TeamCreateWithoutLeaguesInputSchema).array(),z.lazy(() => TeamUncheckedCreateWithoutLeaguesInputSchema),z.lazy(() => TeamUncheckedCreateWithoutLeaguesInputSchema).array() ]).optional(),
-  connectOrCreate: z.union([ z.lazy(() => TeamCreateOrConnectWithoutLeaguesInputSchema),z.lazy(() => TeamCreateOrConnectWithoutLeaguesInputSchema).array() ]).optional(),
-  upsert: z.union([ z.lazy(() => TeamUpsertWithWhereUniqueWithoutLeaguesInputSchema),z.lazy(() => TeamUpsertWithWhereUniqueWithoutLeaguesInputSchema).array() ]).optional(),
-  set: z.union([ z.lazy(() => TeamWhereUniqueInputSchema),z.lazy(() => TeamWhereUniqueInputSchema).array() ]).optional(),
-  disconnect: z.union([ z.lazy(() => TeamWhereUniqueInputSchema),z.lazy(() => TeamWhereUniqueInputSchema).array() ]).optional(),
-  delete: z.union([ z.lazy(() => TeamWhereUniqueInputSchema),z.lazy(() => TeamWhereUniqueInputSchema).array() ]).optional(),
-  connect: z.union([ z.lazy(() => TeamWhereUniqueInputSchema),z.lazy(() => TeamWhereUniqueInputSchema).array() ]).optional(),
-  update: z.union([ z.lazy(() => TeamUpdateWithWhereUniqueWithoutLeaguesInputSchema),z.lazy(() => TeamUpdateWithWhereUniqueWithoutLeaguesInputSchema).array() ]).optional(),
-  updateMany: z.union([ z.lazy(() => TeamUpdateManyWithWhereWithoutLeaguesInputSchema),z.lazy(() => TeamUpdateManyWithWhereWithoutLeaguesInputSchema).array() ]).optional(),
-  deleteMany: z.union([ z.lazy(() => TeamScalarWhereInputSchema),z.lazy(() => TeamScalarWhereInputSchema).array() ]).optional(),
-}).strict();
+export const TeamUpdateManyWithoutLeaguesNestedInputSchema: z.ZodType<Prisma.TeamUpdateManyWithoutLeaguesNestedInput> = z.strictObject({
+  create: z.union([ z.lazy(() => TeamCreateWithoutLeaguesInputSchema), z.lazy(() => TeamCreateWithoutLeaguesInputSchema).array(), z.lazy(() => TeamUncheckedCreateWithoutLeaguesInputSchema), z.lazy(() => TeamUncheckedCreateWithoutLeaguesInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => TeamCreateOrConnectWithoutLeaguesInputSchema), z.lazy(() => TeamCreateOrConnectWithoutLeaguesInputSchema).array() ]).optional(),
+  upsert: z.union([ z.lazy(() => TeamUpsertWithWhereUniqueWithoutLeaguesInputSchema), z.lazy(() => TeamUpsertWithWhereUniqueWithoutLeaguesInputSchema).array() ]).optional(),
+  set: z.union([ z.lazy(() => TeamWhereUniqueInputSchema), z.lazy(() => TeamWhereUniqueInputSchema).array() ]).optional(),
+  disconnect: z.union([ z.lazy(() => TeamWhereUniqueInputSchema), z.lazy(() => TeamWhereUniqueInputSchema).array() ]).optional(),
+  delete: z.union([ z.lazy(() => TeamWhereUniqueInputSchema), z.lazy(() => TeamWhereUniqueInputSchema).array() ]).optional(),
+  connect: z.union([ z.lazy(() => TeamWhereUniqueInputSchema), z.lazy(() => TeamWhereUniqueInputSchema).array() ]).optional(),
+  update: z.union([ z.lazy(() => TeamUpdateWithWhereUniqueWithoutLeaguesInputSchema), z.lazy(() => TeamUpdateWithWhereUniqueWithoutLeaguesInputSchema).array() ]).optional(),
+  updateMany: z.union([ z.lazy(() => TeamUpdateManyWithWhereWithoutLeaguesInputSchema), z.lazy(() => TeamUpdateManyWithWhereWithoutLeaguesInputSchema).array() ]).optional(),
+  deleteMany: z.union([ z.lazy(() => TeamScalarWhereInputSchema), z.lazy(() => TeamScalarWhereInputSchema).array() ]).optional(),
+});
 
-export const TeamUncheckedUpdateManyWithoutLeaguesNestedInputSchema: z.ZodType<Prisma.TeamUncheckedUpdateManyWithoutLeaguesNestedInput> = z.object({
-  create: z.union([ z.lazy(() => TeamCreateWithoutLeaguesInputSchema),z.lazy(() => TeamCreateWithoutLeaguesInputSchema).array(),z.lazy(() => TeamUncheckedCreateWithoutLeaguesInputSchema),z.lazy(() => TeamUncheckedCreateWithoutLeaguesInputSchema).array() ]).optional(),
-  connectOrCreate: z.union([ z.lazy(() => TeamCreateOrConnectWithoutLeaguesInputSchema),z.lazy(() => TeamCreateOrConnectWithoutLeaguesInputSchema).array() ]).optional(),
-  upsert: z.union([ z.lazy(() => TeamUpsertWithWhereUniqueWithoutLeaguesInputSchema),z.lazy(() => TeamUpsertWithWhereUniqueWithoutLeaguesInputSchema).array() ]).optional(),
-  set: z.union([ z.lazy(() => TeamWhereUniqueInputSchema),z.lazy(() => TeamWhereUniqueInputSchema).array() ]).optional(),
-  disconnect: z.union([ z.lazy(() => TeamWhereUniqueInputSchema),z.lazy(() => TeamWhereUniqueInputSchema).array() ]).optional(),
-  delete: z.union([ z.lazy(() => TeamWhereUniqueInputSchema),z.lazy(() => TeamWhereUniqueInputSchema).array() ]).optional(),
-  connect: z.union([ z.lazy(() => TeamWhereUniqueInputSchema),z.lazy(() => TeamWhereUniqueInputSchema).array() ]).optional(),
-  update: z.union([ z.lazy(() => TeamUpdateWithWhereUniqueWithoutLeaguesInputSchema),z.lazy(() => TeamUpdateWithWhereUniqueWithoutLeaguesInputSchema).array() ]).optional(),
-  updateMany: z.union([ z.lazy(() => TeamUpdateManyWithWhereWithoutLeaguesInputSchema),z.lazy(() => TeamUpdateManyWithWhereWithoutLeaguesInputSchema).array() ]).optional(),
-  deleteMany: z.union([ z.lazy(() => TeamScalarWhereInputSchema),z.lazy(() => TeamScalarWhereInputSchema).array() ]).optional(),
-}).strict();
+export const TeamUncheckedUpdateManyWithoutLeaguesNestedInputSchema: z.ZodType<Prisma.TeamUncheckedUpdateManyWithoutLeaguesNestedInput> = z.strictObject({
+  create: z.union([ z.lazy(() => TeamCreateWithoutLeaguesInputSchema), z.lazy(() => TeamCreateWithoutLeaguesInputSchema).array(), z.lazy(() => TeamUncheckedCreateWithoutLeaguesInputSchema), z.lazy(() => TeamUncheckedCreateWithoutLeaguesInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => TeamCreateOrConnectWithoutLeaguesInputSchema), z.lazy(() => TeamCreateOrConnectWithoutLeaguesInputSchema).array() ]).optional(),
+  upsert: z.union([ z.lazy(() => TeamUpsertWithWhereUniqueWithoutLeaguesInputSchema), z.lazy(() => TeamUpsertWithWhereUniqueWithoutLeaguesInputSchema).array() ]).optional(),
+  set: z.union([ z.lazy(() => TeamWhereUniqueInputSchema), z.lazy(() => TeamWhereUniqueInputSchema).array() ]).optional(),
+  disconnect: z.union([ z.lazy(() => TeamWhereUniqueInputSchema), z.lazy(() => TeamWhereUniqueInputSchema).array() ]).optional(),
+  delete: z.union([ z.lazy(() => TeamWhereUniqueInputSchema), z.lazy(() => TeamWhereUniqueInputSchema).array() ]).optional(),
+  connect: z.union([ z.lazy(() => TeamWhereUniqueInputSchema), z.lazy(() => TeamWhereUniqueInputSchema).array() ]).optional(),
+  update: z.union([ z.lazy(() => TeamUpdateWithWhereUniqueWithoutLeaguesInputSchema), z.lazy(() => TeamUpdateWithWhereUniqueWithoutLeaguesInputSchema).array() ]).optional(),
+  updateMany: z.union([ z.lazy(() => TeamUpdateManyWithWhereWithoutLeaguesInputSchema), z.lazy(() => TeamUpdateManyWithWhereWithoutLeaguesInputSchema).array() ]).optional(),
+  deleteMany: z.union([ z.lazy(() => TeamScalarWhereInputSchema), z.lazy(() => TeamScalarWhereInputSchema).array() ]).optional(),
+});
 
-export const NestedStringFilterSchema: z.ZodType<Prisma.NestedStringFilter> = z.object({
+export const NestedStringFilterSchema: z.ZodType<Prisma.NestedStringFilter> = z.strictObject({
   equals: z.string().optional(),
   in: z.string().array().optional(),
   notIn: z.string().array().optional(),
@@ -1138,9 +1138,9 @@ export const NestedStringFilterSchema: z.ZodType<Prisma.NestedStringFilter> = z.
   endsWith: z.string().optional(),
   search: z.string().optional(),
   not: z.union([ z.string(),z.lazy(() => NestedStringFilterSchema) ]).optional(),
-}).strict();
+});
 
-export const NestedDateTimeNullableFilterSchema: z.ZodType<Prisma.NestedDateTimeNullableFilter> = z.object({
+export const NestedDateTimeNullableFilterSchema: z.ZodType<Prisma.NestedDateTimeNullableFilter> = z.strictObject({
   equals: z.coerce.date().optional().nullable(),
   in: z.coerce.date().array().optional().nullable(),
   notIn: z.coerce.date().array().optional().nullable(),
@@ -1149,16 +1149,16 @@ export const NestedDateTimeNullableFilterSchema: z.ZodType<Prisma.NestedDateTime
   gt: z.coerce.date().optional(),
   gte: z.coerce.date().optional(),
   not: z.union([ z.coerce.date(),z.lazy(() => NestedDateTimeNullableFilterSchema) ]).optional().nullable(),
-}).strict();
+});
 
-export const NestedEnumPositionNullableFilterSchema: z.ZodType<Prisma.NestedEnumPositionNullableFilter> = z.object({
+export const NestedEnumPositionNullableFilterSchema: z.ZodType<Prisma.NestedEnumPositionNullableFilter> = z.strictObject({
   equals: z.lazy(() => PositionSchema).optional().nullable(),
   in: z.lazy(() => PositionSchema).array().optional().nullable(),
   notIn: z.lazy(() => PositionSchema).array().optional().nullable(),
-  not: z.union([ z.lazy(() => PositionSchema),z.lazy(() => NestedEnumPositionNullableFilterSchema) ]).optional().nullable(),
-}).strict();
+  not: z.union([ z.lazy(() => PositionSchema), z.lazy(() => NestedEnumPositionNullableFilterSchema) ]).optional().nullable(),
+});
 
-export const NestedIntNullableFilterSchema: z.ZodType<Prisma.NestedIntNullableFilter> = z.object({
+export const NestedIntNullableFilterSchema: z.ZodType<Prisma.NestedIntNullableFilter> = z.strictObject({
   equals: z.number().optional().nullable(),
   in: z.number().array().optional().nullable(),
   notIn: z.number().array().optional().nullable(),
@@ -1167,9 +1167,9 @@ export const NestedIntNullableFilterSchema: z.ZodType<Prisma.NestedIntNullableFi
   gt: z.number().optional(),
   gte: z.number().optional(),
   not: z.union([ z.number(),z.lazy(() => NestedIntNullableFilterSchema) ]).optional().nullable(),
-}).strict();
+});
 
-export const NestedStringNullableFilterSchema: z.ZodType<Prisma.NestedStringNullableFilter> = z.object({
+export const NestedStringNullableFilterSchema: z.ZodType<Prisma.NestedStringNullableFilter> = z.strictObject({
   equals: z.string().optional().nullable(),
   in: z.string().array().optional().nullable(),
   notIn: z.string().array().optional().nullable(),
@@ -1182,9 +1182,9 @@ export const NestedStringNullableFilterSchema: z.ZodType<Prisma.NestedStringNull
   endsWith: z.string().optional(),
   search: z.string().optional(),
   not: z.union([ z.string(),z.lazy(() => NestedStringNullableFilterSchema) ]).optional().nullable(),
-}).strict();
+});
 
-export const NestedDateTimeFilterSchema: z.ZodType<Prisma.NestedDateTimeFilter> = z.object({
+export const NestedDateTimeFilterSchema: z.ZodType<Prisma.NestedDateTimeFilter> = z.strictObject({
   equals: z.coerce.date().optional(),
   in: z.coerce.date().array().optional(),
   notIn: z.coerce.date().array().optional(),
@@ -1193,9 +1193,9 @@ export const NestedDateTimeFilterSchema: z.ZodType<Prisma.NestedDateTimeFilter> 
   gt: z.coerce.date().optional(),
   gte: z.coerce.date().optional(),
   not: z.union([ z.coerce.date(),z.lazy(() => NestedDateTimeFilterSchema) ]).optional(),
-}).strict();
+});
 
-export const NestedStringWithAggregatesFilterSchema: z.ZodType<Prisma.NestedStringWithAggregatesFilter> = z.object({
+export const NestedStringWithAggregatesFilterSchema: z.ZodType<Prisma.NestedStringWithAggregatesFilter> = z.strictObject({
   equals: z.string().optional(),
   in: z.string().array().optional(),
   notIn: z.string().array().optional(),
@@ -1210,10 +1210,10 @@ export const NestedStringWithAggregatesFilterSchema: z.ZodType<Prisma.NestedStri
   not: z.union([ z.string(),z.lazy(() => NestedStringWithAggregatesFilterSchema) ]).optional(),
   _count: z.lazy(() => NestedIntFilterSchema).optional(),
   _min: z.lazy(() => NestedStringFilterSchema).optional(),
-  _max: z.lazy(() => NestedStringFilterSchema).optional()
-}).strict();
+  _max: z.lazy(() => NestedStringFilterSchema).optional(),
+});
 
-export const NestedIntFilterSchema: z.ZodType<Prisma.NestedIntFilter> = z.object({
+export const NestedIntFilterSchema: z.ZodType<Prisma.NestedIntFilter> = z.strictObject({
   equals: z.number().optional(),
   in: z.number().array().optional(),
   notIn: z.number().array().optional(),
@@ -1222,9 +1222,9 @@ export const NestedIntFilterSchema: z.ZodType<Prisma.NestedIntFilter> = z.object
   gt: z.number().optional(),
   gte: z.number().optional(),
   not: z.union([ z.number(),z.lazy(() => NestedIntFilterSchema) ]).optional(),
-}).strict();
+});
 
-export const NestedDateTimeNullableWithAggregatesFilterSchema: z.ZodType<Prisma.NestedDateTimeNullableWithAggregatesFilter> = z.object({
+export const NestedDateTimeNullableWithAggregatesFilterSchema: z.ZodType<Prisma.NestedDateTimeNullableWithAggregatesFilter> = z.strictObject({
   equals: z.coerce.date().optional().nullable(),
   in: z.coerce.date().array().optional().nullable(),
   notIn: z.coerce.date().array().optional().nullable(),
@@ -1235,20 +1235,20 @@ export const NestedDateTimeNullableWithAggregatesFilterSchema: z.ZodType<Prisma.
   not: z.union([ z.coerce.date(),z.lazy(() => NestedDateTimeNullableWithAggregatesFilterSchema) ]).optional().nullable(),
   _count: z.lazy(() => NestedIntNullableFilterSchema).optional(),
   _min: z.lazy(() => NestedDateTimeNullableFilterSchema).optional(),
-  _max: z.lazy(() => NestedDateTimeNullableFilterSchema).optional()
-}).strict();
+  _max: z.lazy(() => NestedDateTimeNullableFilterSchema).optional(),
+});
 
-export const NestedEnumPositionNullableWithAggregatesFilterSchema: z.ZodType<Prisma.NestedEnumPositionNullableWithAggregatesFilter> = z.object({
+export const NestedEnumPositionNullableWithAggregatesFilterSchema: z.ZodType<Prisma.NestedEnumPositionNullableWithAggregatesFilter> = z.strictObject({
   equals: z.lazy(() => PositionSchema).optional().nullable(),
   in: z.lazy(() => PositionSchema).array().optional().nullable(),
   notIn: z.lazy(() => PositionSchema).array().optional().nullable(),
-  not: z.union([ z.lazy(() => PositionSchema),z.lazy(() => NestedEnumPositionNullableWithAggregatesFilterSchema) ]).optional().nullable(),
+  not: z.union([ z.lazy(() => PositionSchema), z.lazy(() => NestedEnumPositionNullableWithAggregatesFilterSchema) ]).optional().nullable(),
   _count: z.lazy(() => NestedIntNullableFilterSchema).optional(),
   _min: z.lazy(() => NestedEnumPositionNullableFilterSchema).optional(),
-  _max: z.lazy(() => NestedEnumPositionNullableFilterSchema).optional()
-}).strict();
+  _max: z.lazy(() => NestedEnumPositionNullableFilterSchema).optional(),
+});
 
-export const NestedIntNullableWithAggregatesFilterSchema: z.ZodType<Prisma.NestedIntNullableWithAggregatesFilter> = z.object({
+export const NestedIntNullableWithAggregatesFilterSchema: z.ZodType<Prisma.NestedIntNullableWithAggregatesFilter> = z.strictObject({
   equals: z.number().optional().nullable(),
   in: z.number().array().optional().nullable(),
   notIn: z.number().array().optional().nullable(),
@@ -1261,10 +1261,10 @@ export const NestedIntNullableWithAggregatesFilterSchema: z.ZodType<Prisma.Neste
   _avg: z.lazy(() => NestedFloatNullableFilterSchema).optional(),
   _sum: z.lazy(() => NestedIntNullableFilterSchema).optional(),
   _min: z.lazy(() => NestedIntNullableFilterSchema).optional(),
-  _max: z.lazy(() => NestedIntNullableFilterSchema).optional()
-}).strict();
+  _max: z.lazy(() => NestedIntNullableFilterSchema).optional(),
+});
 
-export const NestedFloatNullableFilterSchema: z.ZodType<Prisma.NestedFloatNullableFilter> = z.object({
+export const NestedFloatNullableFilterSchema: z.ZodType<Prisma.NestedFloatNullableFilter> = z.strictObject({
   equals: z.number().optional().nullable(),
   in: z.number().array().optional().nullable(),
   notIn: z.number().array().optional().nullable(),
@@ -1273,9 +1273,9 @@ export const NestedFloatNullableFilterSchema: z.ZodType<Prisma.NestedFloatNullab
   gt: z.number().optional(),
   gte: z.number().optional(),
   not: z.union([ z.number(),z.lazy(() => NestedFloatNullableFilterSchema) ]).optional().nullable(),
-}).strict();
+});
 
-export const NestedStringNullableWithAggregatesFilterSchema: z.ZodType<Prisma.NestedStringNullableWithAggregatesFilter> = z.object({
+export const NestedStringNullableWithAggregatesFilterSchema: z.ZodType<Prisma.NestedStringNullableWithAggregatesFilter> = z.strictObject({
   equals: z.string().optional().nullable(),
   in: z.string().array().optional().nullable(),
   notIn: z.string().array().optional().nullable(),
@@ -1290,10 +1290,10 @@ export const NestedStringNullableWithAggregatesFilterSchema: z.ZodType<Prisma.Ne
   not: z.union([ z.string(),z.lazy(() => NestedStringNullableWithAggregatesFilterSchema) ]).optional().nullable(),
   _count: z.lazy(() => NestedIntNullableFilterSchema).optional(),
   _min: z.lazy(() => NestedStringNullableFilterSchema).optional(),
-  _max: z.lazy(() => NestedStringNullableFilterSchema).optional()
-}).strict();
+  _max: z.lazy(() => NestedStringNullableFilterSchema).optional(),
+});
 
-export const NestedDateTimeWithAggregatesFilterSchema: z.ZodType<Prisma.NestedDateTimeWithAggregatesFilter> = z.object({
+export const NestedDateTimeWithAggregatesFilterSchema: z.ZodType<Prisma.NestedDateTimeWithAggregatesFilter> = z.strictObject({
   equals: z.coerce.date().optional(),
   in: z.coerce.date().array().optional(),
   notIn: z.coerce.date().array().optional(),
@@ -1304,10 +1304,10 @@ export const NestedDateTimeWithAggregatesFilterSchema: z.ZodType<Prisma.NestedDa
   not: z.union([ z.coerce.date(),z.lazy(() => NestedDateTimeWithAggregatesFilterSchema) ]).optional(),
   _count: z.lazy(() => NestedIntFilterSchema).optional(),
   _min: z.lazy(() => NestedDateTimeFilterSchema).optional(),
-  _max: z.lazy(() => NestedDateTimeFilterSchema).optional()
-}).strict();
+  _max: z.lazy(() => NestedDateTimeFilterSchema).optional(),
+});
 
-export const NestedIntWithAggregatesFilterSchema: z.ZodType<Prisma.NestedIntWithAggregatesFilter> = z.object({
+export const NestedIntWithAggregatesFilterSchema: z.ZodType<Prisma.NestedIntWithAggregatesFilter> = z.strictObject({
   equals: z.number().optional(),
   in: z.number().array().optional(),
   notIn: z.number().array().optional(),
@@ -1320,10 +1320,10 @@ export const NestedIntWithAggregatesFilterSchema: z.ZodType<Prisma.NestedIntWith
   _avg: z.lazy(() => NestedFloatFilterSchema).optional(),
   _sum: z.lazy(() => NestedIntFilterSchema).optional(),
   _min: z.lazy(() => NestedIntFilterSchema).optional(),
-  _max: z.lazy(() => NestedIntFilterSchema).optional()
-}).strict();
+  _max: z.lazy(() => NestedIntFilterSchema).optional(),
+});
 
-export const NestedFloatFilterSchema: z.ZodType<Prisma.NestedFloatFilter> = z.object({
+export const NestedFloatFilterSchema: z.ZodType<Prisma.NestedFloatFilter> = z.strictObject({
   equals: z.number().optional(),
   in: z.number().array().optional(),
   notIn: z.number().array().optional(),
@@ -1332,318 +1332,318 @@ export const NestedFloatFilterSchema: z.ZodType<Prisma.NestedFloatFilter> = z.ob
   gt: z.number().optional(),
   gte: z.number().optional(),
   not: z.union([ z.number(),z.lazy(() => NestedFloatFilterSchema) ]).optional(),
-}).strict();
+});
 
-export const TeamCreateWithoutPlayersInputSchema: z.ZodType<Prisma.TeamCreateWithoutPlayersInput> = z.object({
-  id: z.string().uuid().optional(),
+export const TeamCreateWithoutPlayersInputSchema: z.ZodType<Prisma.TeamCreateWithoutPlayersInput> = z.strictObject({
+  id: z.uuid().optional(),
   teamName: z.string(),
   city: z.string(),
   since: z.number().int(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
-  leagues: z.lazy(() => LeagueCreateNestedManyWithoutTeamsInputSchema).optional()
-}).strict();
+  leagues: z.lazy(() => LeagueCreateNestedManyWithoutTeamsInputSchema).optional(),
+});
 
-export const TeamUncheckedCreateWithoutPlayersInputSchema: z.ZodType<Prisma.TeamUncheckedCreateWithoutPlayersInput> = z.object({
-  id: z.string().uuid().optional(),
+export const TeamUncheckedCreateWithoutPlayersInputSchema: z.ZodType<Prisma.TeamUncheckedCreateWithoutPlayersInput> = z.strictObject({
+  id: z.uuid().optional(),
   teamName: z.string(),
   city: z.string(),
   since: z.number().int(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
-  leagues: z.lazy(() => LeagueUncheckedCreateNestedManyWithoutTeamsInputSchema).optional()
-}).strict();
+  leagues: z.lazy(() => LeagueUncheckedCreateNestedManyWithoutTeamsInputSchema).optional(),
+});
 
-export const TeamCreateOrConnectWithoutPlayersInputSchema: z.ZodType<Prisma.TeamCreateOrConnectWithoutPlayersInput> = z.object({
+export const TeamCreateOrConnectWithoutPlayersInputSchema: z.ZodType<Prisma.TeamCreateOrConnectWithoutPlayersInput> = z.strictObject({
   where: z.lazy(() => TeamWhereUniqueInputSchema),
-  create: z.union([ z.lazy(() => TeamCreateWithoutPlayersInputSchema),z.lazy(() => TeamUncheckedCreateWithoutPlayersInputSchema) ]),
-}).strict();
+  create: z.union([ z.lazy(() => TeamCreateWithoutPlayersInputSchema), z.lazy(() => TeamUncheckedCreateWithoutPlayersInputSchema) ]),
+});
 
-export const TeamUpsertWithoutPlayersInputSchema: z.ZodType<Prisma.TeamUpsertWithoutPlayersInput> = z.object({
-  update: z.union([ z.lazy(() => TeamUpdateWithoutPlayersInputSchema),z.lazy(() => TeamUncheckedUpdateWithoutPlayersInputSchema) ]),
-  create: z.union([ z.lazy(() => TeamCreateWithoutPlayersInputSchema),z.lazy(() => TeamUncheckedCreateWithoutPlayersInputSchema) ]),
-  where: z.lazy(() => TeamWhereInputSchema).optional()
-}).strict();
-
-export const TeamUpdateToOneWithWhereWithoutPlayersInputSchema: z.ZodType<Prisma.TeamUpdateToOneWithWhereWithoutPlayersInput> = z.object({
+export const TeamUpsertWithoutPlayersInputSchema: z.ZodType<Prisma.TeamUpsertWithoutPlayersInput> = z.strictObject({
+  update: z.union([ z.lazy(() => TeamUpdateWithoutPlayersInputSchema), z.lazy(() => TeamUncheckedUpdateWithoutPlayersInputSchema) ]),
+  create: z.union([ z.lazy(() => TeamCreateWithoutPlayersInputSchema), z.lazy(() => TeamUncheckedCreateWithoutPlayersInputSchema) ]),
   where: z.lazy(() => TeamWhereInputSchema).optional(),
-  data: z.union([ z.lazy(() => TeamUpdateWithoutPlayersInputSchema),z.lazy(() => TeamUncheckedUpdateWithoutPlayersInputSchema) ]),
-}).strict();
+});
 
-export const TeamUpdateWithoutPlayersInputSchema: z.ZodType<Prisma.TeamUpdateWithoutPlayersInput> = z.object({
-  id: z.union([ z.string().uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+export const TeamUpdateToOneWithWhereWithoutPlayersInputSchema: z.ZodType<Prisma.TeamUpdateToOneWithWhereWithoutPlayersInput> = z.strictObject({
+  where: z.lazy(() => TeamWhereInputSchema).optional(),
+  data: z.union([ z.lazy(() => TeamUpdateWithoutPlayersInputSchema), z.lazy(() => TeamUncheckedUpdateWithoutPlayersInputSchema) ]),
+});
+
+export const TeamUpdateWithoutPlayersInputSchema: z.ZodType<Prisma.TeamUpdateWithoutPlayersInput> = z.strictObject({
+  id: z.union([ z.uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   teamName: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   city: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   since: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-  leagues: z.lazy(() => LeagueUpdateManyWithoutTeamsNestedInputSchema).optional()
-}).strict();
+  leagues: z.lazy(() => LeagueUpdateManyWithoutTeamsNestedInputSchema).optional(),
+});
 
-export const TeamUncheckedUpdateWithoutPlayersInputSchema: z.ZodType<Prisma.TeamUncheckedUpdateWithoutPlayersInput> = z.object({
-  id: z.union([ z.string().uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+export const TeamUncheckedUpdateWithoutPlayersInputSchema: z.ZodType<Prisma.TeamUncheckedUpdateWithoutPlayersInput> = z.strictObject({
+  id: z.union([ z.uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   teamName: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   city: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   since: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-  leagues: z.lazy(() => LeagueUncheckedUpdateManyWithoutTeamsNestedInputSchema).optional()
-}).strict();
+  leagues: z.lazy(() => LeagueUncheckedUpdateManyWithoutTeamsNestedInputSchema).optional(),
+});
 
-export const PlayerCreateWithoutTeamInputSchema: z.ZodType<Prisma.PlayerCreateWithoutTeamInput> = z.object({
-  id: z.string().uuid().optional(),
+export const PlayerCreateWithoutTeamInputSchema: z.ZodType<Prisma.PlayerCreateWithoutTeamInput> = z.strictObject({
+  id: z.uuid().optional(),
   firstName: z.string(),
   lastName: z.string(),
   dateBirth: z.coerce.date().optional().nullable(),
   position: z.lazy(() => PositionSchema).optional().nullable(),
   playerNumber: z.number().int().optional().nullable(),
   createdAt: z.coerce.date().optional(),
-  updatedAt: z.coerce.date().optional()
-}).strict();
+  updatedAt: z.coerce.date().optional(),
+});
 
-export const PlayerUncheckedCreateWithoutTeamInputSchema: z.ZodType<Prisma.PlayerUncheckedCreateWithoutTeamInput> = z.object({
-  id: z.string().uuid().optional(),
+export const PlayerUncheckedCreateWithoutTeamInputSchema: z.ZodType<Prisma.PlayerUncheckedCreateWithoutTeamInput> = z.strictObject({
+  id: z.uuid().optional(),
   firstName: z.string(),
   lastName: z.string(),
   dateBirth: z.coerce.date().optional().nullable(),
   position: z.lazy(() => PositionSchema).optional().nullable(),
   playerNumber: z.number().int().optional().nullable(),
   createdAt: z.coerce.date().optional(),
-  updatedAt: z.coerce.date().optional()
-}).strict();
+  updatedAt: z.coerce.date().optional(),
+});
 
-export const PlayerCreateOrConnectWithoutTeamInputSchema: z.ZodType<Prisma.PlayerCreateOrConnectWithoutTeamInput> = z.object({
+export const PlayerCreateOrConnectWithoutTeamInputSchema: z.ZodType<Prisma.PlayerCreateOrConnectWithoutTeamInput> = z.strictObject({
   where: z.lazy(() => PlayerWhereUniqueInputSchema),
-  create: z.union([ z.lazy(() => PlayerCreateWithoutTeamInputSchema),z.lazy(() => PlayerUncheckedCreateWithoutTeamInputSchema) ]),
-}).strict();
+  create: z.union([ z.lazy(() => PlayerCreateWithoutTeamInputSchema), z.lazy(() => PlayerUncheckedCreateWithoutTeamInputSchema) ]),
+});
 
-export const PlayerCreateManyTeamInputEnvelopeSchema: z.ZodType<Prisma.PlayerCreateManyTeamInputEnvelope> = z.object({
-  data: z.union([ z.lazy(() => PlayerCreateManyTeamInputSchema),z.lazy(() => PlayerCreateManyTeamInputSchema).array() ]),
-  skipDuplicates: z.boolean().optional()
-}).strict();
+export const PlayerCreateManyTeamInputEnvelopeSchema: z.ZodType<Prisma.PlayerCreateManyTeamInputEnvelope> = z.strictObject({
+  data: z.union([ z.lazy(() => PlayerCreateManyTeamInputSchema), z.lazy(() => PlayerCreateManyTeamInputSchema).array() ]),
+  skipDuplicates: z.boolean().optional(),
+});
 
-export const LeagueCreateWithoutTeamsInputSchema: z.ZodType<Prisma.LeagueCreateWithoutTeamsInput> = z.object({
-  id: z.string().uuid().optional(),
+export const LeagueCreateWithoutTeamsInputSchema: z.ZodType<Prisma.LeagueCreateWithoutTeamsInput> = z.strictObject({
+  id: z.uuid().optional(),
   leagueName: z.string(),
   createdAt: z.coerce.date().optional(),
-  updatedAt: z.coerce.date().optional()
-}).strict();
+  updatedAt: z.coerce.date().optional(),
+});
 
-export const LeagueUncheckedCreateWithoutTeamsInputSchema: z.ZodType<Prisma.LeagueUncheckedCreateWithoutTeamsInput> = z.object({
-  id: z.string().uuid().optional(),
+export const LeagueUncheckedCreateWithoutTeamsInputSchema: z.ZodType<Prisma.LeagueUncheckedCreateWithoutTeamsInput> = z.strictObject({
+  id: z.uuid().optional(),
   leagueName: z.string(),
   createdAt: z.coerce.date().optional(),
-  updatedAt: z.coerce.date().optional()
-}).strict();
+  updatedAt: z.coerce.date().optional(),
+});
 
-export const LeagueCreateOrConnectWithoutTeamsInputSchema: z.ZodType<Prisma.LeagueCreateOrConnectWithoutTeamsInput> = z.object({
+export const LeagueCreateOrConnectWithoutTeamsInputSchema: z.ZodType<Prisma.LeagueCreateOrConnectWithoutTeamsInput> = z.strictObject({
   where: z.lazy(() => LeagueWhereUniqueInputSchema),
-  create: z.union([ z.lazy(() => LeagueCreateWithoutTeamsInputSchema),z.lazy(() => LeagueUncheckedCreateWithoutTeamsInputSchema) ]),
-}).strict();
+  create: z.union([ z.lazy(() => LeagueCreateWithoutTeamsInputSchema), z.lazy(() => LeagueUncheckedCreateWithoutTeamsInputSchema) ]),
+});
 
-export const PlayerUpsertWithWhereUniqueWithoutTeamInputSchema: z.ZodType<Prisma.PlayerUpsertWithWhereUniqueWithoutTeamInput> = z.object({
+export const PlayerUpsertWithWhereUniqueWithoutTeamInputSchema: z.ZodType<Prisma.PlayerUpsertWithWhereUniqueWithoutTeamInput> = z.strictObject({
   where: z.lazy(() => PlayerWhereUniqueInputSchema),
-  update: z.union([ z.lazy(() => PlayerUpdateWithoutTeamInputSchema),z.lazy(() => PlayerUncheckedUpdateWithoutTeamInputSchema) ]),
-  create: z.union([ z.lazy(() => PlayerCreateWithoutTeamInputSchema),z.lazy(() => PlayerUncheckedCreateWithoutTeamInputSchema) ]),
-}).strict();
+  update: z.union([ z.lazy(() => PlayerUpdateWithoutTeamInputSchema), z.lazy(() => PlayerUncheckedUpdateWithoutTeamInputSchema) ]),
+  create: z.union([ z.lazy(() => PlayerCreateWithoutTeamInputSchema), z.lazy(() => PlayerUncheckedCreateWithoutTeamInputSchema) ]),
+});
 
-export const PlayerUpdateWithWhereUniqueWithoutTeamInputSchema: z.ZodType<Prisma.PlayerUpdateWithWhereUniqueWithoutTeamInput> = z.object({
+export const PlayerUpdateWithWhereUniqueWithoutTeamInputSchema: z.ZodType<Prisma.PlayerUpdateWithWhereUniqueWithoutTeamInput> = z.strictObject({
   where: z.lazy(() => PlayerWhereUniqueInputSchema),
-  data: z.union([ z.lazy(() => PlayerUpdateWithoutTeamInputSchema),z.lazy(() => PlayerUncheckedUpdateWithoutTeamInputSchema) ]),
-}).strict();
+  data: z.union([ z.lazy(() => PlayerUpdateWithoutTeamInputSchema), z.lazy(() => PlayerUncheckedUpdateWithoutTeamInputSchema) ]),
+});
 
-export const PlayerUpdateManyWithWhereWithoutTeamInputSchema: z.ZodType<Prisma.PlayerUpdateManyWithWhereWithoutTeamInput> = z.object({
+export const PlayerUpdateManyWithWhereWithoutTeamInputSchema: z.ZodType<Prisma.PlayerUpdateManyWithWhereWithoutTeamInput> = z.strictObject({
   where: z.lazy(() => PlayerScalarWhereInputSchema),
-  data: z.union([ z.lazy(() => PlayerUpdateManyMutationInputSchema),z.lazy(() => PlayerUncheckedUpdateManyWithoutTeamInputSchema) ]),
-}).strict();
+  data: z.union([ z.lazy(() => PlayerUpdateManyMutationInputSchema), z.lazy(() => PlayerUncheckedUpdateManyWithoutTeamInputSchema) ]),
+});
 
-export const PlayerScalarWhereInputSchema: z.ZodType<Prisma.PlayerScalarWhereInput> = z.object({
-  AND: z.union([ z.lazy(() => PlayerScalarWhereInputSchema),z.lazy(() => PlayerScalarWhereInputSchema).array() ]).optional(),
+export const PlayerScalarWhereInputSchema: z.ZodType<Prisma.PlayerScalarWhereInput> = z.strictObject({
+  AND: z.union([ z.lazy(() => PlayerScalarWhereInputSchema), z.lazy(() => PlayerScalarWhereInputSchema).array() ]).optional(),
   OR: z.lazy(() => PlayerScalarWhereInputSchema).array().optional(),
-  NOT: z.union([ z.lazy(() => PlayerScalarWhereInputSchema),z.lazy(() => PlayerScalarWhereInputSchema).array() ]).optional(),
-  id: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  firstName: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  lastName: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  dateBirth: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.coerce.date() ]).optional().nullable(),
-  position: z.union([ z.lazy(() => EnumPositionNullableFilterSchema),z.lazy(() => PositionSchema) ]).optional().nullable(),
-  playerNumber: z.union([ z.lazy(() => IntNullableFilterSchema),z.number() ]).optional().nullable(),
-  teamId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
-  createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
-  updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
-}).strict();
+  NOT: z.union([ z.lazy(() => PlayerScalarWhereInputSchema), z.lazy(() => PlayerScalarWhereInputSchema).array() ]).optional(),
+  id: z.union([ z.lazy(() => StringFilterSchema), z.string() ]).optional(),
+  firstName: z.union([ z.lazy(() => StringFilterSchema), z.string() ]).optional(),
+  lastName: z.union([ z.lazy(() => StringFilterSchema), z.string() ]).optional(),
+  dateBirth: z.union([ z.lazy(() => DateTimeNullableFilterSchema), z.coerce.date() ]).optional().nullable(),
+  position: z.union([ z.lazy(() => EnumPositionNullableFilterSchema), z.lazy(() => PositionSchema) ]).optional().nullable(),
+  playerNumber: z.union([ z.lazy(() => IntNullableFilterSchema), z.number() ]).optional().nullable(),
+  teamId: z.union([ z.lazy(() => StringNullableFilterSchema), z.string() ]).optional().nullable(),
+  createdAt: z.union([ z.lazy(() => DateTimeFilterSchema), z.coerce.date() ]).optional(),
+  updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema), z.coerce.date() ]).optional(),
+});
 
-export const LeagueUpsertWithWhereUniqueWithoutTeamsInputSchema: z.ZodType<Prisma.LeagueUpsertWithWhereUniqueWithoutTeamsInput> = z.object({
+export const LeagueUpsertWithWhereUniqueWithoutTeamsInputSchema: z.ZodType<Prisma.LeagueUpsertWithWhereUniqueWithoutTeamsInput> = z.strictObject({
   where: z.lazy(() => LeagueWhereUniqueInputSchema),
-  update: z.union([ z.lazy(() => LeagueUpdateWithoutTeamsInputSchema),z.lazy(() => LeagueUncheckedUpdateWithoutTeamsInputSchema) ]),
-  create: z.union([ z.lazy(() => LeagueCreateWithoutTeamsInputSchema),z.lazy(() => LeagueUncheckedCreateWithoutTeamsInputSchema) ]),
-}).strict();
+  update: z.union([ z.lazy(() => LeagueUpdateWithoutTeamsInputSchema), z.lazy(() => LeagueUncheckedUpdateWithoutTeamsInputSchema) ]),
+  create: z.union([ z.lazy(() => LeagueCreateWithoutTeamsInputSchema), z.lazy(() => LeagueUncheckedCreateWithoutTeamsInputSchema) ]),
+});
 
-export const LeagueUpdateWithWhereUniqueWithoutTeamsInputSchema: z.ZodType<Prisma.LeagueUpdateWithWhereUniqueWithoutTeamsInput> = z.object({
+export const LeagueUpdateWithWhereUniqueWithoutTeamsInputSchema: z.ZodType<Prisma.LeagueUpdateWithWhereUniqueWithoutTeamsInput> = z.strictObject({
   where: z.lazy(() => LeagueWhereUniqueInputSchema),
-  data: z.union([ z.lazy(() => LeagueUpdateWithoutTeamsInputSchema),z.lazy(() => LeagueUncheckedUpdateWithoutTeamsInputSchema) ]),
-}).strict();
+  data: z.union([ z.lazy(() => LeagueUpdateWithoutTeamsInputSchema), z.lazy(() => LeagueUncheckedUpdateWithoutTeamsInputSchema) ]),
+});
 
-export const LeagueUpdateManyWithWhereWithoutTeamsInputSchema: z.ZodType<Prisma.LeagueUpdateManyWithWhereWithoutTeamsInput> = z.object({
+export const LeagueUpdateManyWithWhereWithoutTeamsInputSchema: z.ZodType<Prisma.LeagueUpdateManyWithWhereWithoutTeamsInput> = z.strictObject({
   where: z.lazy(() => LeagueScalarWhereInputSchema),
-  data: z.union([ z.lazy(() => LeagueUpdateManyMutationInputSchema),z.lazy(() => LeagueUncheckedUpdateManyWithoutTeamsInputSchema) ]),
-}).strict();
+  data: z.union([ z.lazy(() => LeagueUpdateManyMutationInputSchema), z.lazy(() => LeagueUncheckedUpdateManyWithoutTeamsInputSchema) ]),
+});
 
-export const LeagueScalarWhereInputSchema: z.ZodType<Prisma.LeagueScalarWhereInput> = z.object({
-  AND: z.union([ z.lazy(() => LeagueScalarWhereInputSchema),z.lazy(() => LeagueScalarWhereInputSchema).array() ]).optional(),
+export const LeagueScalarWhereInputSchema: z.ZodType<Prisma.LeagueScalarWhereInput> = z.strictObject({
+  AND: z.union([ z.lazy(() => LeagueScalarWhereInputSchema), z.lazy(() => LeagueScalarWhereInputSchema).array() ]).optional(),
   OR: z.lazy(() => LeagueScalarWhereInputSchema).array().optional(),
-  NOT: z.union([ z.lazy(() => LeagueScalarWhereInputSchema),z.lazy(() => LeagueScalarWhereInputSchema).array() ]).optional(),
-  id: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  leagueName: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
-  updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
-}).strict();
+  NOT: z.union([ z.lazy(() => LeagueScalarWhereInputSchema), z.lazy(() => LeagueScalarWhereInputSchema).array() ]).optional(),
+  id: z.union([ z.lazy(() => StringFilterSchema), z.string() ]).optional(),
+  leagueName: z.union([ z.lazy(() => StringFilterSchema), z.string() ]).optional(),
+  createdAt: z.union([ z.lazy(() => DateTimeFilterSchema), z.coerce.date() ]).optional(),
+  updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema), z.coerce.date() ]).optional(),
+});
 
-export const TeamCreateWithoutLeaguesInputSchema: z.ZodType<Prisma.TeamCreateWithoutLeaguesInput> = z.object({
-  id: z.string().uuid().optional(),
+export const TeamCreateWithoutLeaguesInputSchema: z.ZodType<Prisma.TeamCreateWithoutLeaguesInput> = z.strictObject({
+  id: z.uuid().optional(),
   teamName: z.string(),
   city: z.string(),
   since: z.number().int(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
-  players: z.lazy(() => PlayerCreateNestedManyWithoutTeamInputSchema).optional()
-}).strict();
+  players: z.lazy(() => PlayerCreateNestedManyWithoutTeamInputSchema).optional(),
+});
 
-export const TeamUncheckedCreateWithoutLeaguesInputSchema: z.ZodType<Prisma.TeamUncheckedCreateWithoutLeaguesInput> = z.object({
-  id: z.string().uuid().optional(),
+export const TeamUncheckedCreateWithoutLeaguesInputSchema: z.ZodType<Prisma.TeamUncheckedCreateWithoutLeaguesInput> = z.strictObject({
+  id: z.uuid().optional(),
   teamName: z.string(),
   city: z.string(),
   since: z.number().int(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
-  players: z.lazy(() => PlayerUncheckedCreateNestedManyWithoutTeamInputSchema).optional()
-}).strict();
+  players: z.lazy(() => PlayerUncheckedCreateNestedManyWithoutTeamInputSchema).optional(),
+});
 
-export const TeamCreateOrConnectWithoutLeaguesInputSchema: z.ZodType<Prisma.TeamCreateOrConnectWithoutLeaguesInput> = z.object({
+export const TeamCreateOrConnectWithoutLeaguesInputSchema: z.ZodType<Prisma.TeamCreateOrConnectWithoutLeaguesInput> = z.strictObject({
   where: z.lazy(() => TeamWhereUniqueInputSchema),
-  create: z.union([ z.lazy(() => TeamCreateWithoutLeaguesInputSchema),z.lazy(() => TeamUncheckedCreateWithoutLeaguesInputSchema) ]),
-}).strict();
+  create: z.union([ z.lazy(() => TeamCreateWithoutLeaguesInputSchema), z.lazy(() => TeamUncheckedCreateWithoutLeaguesInputSchema) ]),
+});
 
-export const TeamUpsertWithWhereUniqueWithoutLeaguesInputSchema: z.ZodType<Prisma.TeamUpsertWithWhereUniqueWithoutLeaguesInput> = z.object({
+export const TeamUpsertWithWhereUniqueWithoutLeaguesInputSchema: z.ZodType<Prisma.TeamUpsertWithWhereUniqueWithoutLeaguesInput> = z.strictObject({
   where: z.lazy(() => TeamWhereUniqueInputSchema),
-  update: z.union([ z.lazy(() => TeamUpdateWithoutLeaguesInputSchema),z.lazy(() => TeamUncheckedUpdateWithoutLeaguesInputSchema) ]),
-  create: z.union([ z.lazy(() => TeamCreateWithoutLeaguesInputSchema),z.lazy(() => TeamUncheckedCreateWithoutLeaguesInputSchema) ]),
-}).strict();
+  update: z.union([ z.lazy(() => TeamUpdateWithoutLeaguesInputSchema), z.lazy(() => TeamUncheckedUpdateWithoutLeaguesInputSchema) ]),
+  create: z.union([ z.lazy(() => TeamCreateWithoutLeaguesInputSchema), z.lazy(() => TeamUncheckedCreateWithoutLeaguesInputSchema) ]),
+});
 
-export const TeamUpdateWithWhereUniqueWithoutLeaguesInputSchema: z.ZodType<Prisma.TeamUpdateWithWhereUniqueWithoutLeaguesInput> = z.object({
+export const TeamUpdateWithWhereUniqueWithoutLeaguesInputSchema: z.ZodType<Prisma.TeamUpdateWithWhereUniqueWithoutLeaguesInput> = z.strictObject({
   where: z.lazy(() => TeamWhereUniqueInputSchema),
-  data: z.union([ z.lazy(() => TeamUpdateWithoutLeaguesInputSchema),z.lazy(() => TeamUncheckedUpdateWithoutLeaguesInputSchema) ]),
-}).strict();
+  data: z.union([ z.lazy(() => TeamUpdateWithoutLeaguesInputSchema), z.lazy(() => TeamUncheckedUpdateWithoutLeaguesInputSchema) ]),
+});
 
-export const TeamUpdateManyWithWhereWithoutLeaguesInputSchema: z.ZodType<Prisma.TeamUpdateManyWithWhereWithoutLeaguesInput> = z.object({
+export const TeamUpdateManyWithWhereWithoutLeaguesInputSchema: z.ZodType<Prisma.TeamUpdateManyWithWhereWithoutLeaguesInput> = z.strictObject({
   where: z.lazy(() => TeamScalarWhereInputSchema),
-  data: z.union([ z.lazy(() => TeamUpdateManyMutationInputSchema),z.lazy(() => TeamUncheckedUpdateManyWithoutLeaguesInputSchema) ]),
-}).strict();
+  data: z.union([ z.lazy(() => TeamUpdateManyMutationInputSchema), z.lazy(() => TeamUncheckedUpdateManyWithoutLeaguesInputSchema) ]),
+});
 
-export const TeamScalarWhereInputSchema: z.ZodType<Prisma.TeamScalarWhereInput> = z.object({
-  AND: z.union([ z.lazy(() => TeamScalarWhereInputSchema),z.lazy(() => TeamScalarWhereInputSchema).array() ]).optional(),
+export const TeamScalarWhereInputSchema: z.ZodType<Prisma.TeamScalarWhereInput> = z.strictObject({
+  AND: z.union([ z.lazy(() => TeamScalarWhereInputSchema), z.lazy(() => TeamScalarWhereInputSchema).array() ]).optional(),
   OR: z.lazy(() => TeamScalarWhereInputSchema).array().optional(),
-  NOT: z.union([ z.lazy(() => TeamScalarWhereInputSchema),z.lazy(() => TeamScalarWhereInputSchema).array() ]).optional(),
-  id: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  teamName: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  city: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  since: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
-  createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
-  updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
-}).strict();
+  NOT: z.union([ z.lazy(() => TeamScalarWhereInputSchema), z.lazy(() => TeamScalarWhereInputSchema).array() ]).optional(),
+  id: z.union([ z.lazy(() => StringFilterSchema), z.string() ]).optional(),
+  teamName: z.union([ z.lazy(() => StringFilterSchema), z.string() ]).optional(),
+  city: z.union([ z.lazy(() => StringFilterSchema), z.string() ]).optional(),
+  since: z.union([ z.lazy(() => IntFilterSchema), z.number() ]).optional(),
+  createdAt: z.union([ z.lazy(() => DateTimeFilterSchema), z.coerce.date() ]).optional(),
+  updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema), z.coerce.date() ]).optional(),
+});
 
-export const PlayerCreateManyTeamInputSchema: z.ZodType<Prisma.PlayerCreateManyTeamInput> = z.object({
-  id: z.string().uuid().optional(),
+export const PlayerCreateManyTeamInputSchema: z.ZodType<Prisma.PlayerCreateManyTeamInput> = z.strictObject({
+  id: z.uuid().optional(),
   firstName: z.string(),
   lastName: z.string(),
   dateBirth: z.coerce.date().optional().nullable(),
   position: z.lazy(() => PositionSchema).optional().nullable(),
   playerNumber: z.number().int().optional().nullable(),
   createdAt: z.coerce.date().optional(),
-  updatedAt: z.coerce.date().optional()
-}).strict();
+  updatedAt: z.coerce.date().optional(),
+});
 
-export const PlayerUpdateWithoutTeamInputSchema: z.ZodType<Prisma.PlayerUpdateWithoutTeamInput> = z.object({
-  id: z.union([ z.string().uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+export const PlayerUpdateWithoutTeamInputSchema: z.ZodType<Prisma.PlayerUpdateWithoutTeamInput> = z.strictObject({
+  id: z.union([ z.uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   firstName: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   lastName: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   dateBirth: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  position: z.union([ z.lazy(() => PositionSchema),z.lazy(() => NullableEnumPositionFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  position: z.union([ z.lazy(() => PositionSchema), z.lazy(() => NullableEnumPositionFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   playerNumber: z.union([ z.number().int(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-}).strict();
+});
 
-export const PlayerUncheckedUpdateWithoutTeamInputSchema: z.ZodType<Prisma.PlayerUncheckedUpdateWithoutTeamInput> = z.object({
-  id: z.union([ z.string().uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+export const PlayerUncheckedUpdateWithoutTeamInputSchema: z.ZodType<Prisma.PlayerUncheckedUpdateWithoutTeamInput> = z.strictObject({
+  id: z.union([ z.uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   firstName: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   lastName: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   dateBirth: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  position: z.union([ z.lazy(() => PositionSchema),z.lazy(() => NullableEnumPositionFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  position: z.union([ z.lazy(() => PositionSchema), z.lazy(() => NullableEnumPositionFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   playerNumber: z.union([ z.number().int(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-}).strict();
+});
 
-export const PlayerUncheckedUpdateManyWithoutTeamInputSchema: z.ZodType<Prisma.PlayerUncheckedUpdateManyWithoutTeamInput> = z.object({
-  id: z.union([ z.string().uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+export const PlayerUncheckedUpdateManyWithoutTeamInputSchema: z.ZodType<Prisma.PlayerUncheckedUpdateManyWithoutTeamInput> = z.strictObject({
+  id: z.union([ z.uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   firstName: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   lastName: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   dateBirth: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  position: z.union([ z.lazy(() => PositionSchema),z.lazy(() => NullableEnumPositionFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  position: z.union([ z.lazy(() => PositionSchema), z.lazy(() => NullableEnumPositionFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   playerNumber: z.union([ z.number().int(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-}).strict();
+});
 
-export const LeagueUpdateWithoutTeamsInputSchema: z.ZodType<Prisma.LeagueUpdateWithoutTeamsInput> = z.object({
-  id: z.union([ z.string().uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+export const LeagueUpdateWithoutTeamsInputSchema: z.ZodType<Prisma.LeagueUpdateWithoutTeamsInput> = z.strictObject({
+  id: z.union([ z.uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   leagueName: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-}).strict();
+});
 
-export const LeagueUncheckedUpdateWithoutTeamsInputSchema: z.ZodType<Prisma.LeagueUncheckedUpdateWithoutTeamsInput> = z.object({
-  id: z.union([ z.string().uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+export const LeagueUncheckedUpdateWithoutTeamsInputSchema: z.ZodType<Prisma.LeagueUncheckedUpdateWithoutTeamsInput> = z.strictObject({
+  id: z.union([ z.uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   leagueName: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-}).strict();
+});
 
-export const LeagueUncheckedUpdateManyWithoutTeamsInputSchema: z.ZodType<Prisma.LeagueUncheckedUpdateManyWithoutTeamsInput> = z.object({
-  id: z.union([ z.string().uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+export const LeagueUncheckedUpdateManyWithoutTeamsInputSchema: z.ZodType<Prisma.LeagueUncheckedUpdateManyWithoutTeamsInput> = z.strictObject({
+  id: z.union([ z.uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   leagueName: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-}).strict();
+});
 
-export const TeamUpdateWithoutLeaguesInputSchema: z.ZodType<Prisma.TeamUpdateWithoutLeaguesInput> = z.object({
-  id: z.union([ z.string().uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+export const TeamUpdateWithoutLeaguesInputSchema: z.ZodType<Prisma.TeamUpdateWithoutLeaguesInput> = z.strictObject({
+  id: z.union([ z.uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   teamName: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   city: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   since: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-  players: z.lazy(() => PlayerUpdateManyWithoutTeamNestedInputSchema).optional()
-}).strict();
+  players: z.lazy(() => PlayerUpdateManyWithoutTeamNestedInputSchema).optional(),
+});
 
-export const TeamUncheckedUpdateWithoutLeaguesInputSchema: z.ZodType<Prisma.TeamUncheckedUpdateWithoutLeaguesInput> = z.object({
-  id: z.union([ z.string().uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+export const TeamUncheckedUpdateWithoutLeaguesInputSchema: z.ZodType<Prisma.TeamUncheckedUpdateWithoutLeaguesInput> = z.strictObject({
+  id: z.union([ z.uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   teamName: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   city: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   since: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-  players: z.lazy(() => PlayerUncheckedUpdateManyWithoutTeamNestedInputSchema).optional()
-}).strict();
+  players: z.lazy(() => PlayerUncheckedUpdateManyWithoutTeamNestedInputSchema).optional(),
+});
 
-export const TeamUncheckedUpdateManyWithoutLeaguesInputSchema: z.ZodType<Prisma.TeamUncheckedUpdateManyWithoutLeaguesInput> = z.object({
-  id: z.union([ z.string().uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+export const TeamUncheckedUpdateManyWithoutLeaguesInputSchema: z.ZodType<Prisma.TeamUncheckedUpdateManyWithoutLeaguesInput> = z.strictObject({
+  id: z.union([ z.uuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   teamName: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   city: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   since: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-}).strict();
+});
 
 /////////////////////////////////////////
 // ARGS
@@ -1652,308 +1652,314 @@ export const TeamUncheckedUpdateManyWithoutLeaguesInputSchema: z.ZodType<Prisma.
 export const PlayerFindFirstArgsSchema: z.ZodType<Prisma.PlayerFindFirstArgs> = z.object({
   select: PlayerSelectSchema.optional(),
   include: PlayerIncludeSchema.optional(),
-  where: PlayerWhereInputSchema.optional(),
-  orderBy: z.union([ PlayerOrderByWithRelationInputSchema.array(),PlayerOrderByWithRelationInputSchema ]).optional(),
-  cursor: PlayerWhereUniqueInputSchema.optional(),
+  where: PlayerWhereInputSchema.optional(), 
+  orderBy: z.union([ PlayerOrderByWithRelationInputSchema.array(), PlayerOrderByWithRelationInputSchema ]).optional(),
+  cursor: PlayerWhereUniqueInputSchema.optional(), 
   take: z.number().optional(),
   skip: z.number().optional(),
-  distinct: z.union([ PlayerScalarFieldEnumSchema,PlayerScalarFieldEnumSchema.array() ]).optional(),
-}).strict() ;
+  distinct: z.union([ PlayerScalarFieldEnumSchema, PlayerScalarFieldEnumSchema.array() ]).optional(),
+}).strict();
 
 export const PlayerFindFirstOrThrowArgsSchema: z.ZodType<Prisma.PlayerFindFirstOrThrowArgs> = z.object({
   select: PlayerSelectSchema.optional(),
   include: PlayerIncludeSchema.optional(),
-  where: PlayerWhereInputSchema.optional(),
-  orderBy: z.union([ PlayerOrderByWithRelationInputSchema.array(),PlayerOrderByWithRelationInputSchema ]).optional(),
-  cursor: PlayerWhereUniqueInputSchema.optional(),
+  where: PlayerWhereInputSchema.optional(), 
+  orderBy: z.union([ PlayerOrderByWithRelationInputSchema.array(), PlayerOrderByWithRelationInputSchema ]).optional(),
+  cursor: PlayerWhereUniqueInputSchema.optional(), 
   take: z.number().optional(),
   skip: z.number().optional(),
-  distinct: z.union([ PlayerScalarFieldEnumSchema,PlayerScalarFieldEnumSchema.array() ]).optional(),
-}).strict() ;
+  distinct: z.union([ PlayerScalarFieldEnumSchema, PlayerScalarFieldEnumSchema.array() ]).optional(),
+}).strict();
 
 export const PlayerFindManyArgsSchema: z.ZodType<Prisma.PlayerFindManyArgs> = z.object({
   select: PlayerSelectSchema.optional(),
   include: PlayerIncludeSchema.optional(),
-  where: PlayerWhereInputSchema.optional(),
-  orderBy: z.union([ PlayerOrderByWithRelationInputSchema.array(),PlayerOrderByWithRelationInputSchema ]).optional(),
-  cursor: PlayerWhereUniqueInputSchema.optional(),
+  where: PlayerWhereInputSchema.optional(), 
+  orderBy: z.union([ PlayerOrderByWithRelationInputSchema.array(), PlayerOrderByWithRelationInputSchema ]).optional(),
+  cursor: PlayerWhereUniqueInputSchema.optional(), 
   take: z.number().optional(),
   skip: z.number().optional(),
-  distinct: z.union([ PlayerScalarFieldEnumSchema,PlayerScalarFieldEnumSchema.array() ]).optional(),
-}).strict() ;
+  distinct: z.union([ PlayerScalarFieldEnumSchema, PlayerScalarFieldEnumSchema.array() ]).optional(),
+}).strict();
 
 export const PlayerAggregateArgsSchema: z.ZodType<Prisma.PlayerAggregateArgs> = z.object({
-  where: PlayerWhereInputSchema.optional(),
-  orderBy: z.union([ PlayerOrderByWithRelationInputSchema.array(),PlayerOrderByWithRelationInputSchema ]).optional(),
-  cursor: PlayerWhereUniqueInputSchema.optional(),
+  where: PlayerWhereInputSchema.optional(), 
+  orderBy: z.union([ PlayerOrderByWithRelationInputSchema.array(), PlayerOrderByWithRelationInputSchema ]).optional(),
+  cursor: PlayerWhereUniqueInputSchema.optional(), 
   take: z.number().optional(),
   skip: z.number().optional(),
-}).strict() ;
+}).strict();
 
 export const PlayerGroupByArgsSchema: z.ZodType<Prisma.PlayerGroupByArgs> = z.object({
-  where: PlayerWhereInputSchema.optional(),
-  orderBy: z.union([ PlayerOrderByWithAggregationInputSchema.array(),PlayerOrderByWithAggregationInputSchema ]).optional(),
-  by: PlayerScalarFieldEnumSchema.array(),
-  having: PlayerScalarWhereWithAggregatesInputSchema.optional(),
+  where: PlayerWhereInputSchema.optional(), 
+  orderBy: z.union([ PlayerOrderByWithAggregationInputSchema.array(), PlayerOrderByWithAggregationInputSchema ]).optional(),
+  by: PlayerScalarFieldEnumSchema.array(), 
+  having: PlayerScalarWhereWithAggregatesInputSchema.optional(), 
   take: z.number().optional(),
   skip: z.number().optional(),
-}).strict() ;
+}).strict();
 
 export const PlayerFindUniqueArgsSchema: z.ZodType<Prisma.PlayerFindUniqueArgs> = z.object({
   select: PlayerSelectSchema.optional(),
   include: PlayerIncludeSchema.optional(),
-  where: PlayerWhereUniqueInputSchema,
-}).strict() ;
+  where: PlayerWhereUniqueInputSchema, 
+}).strict();
 
 export const PlayerFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.PlayerFindUniqueOrThrowArgs> = z.object({
   select: PlayerSelectSchema.optional(),
   include: PlayerIncludeSchema.optional(),
-  where: PlayerWhereUniqueInputSchema,
-}).strict() ;
+  where: PlayerWhereUniqueInputSchema, 
+}).strict();
 
 export const TeamFindFirstArgsSchema: z.ZodType<Prisma.TeamFindFirstArgs> = z.object({
   select: TeamSelectSchema.optional(),
   include: TeamIncludeSchema.optional(),
-  where: TeamWhereInputSchema.optional(),
-  orderBy: z.union([ TeamOrderByWithRelationInputSchema.array(),TeamOrderByWithRelationInputSchema ]).optional(),
-  cursor: TeamWhereUniqueInputSchema.optional(),
+  where: TeamWhereInputSchema.optional(), 
+  orderBy: z.union([ TeamOrderByWithRelationInputSchema.array(), TeamOrderByWithRelationInputSchema ]).optional(),
+  cursor: TeamWhereUniqueInputSchema.optional(), 
   take: z.number().optional(),
   skip: z.number().optional(),
-  distinct: z.union([ TeamScalarFieldEnumSchema,TeamScalarFieldEnumSchema.array() ]).optional(),
-}).strict() ;
+  distinct: z.union([ TeamScalarFieldEnumSchema, TeamScalarFieldEnumSchema.array() ]).optional(),
+}).strict();
 
 export const TeamFindFirstOrThrowArgsSchema: z.ZodType<Prisma.TeamFindFirstOrThrowArgs> = z.object({
   select: TeamSelectSchema.optional(),
   include: TeamIncludeSchema.optional(),
-  where: TeamWhereInputSchema.optional(),
-  orderBy: z.union([ TeamOrderByWithRelationInputSchema.array(),TeamOrderByWithRelationInputSchema ]).optional(),
-  cursor: TeamWhereUniqueInputSchema.optional(),
+  where: TeamWhereInputSchema.optional(), 
+  orderBy: z.union([ TeamOrderByWithRelationInputSchema.array(), TeamOrderByWithRelationInputSchema ]).optional(),
+  cursor: TeamWhereUniqueInputSchema.optional(), 
   take: z.number().optional(),
   skip: z.number().optional(),
-  distinct: z.union([ TeamScalarFieldEnumSchema,TeamScalarFieldEnumSchema.array() ]).optional(),
-}).strict() ;
+  distinct: z.union([ TeamScalarFieldEnumSchema, TeamScalarFieldEnumSchema.array() ]).optional(),
+}).strict();
 
 export const TeamFindManyArgsSchema: z.ZodType<Prisma.TeamFindManyArgs> = z.object({
   select: TeamSelectSchema.optional(),
   include: TeamIncludeSchema.optional(),
-  where: TeamWhereInputSchema.optional(),
-  orderBy: z.union([ TeamOrderByWithRelationInputSchema.array(),TeamOrderByWithRelationInputSchema ]).optional(),
-  cursor: TeamWhereUniqueInputSchema.optional(),
+  where: TeamWhereInputSchema.optional(), 
+  orderBy: z.union([ TeamOrderByWithRelationInputSchema.array(), TeamOrderByWithRelationInputSchema ]).optional(),
+  cursor: TeamWhereUniqueInputSchema.optional(), 
   take: z.number().optional(),
   skip: z.number().optional(),
-  distinct: z.union([ TeamScalarFieldEnumSchema,TeamScalarFieldEnumSchema.array() ]).optional(),
-}).strict() ;
+  distinct: z.union([ TeamScalarFieldEnumSchema, TeamScalarFieldEnumSchema.array() ]).optional(),
+}).strict();
 
 export const TeamAggregateArgsSchema: z.ZodType<Prisma.TeamAggregateArgs> = z.object({
-  where: TeamWhereInputSchema.optional(),
-  orderBy: z.union([ TeamOrderByWithRelationInputSchema.array(),TeamOrderByWithRelationInputSchema ]).optional(),
-  cursor: TeamWhereUniqueInputSchema.optional(),
+  where: TeamWhereInputSchema.optional(), 
+  orderBy: z.union([ TeamOrderByWithRelationInputSchema.array(), TeamOrderByWithRelationInputSchema ]).optional(),
+  cursor: TeamWhereUniqueInputSchema.optional(), 
   take: z.number().optional(),
   skip: z.number().optional(),
-}).strict() ;
+}).strict();
 
 export const TeamGroupByArgsSchema: z.ZodType<Prisma.TeamGroupByArgs> = z.object({
-  where: TeamWhereInputSchema.optional(),
-  orderBy: z.union([ TeamOrderByWithAggregationInputSchema.array(),TeamOrderByWithAggregationInputSchema ]).optional(),
-  by: TeamScalarFieldEnumSchema.array(),
-  having: TeamScalarWhereWithAggregatesInputSchema.optional(),
+  where: TeamWhereInputSchema.optional(), 
+  orderBy: z.union([ TeamOrderByWithAggregationInputSchema.array(), TeamOrderByWithAggregationInputSchema ]).optional(),
+  by: TeamScalarFieldEnumSchema.array(), 
+  having: TeamScalarWhereWithAggregatesInputSchema.optional(), 
   take: z.number().optional(),
   skip: z.number().optional(),
-}).strict() ;
+}).strict();
 
 export const TeamFindUniqueArgsSchema: z.ZodType<Prisma.TeamFindUniqueArgs> = z.object({
   select: TeamSelectSchema.optional(),
   include: TeamIncludeSchema.optional(),
-  where: TeamWhereUniqueInputSchema,
-}).strict() ;
+  where: TeamWhereUniqueInputSchema, 
+}).strict();
 
 export const TeamFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.TeamFindUniqueOrThrowArgs> = z.object({
   select: TeamSelectSchema.optional(),
   include: TeamIncludeSchema.optional(),
-  where: TeamWhereUniqueInputSchema,
-}).strict() ;
+  where: TeamWhereUniqueInputSchema, 
+}).strict();
 
 export const LeagueFindFirstArgsSchema: z.ZodType<Prisma.LeagueFindFirstArgs> = z.object({
   select: LeagueSelectSchema.optional(),
   include: LeagueIncludeSchema.optional(),
-  where: LeagueWhereInputSchema.optional(),
-  orderBy: z.union([ LeagueOrderByWithRelationInputSchema.array(),LeagueOrderByWithRelationInputSchema ]).optional(),
-  cursor: LeagueWhereUniqueInputSchema.optional(),
+  where: LeagueWhereInputSchema.optional(), 
+  orderBy: z.union([ LeagueOrderByWithRelationInputSchema.array(), LeagueOrderByWithRelationInputSchema ]).optional(),
+  cursor: LeagueWhereUniqueInputSchema.optional(), 
   take: z.number().optional(),
   skip: z.number().optional(),
-  distinct: z.union([ LeagueScalarFieldEnumSchema,LeagueScalarFieldEnumSchema.array() ]).optional(),
-}).strict() ;
+  distinct: z.union([ LeagueScalarFieldEnumSchema, LeagueScalarFieldEnumSchema.array() ]).optional(),
+}).strict();
 
 export const LeagueFindFirstOrThrowArgsSchema: z.ZodType<Prisma.LeagueFindFirstOrThrowArgs> = z.object({
   select: LeagueSelectSchema.optional(),
   include: LeagueIncludeSchema.optional(),
-  where: LeagueWhereInputSchema.optional(),
-  orderBy: z.union([ LeagueOrderByWithRelationInputSchema.array(),LeagueOrderByWithRelationInputSchema ]).optional(),
-  cursor: LeagueWhereUniqueInputSchema.optional(),
+  where: LeagueWhereInputSchema.optional(), 
+  orderBy: z.union([ LeagueOrderByWithRelationInputSchema.array(), LeagueOrderByWithRelationInputSchema ]).optional(),
+  cursor: LeagueWhereUniqueInputSchema.optional(), 
   take: z.number().optional(),
   skip: z.number().optional(),
-  distinct: z.union([ LeagueScalarFieldEnumSchema,LeagueScalarFieldEnumSchema.array() ]).optional(),
-}).strict() ;
+  distinct: z.union([ LeagueScalarFieldEnumSchema, LeagueScalarFieldEnumSchema.array() ]).optional(),
+}).strict();
 
 export const LeagueFindManyArgsSchema: z.ZodType<Prisma.LeagueFindManyArgs> = z.object({
   select: LeagueSelectSchema.optional(),
   include: LeagueIncludeSchema.optional(),
-  where: LeagueWhereInputSchema.optional(),
-  orderBy: z.union([ LeagueOrderByWithRelationInputSchema.array(),LeagueOrderByWithRelationInputSchema ]).optional(),
-  cursor: LeagueWhereUniqueInputSchema.optional(),
+  where: LeagueWhereInputSchema.optional(), 
+  orderBy: z.union([ LeagueOrderByWithRelationInputSchema.array(), LeagueOrderByWithRelationInputSchema ]).optional(),
+  cursor: LeagueWhereUniqueInputSchema.optional(), 
   take: z.number().optional(),
   skip: z.number().optional(),
-  distinct: z.union([ LeagueScalarFieldEnumSchema,LeagueScalarFieldEnumSchema.array() ]).optional(),
-}).strict() ;
+  distinct: z.union([ LeagueScalarFieldEnumSchema, LeagueScalarFieldEnumSchema.array() ]).optional(),
+}).strict();
 
 export const LeagueAggregateArgsSchema: z.ZodType<Prisma.LeagueAggregateArgs> = z.object({
-  where: LeagueWhereInputSchema.optional(),
-  orderBy: z.union([ LeagueOrderByWithRelationInputSchema.array(),LeagueOrderByWithRelationInputSchema ]).optional(),
-  cursor: LeagueWhereUniqueInputSchema.optional(),
+  where: LeagueWhereInputSchema.optional(), 
+  orderBy: z.union([ LeagueOrderByWithRelationInputSchema.array(), LeagueOrderByWithRelationInputSchema ]).optional(),
+  cursor: LeagueWhereUniqueInputSchema.optional(), 
   take: z.number().optional(),
   skip: z.number().optional(),
-}).strict() ;
+}).strict();
 
 export const LeagueGroupByArgsSchema: z.ZodType<Prisma.LeagueGroupByArgs> = z.object({
-  where: LeagueWhereInputSchema.optional(),
-  orderBy: z.union([ LeagueOrderByWithAggregationInputSchema.array(),LeagueOrderByWithAggregationInputSchema ]).optional(),
-  by: LeagueScalarFieldEnumSchema.array(),
-  having: LeagueScalarWhereWithAggregatesInputSchema.optional(),
+  where: LeagueWhereInputSchema.optional(), 
+  orderBy: z.union([ LeagueOrderByWithAggregationInputSchema.array(), LeagueOrderByWithAggregationInputSchema ]).optional(),
+  by: LeagueScalarFieldEnumSchema.array(), 
+  having: LeagueScalarWhereWithAggregatesInputSchema.optional(), 
   take: z.number().optional(),
   skip: z.number().optional(),
-}).strict() ;
+}).strict();
 
 export const LeagueFindUniqueArgsSchema: z.ZodType<Prisma.LeagueFindUniqueArgs> = z.object({
   select: LeagueSelectSchema.optional(),
   include: LeagueIncludeSchema.optional(),
-  where: LeagueWhereUniqueInputSchema,
-}).strict() ;
+  where: LeagueWhereUniqueInputSchema, 
+}).strict();
 
 export const LeagueFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.LeagueFindUniqueOrThrowArgs> = z.object({
   select: LeagueSelectSchema.optional(),
   include: LeagueIncludeSchema.optional(),
-  where: LeagueWhereUniqueInputSchema,
-}).strict() ;
+  where: LeagueWhereUniqueInputSchema, 
+}).strict();
 
 export const PlayerCreateArgsSchema: z.ZodType<Prisma.PlayerCreateArgs> = z.object({
   select: PlayerSelectSchema.optional(),
   include: PlayerIncludeSchema.optional(),
-  data: z.union([ PlayerCreateInputSchema,PlayerUncheckedCreateInputSchema ]),
-}).strict() ;
+  data: z.union([ PlayerCreateInputSchema, PlayerUncheckedCreateInputSchema ]),
+}).strict();
 
 export const PlayerUpsertArgsSchema: z.ZodType<Prisma.PlayerUpsertArgs> = z.object({
   select: PlayerSelectSchema.optional(),
   include: PlayerIncludeSchema.optional(),
-  where: PlayerWhereUniqueInputSchema,
-  create: z.union([ PlayerCreateInputSchema,PlayerUncheckedCreateInputSchema ]),
-  update: z.union([ PlayerUpdateInputSchema,PlayerUncheckedUpdateInputSchema ]),
-}).strict() ;
+  where: PlayerWhereUniqueInputSchema, 
+  create: z.union([ PlayerCreateInputSchema, PlayerUncheckedCreateInputSchema ]),
+  update: z.union([ PlayerUpdateInputSchema, PlayerUncheckedUpdateInputSchema ]),
+}).strict();
 
 export const PlayerCreateManyArgsSchema: z.ZodType<Prisma.PlayerCreateManyArgs> = z.object({
-  data: z.union([ PlayerCreateManyInputSchema,PlayerCreateManyInputSchema.array() ]),
+  data: z.union([ PlayerCreateManyInputSchema, PlayerCreateManyInputSchema.array() ]),
   skipDuplicates: z.boolean().optional(),
-}).strict() ;
+}).strict();
 
 export const PlayerDeleteArgsSchema: z.ZodType<Prisma.PlayerDeleteArgs> = z.object({
   select: PlayerSelectSchema.optional(),
   include: PlayerIncludeSchema.optional(),
-  where: PlayerWhereUniqueInputSchema,
-}).strict() ;
+  where: PlayerWhereUniqueInputSchema, 
+}).strict();
 
 export const PlayerUpdateArgsSchema: z.ZodType<Prisma.PlayerUpdateArgs> = z.object({
   select: PlayerSelectSchema.optional(),
   include: PlayerIncludeSchema.optional(),
-  data: z.union([ PlayerUpdateInputSchema,PlayerUncheckedUpdateInputSchema ]),
-  where: PlayerWhereUniqueInputSchema,
-}).strict() ;
+  data: z.union([ PlayerUpdateInputSchema, PlayerUncheckedUpdateInputSchema ]),
+  where: PlayerWhereUniqueInputSchema, 
+}).strict();
 
 export const PlayerUpdateManyArgsSchema: z.ZodType<Prisma.PlayerUpdateManyArgs> = z.object({
-  data: z.union([ PlayerUpdateManyMutationInputSchema,PlayerUncheckedUpdateManyInputSchema ]),
-  where: PlayerWhereInputSchema.optional(),
-}).strict() ;
+  data: z.union([ PlayerUpdateManyMutationInputSchema, PlayerUncheckedUpdateManyInputSchema ]),
+  where: PlayerWhereInputSchema.optional(), 
+  limit: z.number().optional(),
+}).strict();
 
 export const PlayerDeleteManyArgsSchema: z.ZodType<Prisma.PlayerDeleteManyArgs> = z.object({
-  where: PlayerWhereInputSchema.optional(),
-}).strict() ;
+  where: PlayerWhereInputSchema.optional(), 
+  limit: z.number().optional(),
+}).strict();
 
 export const TeamCreateArgsSchema: z.ZodType<Prisma.TeamCreateArgs> = z.object({
   select: TeamSelectSchema.optional(),
   include: TeamIncludeSchema.optional(),
-  data: z.union([ TeamCreateInputSchema,TeamUncheckedCreateInputSchema ]),
-}).strict() ;
+  data: z.union([ TeamCreateInputSchema, TeamUncheckedCreateInputSchema ]),
+}).strict();
 
 export const TeamUpsertArgsSchema: z.ZodType<Prisma.TeamUpsertArgs> = z.object({
   select: TeamSelectSchema.optional(),
   include: TeamIncludeSchema.optional(),
-  where: TeamWhereUniqueInputSchema,
-  create: z.union([ TeamCreateInputSchema,TeamUncheckedCreateInputSchema ]),
-  update: z.union([ TeamUpdateInputSchema,TeamUncheckedUpdateInputSchema ]),
-}).strict() ;
+  where: TeamWhereUniqueInputSchema, 
+  create: z.union([ TeamCreateInputSchema, TeamUncheckedCreateInputSchema ]),
+  update: z.union([ TeamUpdateInputSchema, TeamUncheckedUpdateInputSchema ]),
+}).strict();
 
 export const TeamCreateManyArgsSchema: z.ZodType<Prisma.TeamCreateManyArgs> = z.object({
-  data: z.union([ TeamCreateManyInputSchema,TeamCreateManyInputSchema.array() ]),
+  data: z.union([ TeamCreateManyInputSchema, TeamCreateManyInputSchema.array() ]),
   skipDuplicates: z.boolean().optional(),
-}).strict() ;
+}).strict();
 
 export const TeamDeleteArgsSchema: z.ZodType<Prisma.TeamDeleteArgs> = z.object({
   select: TeamSelectSchema.optional(),
   include: TeamIncludeSchema.optional(),
-  where: TeamWhereUniqueInputSchema,
-}).strict() ;
+  where: TeamWhereUniqueInputSchema, 
+}).strict();
 
 export const TeamUpdateArgsSchema: z.ZodType<Prisma.TeamUpdateArgs> = z.object({
   select: TeamSelectSchema.optional(),
   include: TeamIncludeSchema.optional(),
-  data: z.union([ TeamUpdateInputSchema,TeamUncheckedUpdateInputSchema ]),
-  where: TeamWhereUniqueInputSchema,
-}).strict() ;
+  data: z.union([ TeamUpdateInputSchema, TeamUncheckedUpdateInputSchema ]),
+  where: TeamWhereUniqueInputSchema, 
+}).strict();
 
 export const TeamUpdateManyArgsSchema: z.ZodType<Prisma.TeamUpdateManyArgs> = z.object({
-  data: z.union([ TeamUpdateManyMutationInputSchema,TeamUncheckedUpdateManyInputSchema ]),
-  where: TeamWhereInputSchema.optional(),
-}).strict() ;
+  data: z.union([ TeamUpdateManyMutationInputSchema, TeamUncheckedUpdateManyInputSchema ]),
+  where: TeamWhereInputSchema.optional(), 
+  limit: z.number().optional(),
+}).strict();
 
 export const TeamDeleteManyArgsSchema: z.ZodType<Prisma.TeamDeleteManyArgs> = z.object({
-  where: TeamWhereInputSchema.optional(),
-}).strict() ;
+  where: TeamWhereInputSchema.optional(), 
+  limit: z.number().optional(),
+}).strict();
 
 export const LeagueCreateArgsSchema: z.ZodType<Prisma.LeagueCreateArgs> = z.object({
   select: LeagueSelectSchema.optional(),
   include: LeagueIncludeSchema.optional(),
-  data: z.union([ LeagueCreateInputSchema,LeagueUncheckedCreateInputSchema ]),
-}).strict() ;
+  data: z.union([ LeagueCreateInputSchema, LeagueUncheckedCreateInputSchema ]),
+}).strict();
 
 export const LeagueUpsertArgsSchema: z.ZodType<Prisma.LeagueUpsertArgs> = z.object({
   select: LeagueSelectSchema.optional(),
   include: LeagueIncludeSchema.optional(),
-  where: LeagueWhereUniqueInputSchema,
-  create: z.union([ LeagueCreateInputSchema,LeagueUncheckedCreateInputSchema ]),
-  update: z.union([ LeagueUpdateInputSchema,LeagueUncheckedUpdateInputSchema ]),
-}).strict() ;
+  where: LeagueWhereUniqueInputSchema, 
+  create: z.union([ LeagueCreateInputSchema, LeagueUncheckedCreateInputSchema ]),
+  update: z.union([ LeagueUpdateInputSchema, LeagueUncheckedUpdateInputSchema ]),
+}).strict();
 
 export const LeagueCreateManyArgsSchema: z.ZodType<Prisma.LeagueCreateManyArgs> = z.object({
-  data: z.union([ LeagueCreateManyInputSchema,LeagueCreateManyInputSchema.array() ]),
+  data: z.union([ LeagueCreateManyInputSchema, LeagueCreateManyInputSchema.array() ]),
   skipDuplicates: z.boolean().optional(),
-}).strict() ;
+}).strict();
 
 export const LeagueDeleteArgsSchema: z.ZodType<Prisma.LeagueDeleteArgs> = z.object({
   select: LeagueSelectSchema.optional(),
   include: LeagueIncludeSchema.optional(),
-  where: LeagueWhereUniqueInputSchema,
-}).strict() ;
+  where: LeagueWhereUniqueInputSchema, 
+}).strict();
 
 export const LeagueUpdateArgsSchema: z.ZodType<Prisma.LeagueUpdateArgs> = z.object({
   select: LeagueSelectSchema.optional(),
   include: LeagueIncludeSchema.optional(),
-  data: z.union([ LeagueUpdateInputSchema,LeagueUncheckedUpdateInputSchema ]),
-  where: LeagueWhereUniqueInputSchema,
-}).strict() ;
+  data: z.union([ LeagueUpdateInputSchema, LeagueUncheckedUpdateInputSchema ]),
+  where: LeagueWhereUniqueInputSchema, 
+}).strict();
 
 export const LeagueUpdateManyArgsSchema: z.ZodType<Prisma.LeagueUpdateManyArgs> = z.object({
-  data: z.union([ LeagueUpdateManyMutationInputSchema,LeagueUncheckedUpdateManyInputSchema ]),
-  where: LeagueWhereInputSchema.optional(),
-}).strict() ;
+  data: z.union([ LeagueUpdateManyMutationInputSchema, LeagueUncheckedUpdateManyInputSchema ]),
+  where: LeagueWhereInputSchema.optional(), 
+  limit: z.number().optional(),
+}).strict();
 
 export const LeagueDeleteManyArgsSchema: z.ZodType<Prisma.LeagueDeleteManyArgs> = z.object({
-  where: LeagueWhereInputSchema.optional(),
-}).strict() ;
+  where: LeagueWhereInputSchema.optional(), 
+  limit: z.number().optional(),
+}).strict();

@@ -1,12 +1,23 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "module": "commonjs",
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
     "outDir": "./dist",
-    "rootDir": "../",
+    "rootDir": "./src",
     "strict": true,
     "strictNullChecks": true,
     "esModuleInterop": true,
-    "noImplicitReturns": false
-  }
+    "noImplicitReturns": false,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "allowJs": true,
+    "types": ["bun-types"]
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "dist"]
 }
